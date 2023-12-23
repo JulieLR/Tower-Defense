@@ -3,6 +3,8 @@ package gui;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import config.MapConfig;
+
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -10,47 +12,61 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Color;
+import java.awt.Dimension;
 
-public class Game extends JPanel implements Frames{
+public class Game extends JPanel{
     
-    private Random random = new Random();
-    private BufferedImage image;
+     //Tiles
+    final int scale =4;
+    final int initialTileSize = 16;
 
-    private ArrayList<BufferedImage> assets = new ArrayList<>();
+    final int tileSize= initialTileSize*scale; //32x32
+
+    //Ecran
+    final int col = 15;
+    final int ligne= 10;
+
+    final int width= col*tileSize; //960
+    final int height= ligne*tileSize; //640
+
+    private BufferedImage image;
+    private MapConfig tiles;
 
     public Game(BufferedImage img){
         this.image=img;
-        addAsset();
+        this.tiles= new MapConfig(this);
+
+        setPreferredSize(new Dimension(width, height));
         setVisible(true);
 
     }
 
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public int getInitialTileSize() {
+        return initialTileSize;
+    }
+
+    public int getCol() {
+        return col;
+    }
+
+    public int getLigne() {
+        return ligne;
+    }
+
+    public int getTileSize() {
+        return tileSize;
+    }
+
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
-        for(int x=0;x<21;x++){
-            for(int y=0;y<20;y++){
-                g.drawImage(assets.get(random.nextInt(5)),x*30, y*30, 64, 64, null);
-                //g.setColor(getColor());
-                //g.fillRect(x*30, y*30, 64, 64);
-            }
-        }
-    }
 
-    public void addAsset(){
-        for(int x=0;x<5;x++){
-            assets.add(image.getSubimage(x*16, 0, 16, 16));
-        }
-    }
+        tiles.drawBackground(g); //draw map à mettre avant le draw des characters
 
-    public int getRandomNb(){
-        return random.nextInt(3);
-    }
-
-    public Color getColor(){
-        int r = random.nextInt(256);
-        int g = random.nextInt(256);
-        int b = random.nextInt(256);
-        return new Color(r,g,b);
+        g.dispose(); //
     }
 
 }

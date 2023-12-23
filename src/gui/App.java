@@ -16,14 +16,16 @@ public class App extends JFrame{
 
         getImage("src/ressources/sprite.png");
         
-        setSize(645,640);
-        setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setTitle("TOWER DEFENSE");
         //setResizable(false);
 
         this.game = new Game(image);
         add(game);
+
+        this.pack();
+        setLocationRelativeTo(null);
+        setVisible(true);
     }
 
     public void getImage(String chemin){
