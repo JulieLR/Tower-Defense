@@ -15,8 +15,8 @@ public class App extends JFrame{
     public App(){
 
         getImage("src/ressources/sprite.png");
-
-        setSize(640,640);
+        
+        setSize(645,640);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -37,5 +37,6 @@ public class App extends JFrame{
     public static void main(String[] args) {
         System.out.println("Hey");
         App app = new App();
+        //Menu menu = new Menu();
     }
 }
