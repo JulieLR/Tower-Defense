@@ -14,7 +14,7 @@ import java.util.Random;
 import java.awt.Color;
 import java.awt.Dimension;
 
-public class Game extends JPanel{
+public class Game extends JPanel implements Runnable{
     
      //Tiles
     final int scale =4;
@@ -32,6 +32,10 @@ public class Game extends JPanel{
     private BufferedImage image;
     private MapConfig tiles;
 
+    private Thread gameThread;
+    private final double FPS_SET= 120.0;
+    private final double UPS_SET= 60.0;
+
     public Game(BufferedImage img){
         this.image=img;
         this.tiles= new MapConfig(this);
@@ -39,6 +43,7 @@ public class Game extends JPanel{
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
 
+        start();
     }
 
     public BufferedImage getImage() {
@@ -67,6 +72,53 @@ public class Game extends JPanel{
         tiles.drawBackground(g); //draw map à mettre avant le draw des characters
 
         g.dispose(); //
+    }
+
+    private void start() {
+        gameThread= new Thread(this){};
+        gameThread.start();
+    }
+    private void updateGame () {
+
+        //System.out.println("Game Updated");
+    }
+
+    @Override
+    public void run() {
+        double timePerFrame= 1000000000.0/FPS_SET;
+        double timePerUpdate= 1000000000.0/UPS_SET;
+
+        long lastFrame= System.nanoTime();
+        long lastUpdate= System.nanoTime();
+        long lastTimeCheck= System.currentTimeMillis(); 
+
+        int frames=0;
+        int updates= 0;
+        
+        while (true) {
+            if (System.nanoTime()- lastFrame>= timePerFrame) {
+                repaint();
+                lastFrame= System.nanoTime();
+                frames++;
+
+            } 
+
+            if (System.nanoTime()- lastUpdate>= timePerUpdate) {
+                updateGame();
+                lastUpdate= System.nanoTime();
+                updates++;
+
+            }
+
+            if (System.currentTimeMillis()- lastTimeCheck>= 1000) {
+                System.out.println("FPS: "+ frames+ " | UPS: "+ updates);
+                frames= 0;
+                updates= 0;
+                lastTimeCheck= System.currentTimeMillis();
+
+            }
+        }
+
     }
 
 }
