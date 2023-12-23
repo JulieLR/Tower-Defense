@@ -1,3 +1,4 @@
+package perso;
 import java.lang.Math.*;
 
 public class Personnages {
