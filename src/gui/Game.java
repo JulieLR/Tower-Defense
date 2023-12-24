@@ -24,6 +24,7 @@ import java.awt.Dimension;
 
 
 
+
 public class Game extends JPanel implements Runnable {
     
      //Tiles
@@ -59,6 +60,7 @@ public class Game extends JPanel implements Runnable {
     private Thread gameThread;
     private final double FPS_SET= 120.0;
     private final double UPS_SET= 60.0;
+    
     
     // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
     private Mouse_Listener mouseListener; 
