@@ -7,14 +7,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
-import inputs.Keyboard_Listener;
-import inputs.Mouse_Listener;
-
 public class App extends JFrame{
 
     private Game game;
-    private Mouse_Listener mouseListener; 
-    private Keyboard_Listener keyboardlistener;
 
     public App(){
         
@@ -30,21 +25,10 @@ public class App extends JFrame{
         setVisible(true);
     }
 
-    public void initInput() {
-        mouseListener= new Mouse_Listener();
-        keyboardlistener= new Keyboard_Listener();
-
-        addMouseListener(mouseListener);
-        addMouseMotionListener(mouseListener);
-        addKeyListener(keyboardlistener);
-
-        requestFocus();
-    }
-
     public static void main(String[] args) {
         System.out.println("Hey");
         App app = new App();
-        app.initInput();
+        app.game.initInput();
         //Menu menu = new Menu();
     }
 }
