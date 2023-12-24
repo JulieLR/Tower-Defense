@@ -20,14 +20,17 @@ public class Game extends JPanel implements Runnable{
     final int scale =4;
     final int initialTileSize = 16;
 
-    final int tileSize= initialTileSize*scale; //32x32
+    final int tileSize= initialTileSize*scale; //48x48
+
+    //Barre pour les tour
+    final int barLine = 2;
 
     //Ecran
     final int col = 15;
-    final int ligne= 10;
+    final int ligne= 10+barLine;//10 jeu et 2 bar
 
     final int width= col*tileSize; //960
-    final int height= ligne*tileSize; //640
+    final int height= ligne*tileSize; //640+128
 
     private BufferedImage image;
     private MapConfig tiles;

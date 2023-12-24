@@ -14,7 +14,7 @@ public class App extends JFrame{
 
     public App(){
 
-        getImage("src/ressources/mapSprite.png");
+        getImage("src/ressources/map/sprite1.png");
         
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("TOWER DEFENSE");
