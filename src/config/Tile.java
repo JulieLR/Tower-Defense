@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public class Tile {
 
-    public enum Type{PATH,GRASS,WATER};
+    public enum Type{PATH,GRASS,WATER,CASTLE,TOWER,BAR};
     private BufferedImage image; // image du tile
     private BufferedImage secondImg;
 
