@@ -5,12 +5,17 @@ public class Tower extends Entities {
     // Attribut
     //private int pointDeVie;
     private int prix;
+    private String type; // type de tour
+    private int id; // identifiant pour savoir quelle tour specifiquement
     
-public Tower(int vie, int prix, Coordinates pos,int degat, int vitesseAtk){
+public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk, String type, int id){
     super(vitesseAtk, pos, degat);
     //this.pointDeVie=vie;
     this.prix=prix;
-}
+    this.type=type;
+    this.id= id;
+    }
+
     // Methodes
 
     // getter et setter
@@ -26,6 +31,20 @@ public Tower(int vie, int prix, Coordinates pos,int degat, int vitesseAtk){
     }
     public void setPrix (int prix) {
         this.prix=prix;
+    }
+
+    public String getType () {
+        return this.type;
+    }
+    public void setType (String nom) {
+        this.type= nom;
+    }
+
+    public int getId () {
+        return this.id;
+    }
+    public void setid(int id) {
+        this.id= id;
     }
 
     // isDead
