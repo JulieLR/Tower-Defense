@@ -9,6 +9,7 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Color;
@@ -32,15 +33,22 @@ public class Game extends JPanel implements Runnable{
     final int width= col*tileSize; //960
     final int height= ligne*tileSize; //640+128
 
-    private BufferedImage image;
+    private BufferedImage mapImage;
     private MapConfig tiles;
+
+    private BufferedImage enemyImage;
+
+    private BufferedImage towerImage;
 
     private Thread gameThread;
     private final double FPS_SET= 120.0;
     private final double UPS_SET= 60.0;
 
-    public Game(BufferedImage img){
-        this.image=img;
+    public Game(){
+        this.mapImage = getImage("src/ressources/map/sprite1.png");
+        this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
+        this.towerImage= getImage("src/ressources/towers/towerSprite.png");
+
         this.tiles= new MapConfig(this);
 
         setPreferredSize(new Dimension(width, height));
@@ -49,8 +57,18 @@ public class Game extends JPanel implements Runnable{
         start();
     }
 
-    public BufferedImage getImage() {
-        return image;
+    public BufferedImage getImage(String chemin){
+        try {
+            BufferedImage image = ImageIO.read(new File(chemin));
+            return image;
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public BufferedImage getMapImage() {
+        return mapImage;
     }
 
     public int getInitialTileSize() {

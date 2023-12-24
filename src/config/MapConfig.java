@@ -101,7 +101,7 @@ public class MapConfig {
         //0: herbe, 1: terre, 2:eau
         for(int ligne=0;ligne<5;ligne++){
             for(int col=0;col<6;col++){
-                tiles.add(this.game.getImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
+                tiles.add(this.game.getMapImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
             }
         }
     }

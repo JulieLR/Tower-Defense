@@ -10,30 +10,19 @@ import javax.swing.JFrame;
 public class App extends JFrame{
 
     private Game game;
-    private BufferedImage image;
 
     public App(){
-
-        getImage("src/ressources/map/sprite1.png");
         
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("TOWER DEFENSE");
         //setResizable(false);
 
-        this.game = new Game(image);
+        this.game = new Game();
         add(game);
 
         this.pack();
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    public void getImage(String chemin){
-        try {
-            this.image = ImageIO.read(new File(chemin));
-        }catch(IOException e){
-            e.printStackTrace();
-        }
     }
 
     public static void main(String[] args) {
