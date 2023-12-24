@@ -3,23 +3,23 @@ import java.lang.Math.*;
 
 public class Tower extends Entities {
     // Attribut
-    private int pointDeVie;
+    //private int pointDeVie;
     private int prix;
     
 public Tower(int vie, int prix, Coordinates pos,int degat, int vitesseAtk){
     super(vitesseAtk, pos, degat);
-    this.pointDeVie=vie;
+    //this.pointDeVie=vie;
     this.prix=prix;
 }
     // Methodes
 
     // getter et setter
-    public int getPointDeVie () {
+    /* public int getPointDeVie () {
         return this.pointDeVie;
-    }
+    } 
     public void setPointDeVie (int pointDeVie) {
         this.pointDeVie=pointDeVie;
-    }
+    } */
 
     public int getPrix () {
         return this.prix;
@@ -29,9 +29,9 @@ public Tower(int vie, int prix, Coordinates pos,int degat, int vitesseAtk){
     }
 
     // isDead
-    public boolean isDead () {
+    /* public boolean isDead () {
         return this.pointDeVie<=0;
-    }
+    } */
     
     // attaque
     public void attaque (Entities p) {
