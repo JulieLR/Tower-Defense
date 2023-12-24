@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import config.MapConfig;
+import inputs.Keyboard_Listener;
+import inputs.Mouse_Listener;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -14,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.awt.Color;
 import java.awt.Dimension;
+
 
 public class Game extends JPanel implements Runnable{
     
@@ -43,6 +46,10 @@ public class Game extends JPanel implements Runnable{
     private Thread gameThread;
     private final double FPS_SET= 120.0;
     private final double UPS_SET= 60.0;
+    
+    // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
+    private Mouse_Listener mouseListener; 
+    private Keyboard_Listener keyboardlistener;
 
     public Game(){
         this.mapImage = getImage("src/ressources/map/sprite1.png");
@@ -55,6 +62,17 @@ public class Game extends JPanel implements Runnable{
         setVisible(true);
 
         start();
+    }
+
+    public void initInput() {
+        mouseListener= new Mouse_Listener();
+        keyboardlistener= new Keyboard_Listener();
+
+        addMouseListener(mouseListener);
+        addMouseMotionListener(mouseListener);
+        addKeyListener(keyboardlistener);
+
+        requestFocus();
     }
 
     public BufferedImage getImage(String chemin){
@@ -132,7 +150,7 @@ public class Game extends JPanel implements Runnable{
             }
 
             if (System.currentTimeMillis()- lastTimeCheck>= 1000) {
-                System.out.println("FPS: "+ frames+ " | UPS: "+ updates);
+                // System.out.println("FPS: "+ frames+ " | UPS: "+ updates);
                 frames= 0;
                 updates= 0;
                 lastTimeCheck= System.currentTimeMillis();

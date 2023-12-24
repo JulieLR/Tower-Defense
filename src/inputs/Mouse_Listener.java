@@ -9,7 +9,7 @@ public class Mouse_Listener implements MouseListener, MouseMotionListener{
     // MouseListener: pour interactions avec les clics de souris
     @Override
     public void mouseClicked(MouseEvent e) { /*
-        // click gauche
+        // clic gauche
         if (e.getButton()== MouseEvent.BUTTON1) {
             System.out.println("left button pressed");
         } 
@@ -17,15 +17,21 @@ public class Mouse_Listener implements MouseListener, MouseMotionListener{
         else if (e.getButton()== MouseEvent.BUTTON2) {
             System.out.println("scroll button pressed");
         }
-        // click droit
+        // clic droit
         else if (e.getButton()== MouseEvent.BUTTON3) {
             System.out.println("right button pressed");
+        } */
+        /* 
+        // coordonnees de quand on clique sur la souris (clic gauche)
+        if (e.getButton()== MouseEvent.BUTTON1) {
+            System.out.println("position: "+ e.getX()+ " "+ e.getY());
         } */
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
         // TODO Auto-generated method stub
+        // peut faire 1 swithc selon "la fenêtre de jeu on est"
     }
 
     @Override
