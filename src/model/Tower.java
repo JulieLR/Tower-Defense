@@ -8,13 +8,15 @@ public class Tower extends Entities {
     private int prix;
     private String type; // type de tour
     private int id; // identifiant pour savoir quelle tour specifiquement
+    private int cd; // cool down
     
-public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk, String type, int id){
+public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk, String type, int id, int cd){
     super(vitesseAtk, pos, degat);
     //this.pointDeVie=vie;
     this.prix=prix;
     this.type=type;
     this.id= id;
+    this.cd=cd;
     }
 
     // Methodes
@@ -46,6 +48,13 @@ public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk,
     }
     public void setid(int id) {
         this.id= id;
+    }
+    
+    public int getCoolDown () {
+        return this.cd;
+    }
+    public void setCoolDown (int cd) {
+        this.cd=cd;
     }
 
     // isDead
