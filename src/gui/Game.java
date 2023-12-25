@@ -110,6 +110,7 @@ public class Game extends JPanel implements Runnable{
 
         tiles.drawImages(g); //draw map à mettre avant le draw des characters
         enemies.drawImages(g);
+        tiles.drawStartTile(g);
 
         g.dispose(); //
     }

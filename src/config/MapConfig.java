@@ -20,6 +20,7 @@ public class MapConfig implements Frames {
     private Game game;
     private Tile[][] map;
     private Tile end;
+    private Coordinates start;
     private ArrayList<BufferedImage> tiles = new ArrayList<>();
     Random random = new Random();
 
@@ -42,6 +43,10 @@ public class MapConfig implements Frames {
 
     public Tile getEnd(){
         return this.end;
+    }
+
+    public Coordinates getStartCoor(){
+        return this.start;
     }
 
     
@@ -99,6 +104,11 @@ public class MapConfig implements Frames {
                         this.map[ligne][col] = new Tile(tiles.get(17),tiles.get(18), Type.TOWER,Character.getNumericValue(readline2.charAt(i)));
                         ligne++;
                     }
+                    else if(readline.charAt(i) == 'S'){//ennemies start
+                        this.map[ligne][col] = new Tile(tiles.get(28), Type.PATH,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
+                        this.start= new Coordinates(ligne*this.game.getTileSize(), col*this.game.getTileSize());
+                        ligne++;
+                    }
                 }
                 col++;
                 ligne=0;
@@ -138,6 +148,12 @@ public class MapConfig implements Frames {
             }
         }
     }
+
+    public void drawStartTile(Graphics g){
+        g.drawImage(tiles.get(28), (int)start.getX(),(int) start.getY(), game.getTileSize(), game.getTileSize(), game);
+
+    }
+
     public static BufferedImage rotate(BufferedImage img, double angle) {
 
         int w = img.getWidth();    

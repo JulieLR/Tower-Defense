@@ -15,12 +15,15 @@ public class EnemiesGraphics implements Frames{
     
     private Game game;
     private ArrayList<BufferedImage> enemiesAsset = new ArrayList<>();
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     private Enemy enemy;
+    private Coordinates start;
 
     public EnemiesGraphics(Game game){
         this.game = game;
+        this.start = this.game.getMapConfig().getStartCoor();
         addAsset();
-        this.enemy= new Enemy(200,2f,enemiesAsset.get(1), new Coordinates(2*this.game.getTileSize(),9*this.game.getTileSize()),20, 20,0);
+        this.enemy= new Enemy(200,0.5f,enemiesAsset.get(1),start,20, 20,0);
 
     }
 

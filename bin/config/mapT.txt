@@ -8,5 +8,5 @@ G d d G D G G G d D D d T W G
 G G D G D G G G D G w W W w G
 G G D G d D D D d G W G G G G
 G G D G G G G G G G W G G G G
-b B B B B B B B B B B B B B b
+b B S B B B B B B B B B B B b
 B X X X X X X X X X X X X X B
