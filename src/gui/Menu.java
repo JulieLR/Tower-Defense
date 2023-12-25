@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Menu extends JFrame implements Frames {
+public class Menu extends JFrame {
 
     private JLabel fond;
     private JPanel boutons= new JPanel();
@@ -102,7 +102,6 @@ public class Menu extends JFrame implements Frames {
         return img;
     }
 
-    @Override
     public void addAsset() {
         for(int i=0; i<3;i++){
             for(int j=0;j<3;j++){

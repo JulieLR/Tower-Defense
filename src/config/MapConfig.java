@@ -10,24 +10,40 @@ import config.Tile.Type;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.awt.Color;
-import gui.Game;
 
-public class MapConfig {
+import gui.Frames;
+import gui.Game;
+import model.Coordinates;
+
+public class MapConfig implements Frames {
     
     private Game game;
     private Tile[][] map;
+    private Tile end;
     private ArrayList<BufferedImage> tiles = new ArrayList<>();
-    private ArrayList<BufferedImage> tilesDeco = new ArrayList<>();
     Random random = new Random();
 
     public MapConfig(Game game) {
+
         this.game=game;
         this.map= new Tile[this.game.getCol()][this.game.getLigne()];
         addAsset();
         mapFromFile("src/config/mapT.txt","src/config/map.txt");
+        //System.out.print(this.getTile(new Coordinates(130, 130)).typeToString());
+    } 
 
-
+    public Tile getTile(Coordinates c){
+        return this.map[((int)c.getX()/this.game.getTileSize())][(int)c.getY()/this.game.getTileSize()];    
     }
+
+    public Tile[][] getMap(){
+        return this.map;
+    }
+
+    public Tile getEnd(){
+        return this.end;
+    }
+
     
     public void mapFromFile(String path, String path2){
         try{
@@ -46,40 +62,37 @@ public class MapConfig {
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'D'){//Path
-                        this.map[ligne][col] = new Tile(tiles.get(1), Type.PATH, Character.getNumericValue(readline2.charAt(i)));
+                        this.map[ligne][col] = new Tile(tiles.get(1), Type.PATH, Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'W'){//water
-                        this.map[ligne][col] = new Tile(tiles.get(3), Type.WATER,Character.getNumericValue(readline2.charAt(i)));
+                        this.map[ligne][col] = new Tile(tiles.get(3), Type.WATER,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'w'){//water corner
-                        this.map[ligne][col] = new Tile(tiles.get(2), Type.WATER,Character.getNumericValue(readline2.charAt(i)));
+                        this.map[ligne][col] = new Tile(tiles.get(2), Type.WATER,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'd'){//path corner
-                        this.map[ligne][col] = new Tile(tiles.get(0), Type.WATER,Character.getNumericValue(readline2.charAt(i)));
-                        ligne++;
-                    }
-                    else if(readline.charAt(i) == 'I'){//path intersection
-                        this.map[ligne][col] = new Tile(tiles.get(4), Type.WATER,Character.getNumericValue(readline2.charAt(i)));
+                        this.map[ligne][col] = new Tile(tiles.get(0), Type.PATH,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'C'){//castle
                         int x =Character.getNumericValue(readline2.charAt(i));//type of castle
-                        this.map[ligne][col] = new Tile(tiles.get(21+x), Type.CASTLE,0);
+                        this.map[ligne][col] = new Tile(tiles.get(21+x), Type.CASTLE,0,new Coordinates(ligne, col));
                         ligne++;
+                        this.end=this.map[ligne-1][col];
                     }
                     else if(readline.charAt(i) == 'B'){//Bar border
-                        this.map[ligne][col] = new Tile(tiles.get(28), Type.BAR,Character.getNumericValue(readline2.charAt(i)));
+                        this.map[ligne][col] = new Tile(tiles.get(28), Type.BAR,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'b'){//Bar corner
-                        this.map[ligne][col] = new Tile(tiles.get(27), Type.BAR,Character.getNumericValue(readline2.charAt(i)));
+                        this.map[ligne][col] = new Tile(tiles.get(27), Type.BAR,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'X'){//Bar inside
-                        this.map[ligne][col] = new Tile(tiles.get(29), Type.BAR,Character.getNumericValue(readline2.charAt(i)));
+                        this.map[ligne][col] = new Tile(tiles.get(29), Type.BAR,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'T'){//Tower place
@@ -96,7 +109,7 @@ public class MapConfig {
             e.printStackTrace();
         }
     }
-
+    @Override
     public void addAsset() {
         //0: herbe, 1: terre, 2:eau
         for(int ligne=0;ligne<5;ligne++){
@@ -105,8 +118,8 @@ public class MapConfig {
             }
         }
     }
-
-    public void drawBackground(Graphics g) {
+    @Override
+    public void drawImages(Graphics g) {
         for(int x=0;x<this.map.length;x++){
             for(int y=0;y<this.map[0].length;y++){
                 /*si ce n'est pas un chateau alors on change la rotation de l'image avec la valeur du tile
