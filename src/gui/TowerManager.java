@@ -2,14 +2,13 @@ package gui;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.Buffer;
 import java.util.ArrayList;
 
 public class TowerManager implements Serializable{
     public TowerTile TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA;
     public BufferedImage towerImage;
     // public transient BufferedImage towerImageTransient; // transient pour igniorer le serializes
-    private static final int serialVersionUID= 1;
+    // private static final int serialVersionUID= 1;
     public ArrayList<TowerTile> tile= new ArrayList<> ();
     
     public TowerManager () throws IOException, ClassNotFoundException {
@@ -29,7 +28,8 @@ public class TowerManager implements Serializable{
     }
 
     private void loadTowerImage () {
-        // towerImage= 
+        towerSerialize(towerImage, "TowerManager.ser");
+        towerImage= towerDeserialize("TowerManager.ser");
     }
 
     // conversion des donnees en fichier binaire
