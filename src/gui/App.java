@@ -41,5 +41,7 @@ public class App extends JFrame{
         App app = new App();
         app.initInput();
         //Menu menu = new Menu();
+        //TowerManager towerManager= new TowerManager();
+        //TowerSerialize towerSerialize= new TowerSerialize(towerManager);
     }
 }
