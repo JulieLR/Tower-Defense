@@ -4,23 +4,21 @@ import java.awt.image.BufferedImage;
 
 public class Entities {
 
-    private int vitesseAtk;
+    private float vitesseAtk;
     private Coordinates pos;
     private int degat;
-    private BufferedImage img;
 
-    public Entities(int v, Coordinates c, int degat, BufferedImage img){
+    public Entities(float v, Coordinates c, int degat){
         this.vitesseAtk=v;
         this.pos=c;
         this.degat=degat;
-        this.img=img;
     }
 
-    public int getVitesseAtk() {
+    public float getVitesseAtk() {
         return vitesseAtk;
     }
 
-    public void setVitesseAtk(int vitesseAtk) {
+    public void setVitesseAtk(float vitesseAtk) {
         this.vitesseAtk = vitesseAtk;
     }
 
@@ -38,13 +36,5 @@ public class Entities {
 
     public void setPos(Coordinates pos) {
         this.pos = pos;
-    }
-
-     public BufferedImage getImg() {
-        return img;
-    }
-
-    public void setImg(BufferedImage img) {
-        this.img = img;
     }
 }

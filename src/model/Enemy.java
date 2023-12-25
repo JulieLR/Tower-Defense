@@ -8,17 +8,15 @@ import java.util.Random;
 public class Enemy extends Entities{
 
     private int pointDeVie;
-    private float speed;
     private int type;
     private Rectangle zone;
     private Direction dir = Direction.NORTH;
     private Random r = new Random();
 
 
-    public Enemy(int vie,float speed,BufferedImage img, Coordinates pos,int degat, int vitesseAtk,int type){
-        super(vitesseAtk, pos, degat, img);
+    public Enemy(int vie, Coordinates pos,int degat, float vitesseAtk,int type){
+        super(vitesseAtk, pos, degat);
         this.pointDeVie=vie;
-        this.speed=speed;
         this.type=type;
         this.zone= new Rectangle( (int) super.getPos().getX(), (int) super.getPos().getY(),48,48);
     }
@@ -32,11 +30,11 @@ public class Enemy extends Entities{
     }
 
     public float getSpeed() {
-        return speed;
+        return super.getVitesseAtk();
     }
 
     public void setSpeed(int speed) {
-        this.speed = speed;
+        super.setVitesseAtk(speed);
     }
 
     public int getType() {
@@ -53,9 +51,6 @@ public class Enemy extends Entities{
 
     public void setZone(Rectangle zone) {
         this.zone = zone;
-    }
-    public BufferedImage getImage() {
-        return super.getImg();
     }
 
     public Coordinates getPos(){
@@ -81,13 +76,13 @@ public class Enemy extends Entities{
     public void move(Direction dir){
         this.dir=dir;
         switch(dir){
-            case EAST:this.setPos(new Coordinates(this.getPos().getX()+speed, this.getPos().getY()));
+            case EAST:this.setPos(new Coordinates(this.getPos().getX()+super.getVitesseAtk(), this.getPos().getY()));
                 break;
-            case NORTH: this.setPos(new Coordinates(this.getPos().getX(), this.getPos().getY()-speed));
+            case NORTH: this.setPos(new Coordinates(this.getPos().getX(), this.getPos().getY()-super.getVitesseAtk()));
                 break;
-            case SOUTH: this.setPos(new Coordinates(this.getPos().getX(), this.getPos().getY()+speed));
+            case SOUTH: this.setPos(new Coordinates(this.getPos().getX(), this.getPos().getY()+super.getVitesseAtk()));
                 break;
-            case WEST: this.setPos(new Coordinates(this.getPos().getX()-speed, this.getPos().getY()));
+            case WEST: this.setPos(new Coordinates(this.getPos().getX()-super.getVitesseAtk(), this.getPos().getY()));
                 break;
         } 
     }
@@ -95,52 +90,4 @@ public class Enemy extends Entities{
     public void setPos(int x, int y){
         super.setPos(new Coordinates(x,y));
     }
-
-    public Direction getNextMove(ArrayList<Direction> possible){
-        int nb = Math.abs(r.nextInt(possible.size()));
-        System.out.println(possible.size());
-        System.out.println(nb);
-        System.out.println(possible.size());
-        System.out.println(possible.get(nb).DirToString());
-
-        return possible.get(nb);
-    }/* 
-
-    public void  adjustPos(int x, int y, int k){
-        switch(dir){
-            case EAST:
-                 x++;
-                break;
-            case NORTH:
-                 y--;
-                break;
-            case SOUTH:
-                 y++;
-                break;
-            case WEST:
-                x--;
-                break;
-
-        }
-        this.setPos(new Coordinates((int)x*k,(int)y*k));
-        System.out.println(this.getPos().getX()+" : "+ this.getPos().getY());
-    }
-
-    public float getSpeedAndHeight(Direction dir) {
-		if (dir == Direction.NORTH)
-			return -speed;
-		else if (dir == Direction.SOUTH)
-			return speed+64;
-
-		return 0;
-	}
-
-	public float getSpeedAndWidth(Direction dir) {
-		if (dir == Direction.WEST)
-			return -speed;
-		else if (dir == Direction.EAST)
-			return speed +64;
-
-		return 0;
-	} */
 }
