@@ -1,9 +1,12 @@
 package gui;
 
 import javax.imageio.ImageIO;
+import javax.print.attribute.standard.MediaSize.Engineering;
 import javax.swing.JPanel;
 
 import config.MapConfig;
+import config.Tile;
+import config.Tile.Type;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -21,7 +24,7 @@ public class Game extends JPanel implements Runnable{
     final int scale =4;
     final int initialTileSize = 16;
 
-    final int tileSize= initialTileSize*scale; //48x48
+    final int tileSize= initialTileSize*scale; //64x64
 
     //Barre pour les tour
     final int barLine = 2;
@@ -38,6 +41,8 @@ public class Game extends JPanel implements Runnable{
 
     private BufferedImage enemyImage;
 
+    private EnemiesGraphics enemies;
+
     private BufferedImage towerImage;
 
     private Thread gameThread;
@@ -50,6 +55,7 @@ public class Game extends JPanel implements Runnable{
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
 
         this.tiles= new MapConfig(this);
+        this.enemies= new EnemiesGraphics(this);
 
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
@@ -87,10 +93,23 @@ public class Game extends JPanel implements Runnable{
         return tileSize;
     }
 
+    public int getScale(){
+        return this.scale;
+    }
+
+    public BufferedImage getEnemyImage() {
+        return enemyImage;
+    }
+
+    public MapConfig getMapConfig() {
+        return tiles;
+    }
+
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
 
-        tiles.drawBackground(g); //draw map à mettre avant le draw des characters
+        tiles.drawImages(g); //draw map à mettre avant le draw des characters
+        enemies.drawImages(g);
 
         g.dispose(); //
     }
@@ -102,6 +121,7 @@ public class Game extends JPanel implements Runnable{
     private void updateGame () {
 
         //System.out.println("Game Updated");
+        this.enemies.update();
     }
 
     @Override
@@ -140,6 +160,13 @@ public class Game extends JPanel implements Runnable{
             }
         }
 
+    }
+
+    public Type getTileType(int x, int y) {
+        return this.tiles.getMap()[x/this.tileSize][y/tileSize].getType();
+    }
+    public Tile getTile(int x, int y){
+        return this.tiles.getMap()[x/this.tileSize][y/tileSize];
     }
 
 }

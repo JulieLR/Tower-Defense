@@ -1,4 +1,5 @@
 package model;
+import java.awt.image.BufferedImage;
 import java.lang.Math.*;
 
 public class Tower extends Entities {
@@ -6,8 +7,8 @@ public class Tower extends Entities {
     private int pointDeVie;
     private int prix;
     
-public Tower(int vie, int prix, Coordinates pos,int degat, int vitesseAtk){
-    super(vitesseAtk, pos, degat);
+public Tower(int vie, int prix, Coordinates pos,int degat, int vitesseAtk, BufferedImage img){
+    super(vitesseAtk, pos, degat, img);
     this.pointDeVie=vie;
     this.prix=prix;
 }
