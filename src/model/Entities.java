@@ -2,7 +2,7 @@ package model;
 
 public class Entities {
 
-    private int vitesseAtk;
+    private float vitesseAtk;
     private Coordinates pos;
     private int degat;
 
@@ -12,7 +12,7 @@ public class Entities {
         this.degat=degat;
     }
 
-    public int getVitesseAtk() {
+    public float getVitesseAtk() {
         return vitesseAtk;
     }
 
