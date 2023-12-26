@@ -15,6 +15,7 @@ public class EnemiesConfig {
 
     private int nbEnemies;
     private Coordinates start;
+    private Coordinates end;
     private Enemy e;
 
     public EnemiesConfig(Game game,int n){
@@ -22,7 +23,8 @@ public class EnemiesConfig {
         this.game=game;
         this.nbEnemies=n;
         this.start = this.game.getMapConfig().getStartCoor();
-        this.e= new Enemy(200,start,20, 3f,1);
+        this.end = this.game.getMapConfig().getEndCoor();
+        this.e= new Enemy(200,start,20, 4f,1);
         //this.enemies = makeEnemies(nbEnemies);
         this.enemies.add(e);
     }
@@ -66,16 +68,17 @@ public class EnemiesConfig {
         if(getTileType(newX, newY) == Type.PATH){
             e.move(e.getDir());
         }
-        else if(atEnd(e)){
-            System.out.print("END");
+        else if(isAtEnd(newX,newY)){
+                e.setAtEnd(true);
+                System.out.println("u lost one life dang it");
         }
         else{
             setNextDir(e);
         }
     }
-    //a revoir
-    private boolean atEnd(Enemy e) {
-        return (getTile((int)e.getPos().getX(),(int)e.getPos().getY())== this.game.getMapConfig().getEnd());
+
+    private boolean isAtEnd(int x, int y) {
+        return (getTileType(x, y)== Type.CASTLE);
     }
 
     private Tile getTile(int x, int y) {

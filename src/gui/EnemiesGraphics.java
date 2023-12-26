@@ -33,9 +33,13 @@ public class EnemiesGraphics implements Frames{
     public void drawImages(Graphics g){
         long time = System.currentTimeMillis();
         for(Enemy e: enemies){
-            //drawWalking(g, time,e);
-            //drawStun(g, time,e);
-            drawAttack(g, time,e);
+            if(e.isAtEnd()){
+                drawAttack(g, time,e);
+                //drawStun(g, time,e);
+            }
+            else{
+                drawWalking(g, time,e);
+            }
         }
     }
     
@@ -65,13 +69,13 @@ public class EnemiesGraphics implements Frames{
         int p = getEcart(e.getType());
         
         if(time%n<k){
-            g.drawImage(this.enemiesAsset.get(4+p),(int) e.getPos().getX(),(int)e.getPos().getY()-(this.game.getTileSize()/this.game.getScale()),this.game.getTileSize(),this.game.getTileSize(), null);
+            g.drawImage(this.enemiesAsset.get(4+p),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
         else if(time%n<m){
-            g.drawImage(this.enemiesAsset.get(5+p),(int) e.getPos().getX(),(int)e.getPos().getY()-(this.game.getTileSize()/this.game.getScale()),this.game.getTileSize(),this.game.getTileSize(), null);
+            g.drawImage(this.enemiesAsset.get(5+p),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
         else{
-            g.drawImage(this.enemiesAsset.get(6+p),(int) e.getPos().getX(),(int)e.getPos().getY()-(this.game.getTileSize()/this.game.getScale()),this.game.getTileSize(),this.game.getTileSize(), null);
+            g.drawImage(this.enemiesAsset.get(6+p),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         } 
     }
 

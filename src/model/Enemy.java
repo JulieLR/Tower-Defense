@@ -10,6 +10,8 @@ public class Enemy extends Entities{
     private int pointDeVie;
     private int type;
     private Rectangle zone;
+    private boolean atEnd;
+
     private Direction dir = Direction.NORTH;
     private Random r = new Random();
 
@@ -67,6 +69,13 @@ public class Enemy extends Entities{
 
     public void setDir(Direction dir) {
         this.dir = dir;
+    }
+    public boolean isAtEnd() {
+        return atEnd;
+    }
+
+    public void setAtEnd(boolean atEnd) {
+        this.atEnd = atEnd;
     }
 
     public void move(float x, float y){
