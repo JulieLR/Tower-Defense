@@ -11,9 +11,10 @@ import model.Enemy;
 public class EnemiesConfig {
 
     private Game game;
-    private ArrayList<Enemy> enemies = new ArrayList<>();
+    private ArrayList<Enemy> enemies= new ArrayList<>();
 
     private int nbEnemies;
+    private int nbSpawned;
     private Coordinates start;
     private Coordinates end;
     private Enemy e;
@@ -22,33 +23,41 @@ public class EnemiesConfig {
 
         this.game=game;
         this.nbEnemies=n;
+        this.nbSpawned=1;
         this.start = this.game.getMapConfig().getStartCoor();
         this.end = this.game.getMapConfig().getEndCoor();
         this.e= new Enemy(200,start,20, 4f,1);
-        //this.enemies = makeEnemies(nbEnemies);
-        this.enemies.add(e);
+        makeEnemies(nbEnemies);
+        enemies.get(0).setSpawned(true);
+        //this.enemies.add(e);
     }
 
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
 
-    private ArrayList<Enemy> makeEnemies(int n) {
-        ArrayList<Enemy> enemies = new ArrayList<>();
+    public void spawn() {
+        if(nbSpawned<nbEnemies){
+            enemies.get(nbSpawned).setSpawned(true);
+            nbSpawned++;
+        }
+
+    }
+
+    private void makeEnemies(int n) {
         int a = (int)(n*0.5f);
         int b = (int)(n*0.3f);
         int c = (int)(n*0.2f);
 
         for(int i=0;i<a;i++){
-            enemies.add(new Enemy(200, start, 20, 0.5f, 0));
+            this.enemies.add(new Enemy(200, start, 20, 0.5f, 0));
         }
-        for(int i=0;i<b;i++){
-            enemies.add(new Enemy(200, start, 20, 0.5f, 1));
+        for(int j=0;j<b;j++){
+            this.enemies.add(new Enemy(200, start, 20, 0.5f, 1));
         }
-        for(int i=0;i<c;i++){
-            enemies.add(new Enemy(200, start, 20, 0.5f, 2));
+        for(int k=0;k<c;k++){
+            this.enemies.add(new Enemy(200, start, 20, 0.5f, 2));
         }
-        return enemies;
     }
 
     public Enemy getE() {
@@ -57,7 +66,9 @@ public class EnemiesConfig {
 
     public void update(){
         for( Enemy e : enemies){
-            updateMove(e);
+            if(e.isSpawned()){
+                updateMove(e);
+            }
         }
     }
 

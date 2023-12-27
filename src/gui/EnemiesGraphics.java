@@ -16,15 +16,13 @@ public class EnemiesGraphics implements Frames{
     private Game game;
     private EnemiesConfig enemiesConfig;
     private ArrayList<BufferedImage> enemiesAsset = new ArrayList<>();
-    private ArrayList<Enemy> enemies = new ArrayList<>();
-    private Coordinates start;
+    private ArrayList<Enemy> enemies;
 
     public EnemiesGraphics(Game game,EnemiesConfig e){
 
         this.game = game;
         this.enemiesConfig= e;
         this.enemies=e.getEnemies();
-        this.start = this.game.getMapConfig().getStartCoor();
         addAsset();
 
     }
@@ -33,12 +31,14 @@ public class EnemiesGraphics implements Frames{
     public void drawImages(Graphics g){
         long time = System.currentTimeMillis();
         for(Enemy e: enemies){
-            if(e.isAtEnd()){
-                drawAttack(g, time,e);
-                //drawStun(g, time,e);
-            }
-            else{
-                drawWalking(g, time,e);
+            if(e.isSpawned()){
+                if(e.isAtEnd()){
+                    drawAttack(g, time,e);
+                    //drawStun(g, time,e);
+                }
+                else{
+                    drawWalking(g, time,e);
+                }
             }
         }
     }

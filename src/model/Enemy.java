@@ -11,6 +11,7 @@ public class Enemy extends Entities{
     private int type;
     private Rectangle zone;
     private boolean atEnd;
+    private boolean isSpawned;
 
     private Direction dir = Direction.NORTH;
     private Random r = new Random();
@@ -76,6 +77,14 @@ public class Enemy extends Entities{
 
     public void setAtEnd(boolean atEnd) {
         this.atEnd = atEnd;
+    }
+
+    public boolean isSpawned() {
+        return isSpawned;
+    }
+
+    public void setSpawned(boolean isSpawned) {
+        this.isSpawned = isSpawned;
     }
 
     public void move(float x, float y){
