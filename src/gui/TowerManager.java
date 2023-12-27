@@ -13,8 +13,8 @@ public class TowerManager implements Serializable{
     
     public TowerManager () throws IOException, ClassNotFoundException {
         createTile();
-        towerSerialize(towerImage, "TowerManager.ser");
-        towerDeserialize("TowerManager.ser");
+        //towerSerialize(towerImage, "TowerManager.ser");
+        //towerDeserialize("TowerManager.ser");
         loadTowerImage();
     }
 
@@ -73,6 +73,7 @@ public class TowerManager implements Serializable{
     } */
     private BufferedImage towerDeserialize (String fichier) {
         try (ObjectInputStream in= new ObjectInputStream(new FileInputStream(fichier))) {
+            System.out.println("object info serealised");
             return (BufferedImage) in.readObject();
         } catch (IOException| ClassNotFoundException e) {
             e.printStackTrace();
@@ -84,7 +85,7 @@ public class TowerManager implements Serializable{
         return tile.get(id).getTower();
     }
 
-    private BufferedImage getSprite (int cordX, int cordY) {
+    public BufferedImage getSprite (int cordX, int cordY) {
 		return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
 		} 
 
