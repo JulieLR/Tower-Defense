@@ -31,7 +31,7 @@ public class Mouse_Listener implements MouseListener, MouseMotionListener{
     @Override
     public void mousePressed(MouseEvent e) {
         // TODO Auto-generated method stub
-        // peut faire 1 swithc selon "la fenêtre de jeu on est"
+        // peut faire 1 switch selon "la fenêtre de jeu on est"
     }
 
     @Override
