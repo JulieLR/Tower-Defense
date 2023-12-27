@@ -16,10 +16,12 @@ import java.io.IOException;
 import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Random;
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 
-public class Game extends JPanel implements Runnable{
+
+public class Game extends JPanel implements Runnable {
     
      //Tiles
     final int scale =4;
@@ -46,6 +48,7 @@ public class Game extends JPanel implements Runnable{
     private EnemiesGraphics enemies;
 
     private BufferedImage towerImage;
+    private JPanel towerButton;
 
     private Thread gameThread;
     private final double FPS_SET= 120.0;
@@ -57,8 +60,8 @@ public class Game extends JPanel implements Runnable{
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
 
         this.tiles= new MapConfig(this);
-        this.enemiesConfig = new EnemiesConfig(this,10);
-        this.enemies= new EnemiesGraphics(this,this.enemiesConfig);
+        this.towerButton= new TowerBottomBar(this);
+        add(towerButton);
 
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
@@ -176,7 +179,7 @@ public class Game extends JPanel implements Runnable{
             }
         }
 
-    }
+    } 
 
     public Type getTileType(int x, int y) {
         return this.tiles.getMap()[x/this.tileSize][y/tileSize].getType();
