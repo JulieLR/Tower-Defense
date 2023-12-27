@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import javax.print.attribute.standard.MediaSize.Engineering;
 import javax.swing.JPanel;
 
+import config.EnemiesConfig;
 import config.MapConfig;
 import config.Tile;
 import config.Tile.Type;
@@ -41,6 +42,7 @@ public class Game extends JPanel implements Runnable{
 
     private BufferedImage enemyImage;
 
+    private EnemiesConfig enemiesConfig;
     private EnemiesGraphics enemies;
 
     private BufferedImage towerImage;
@@ -55,7 +57,8 @@ public class Game extends JPanel implements Runnable{
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
 
         this.tiles= new MapConfig(this);
-        this.enemies= new EnemiesGraphics(this);
+        this.enemiesConfig = new EnemiesConfig(this,10);
+        this.enemies= new EnemiesGraphics(this,this.enemiesConfig);
 
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
@@ -136,6 +139,11 @@ public class Game extends JPanel implements Runnable{
 
         int frames=0;
         int updates= 0;
+
+        double spawnInterval = 5000000000d;//5s
+        double delta =0;
+        long currentTime;
+        long lastTime = System.nanoTime();
         
         while (true) {
             if (System.nanoTime()- lastFrame>= timePerFrame) {
@@ -158,6 +166,13 @@ public class Game extends JPanel implements Runnable{
                 updates= 0;
                 lastTimeCheck= System.currentTimeMillis();
 
+            }
+            currentTime = System.nanoTime();
+            delta+= (currentTime-lastTime)/spawnInterval;
+            lastTime=currentTime;
+            if(delta >=1){
+                enemiesConfig.spawn();
+                delta--;
             }
         }
 

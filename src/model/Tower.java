@@ -7,8 +7,8 @@ public class Tower extends Entities {
     private int pointDeVie;
     private int prix;
     
-public Tower(int vie, int prix, Coordinates pos,int degat, int vitesseAtk, BufferedImage img){
-    super(vitesseAtk, pos, degat, img);
+public Tower(int vie, int prix, Coordinates pos,int degat, int vitesseAtk){
+    super(vitesseAtk, pos, degat);
     this.pointDeVie=vie;
     this.prix=prix;
 }

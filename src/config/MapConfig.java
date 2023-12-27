@@ -20,6 +20,7 @@ public class MapConfig implements Frames {
     private Game game;
     private Tile[][] map;
     private Tile end;
+    private Coordinates endCoor;
     private Coordinates start;
     private ArrayList<BufferedImage> tiles = new ArrayList<>();
     Random random = new Random();
@@ -42,8 +43,13 @@ public class MapConfig implements Frames {
     }
 
     public Tile getEnd(){
-        return this.end;
+        return end;
     }
+
+    public Coordinates getEndCoor() {
+        return endCoor;
+    }
+
 
     public Coordinates getStartCoor(){
         return this.start;
@@ -85,8 +91,9 @@ public class MapConfig implements Frames {
                     else if(readline.charAt(i) == 'C'){//castle
                         int x =Character.getNumericValue(readline2.charAt(i));//type of castle
                         this.map[ligne][col] = new Tile(tiles.get(21+x), Type.CASTLE,0,new Coordinates(ligne, col));
-                        ligne++;
                         this.end=this.map[ligne-1][col];
+                        this.endCoor = new Coordinates(((ligne-1)*this.game.getTileSize()), col*this.game.getTileSize());
+                        ligne++;
                     }
                     else if(readline.charAt(i) == 'B'){//Bar border
                         this.map[ligne][col] = new Tile(tiles.get(28), Type.BAR,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));

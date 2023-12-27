@@ -1,0 +1,173 @@
+package config;
+
+import java.util.ArrayList;
+
+import config.Tile.Type;
+import gui.Game;
+import model.Coordinates;
+import model.Direction;
+import model.Enemy;
+
+public class EnemiesConfig {
+
+    private Game game;
+    private ArrayList<Enemy> enemies= new ArrayList<>();
+
+    private int nbEnemies;
+    private int nbSpawned;
+    private Coordinates start;
+    private Coordinates end;
+    private Enemy e;
+
+    public EnemiesConfig(Game game,int n){
+
+        this.game=game;
+        this.nbEnemies=n;
+        this.nbSpawned=1;
+        this.start = this.game.getMapConfig().getStartCoor();
+        this.end = this.game.getMapConfig().getEndCoor();
+        this.e= new Enemy(200,start,20, 4f,1);
+        makeEnemies(nbEnemies);
+        enemies.get(0).setSpawned(true);
+        //this.enemies.add(e);
+    }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public void spawn() {
+        if(nbSpawned<nbEnemies){
+            enemies.get(nbSpawned).setSpawned(true);
+            nbSpawned++;
+        }
+
+    }
+
+    private void makeEnemies(int n) {
+        int a = (int)(n*0.5f);
+        int b = (int)(n*0.3f);
+        int c = (int)(n*0.2f);
+
+        for(int i=0;i<a;i++){
+            this.enemies.add(new Enemy(200, start, 20, 0.5f, 0));
+        }
+        for(int j=0;j<b;j++){
+            this.enemies.add(new Enemy(200, start, 20, 0.5f, 1));
+        }
+        for(int k=0;k<c;k++){
+            this.enemies.add(new Enemy(200, start, 20, 0.5f, 2));
+        }
+    }
+
+    public Enemy getE() {
+        return e;
+    }
+
+    public void update(){
+        for( Enemy e : enemies){
+            if(e.isSpawned()){
+                updateMove(e);
+            }
+        }
+    }
+
+    private void updateMove(Enemy e) {
+        int newX = (int) (e.getPos().getX() + getHorizontalSpeed(e.getDir(),e));
+        int newY = (int) (e.getPos().getY() + getVerticalSpeed(e.getDir(),e));
+
+        if(getTileType(newX, newY) == Type.PATH){
+            e.move(e.getDir());
+        }
+        else if(isAtEnd(newX,newY)){
+                e.setAtEnd(true);
+                System.out.println("u lost one life dang it");
+        }
+        else{
+            setNextDir(e);
+        }
+    }
+
+    private boolean isAtEnd(int x, int y) {
+        return (getTileType(x, y)== Type.CASTLE);
+    }
+
+    private Tile getTile(int x, int y) {
+        return this.game.getTile(x,y);
+    }
+
+    public boolean isPath(int x, int y){
+        return (getTileType(x,y)== Type.PATH);
+    }
+
+    private void setNextDir(Enemy e) {
+        Direction dir = e.getDir();
+
+        int xCord = (int) e.getPos().getX()/this.game.getTileSize();
+        int yCord = (int) e.getPos().getY()/this.game.getTileSize();
+
+        atCenterTile(e,dir,xCord,yCord);
+
+        //Si on allait de horizontalement alors le prochain c'est vertical
+        if(dir == Direction.WEST || dir == Direction.EAST){
+            int newY = (int) (e.getPos().getY() + getVerticalSpeed(Direction.NORTH,e));
+            if(isPath((int)e.getPos().getX(),newY)){
+                e.move(Direction.NORTH);
+            }
+            else{
+                e.move(Direction.SOUTH);
+            }
+        }
+        else{
+            int newX = (int) (e.getPos().getX() + getHorizontalSpeed(Direction.EAST,e));
+            if(isPath(newX, (int)e.getPos().getY())){
+                e.move(Direction.EAST);
+            }
+            else{
+                e.move(Direction.WEST);
+            }
+        }
+    }
+
+    public float getSpeed(Direction d, Direction cur){
+        return 0;
+    }
+
+    private void atCenterTile(Enemy e, Direction dir, int x, int y) {
+        if(dir == Direction.EAST && x<14){
+            x++;
+        }
+        else{
+            if(dir == Direction.SOUTH && y<14){
+                y++;
+            }
+        }
+        e.setPos(x*this.game.getTileSize(),y*this.game.getTileSize());
+    }
+
+    private Type getTileType(int x, int y) {
+        return game.getTileType(x,y);
+    }
+
+    private float getVerticalSpeed(Direction dir,Enemy e) {
+        if(dir == Direction.NORTH){
+            return -e.getSpeed();
+        }
+        else if(dir== Direction.SOUTH){
+            return e.getSpeed()+this.game.getTileSize();
+        }
+        return 0;
+    }
+
+    private float getHorizontalSpeed(Direction dir,Enemy e) {
+        if(dir == Direction.WEST){
+            return -e.getSpeed();
+        }
+        else if(dir == Direction.EAST){
+            return e.getSpeed()+this.game.getTileSize();
+        }
+        return 0;
+    }
+
+}
+

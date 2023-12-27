@@ -3,8 +3,8 @@ package gui;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.List;
 
+import config.EnemiesConfig;
 import config.Tile;
 import config.Tile.Type;
 import model.Enemy;
@@ -14,32 +14,95 @@ import model.Direction;
 public class EnemiesGraphics implements Frames{
     
     private Game game;
+    private EnemiesConfig enemiesConfig;
     private ArrayList<BufferedImage> enemiesAsset = new ArrayList<>();
-    private ArrayList<Enemy> enemies = new ArrayList<>();
-    private Enemy enemy;
-    private Coordinates start;
+    private ArrayList<Enemy> enemies;
 
-    public EnemiesGraphics(Game game){
+    public EnemiesGraphics(Game game,EnemiesConfig e){
+
         this.game = game;
-        this.start = this.game.getMapConfig().getStartCoor();
+        this.enemiesConfig= e;
+        this.enemies=e.getEnemies();
         addAsset();
-        this.enemy= new Enemy(200,0.5f,enemiesAsset.get(1),start,20, 20,0);
 
     }
 
     @Override
     public void drawImages(Graphics g){
         long time = System.currentTimeMillis();
-        //time%250<100 et +-1, % pour la vitesse et < l'intervalle de changement d'image
-        if(time%400<200){
-            g.drawImage(this.enemiesAsset.get(2),(int) this.enemy.getPos().getX(),(int)this.enemy.getPos().getY()-(this.game.getTileSize()/this.game.getScale()),this.game.getTileSize(),this.game.getTileSize(), null);
+        for(Enemy e: enemies){
+            if(e.isSpawned()){
+                if(e.isAtEnd()){
+                    drawAttack(g, time,e);
+                    //drawStun(g, time,e);
+                }
+                else{
+                    drawWalking(g, time,e);
+                }
+            }
+        }
+    }
+    
+    public void drawWalking(Graphics g, long time,Enemy e){
+        //vitesse d'animation selon la vitesse du personnage
+        int n = (int)(400f/e.getSpeed());
+        int m = (int)(200f/e.getSpeed());
+
+        int p = getEcart(e.getType());
+        //time%250<100 et +-1, % tjr ratio 2:1 et plus % haut plus lent
+        if(time%n<m){
+            g.drawImage(this.enemiesAsset.get(2+p),(int) e.getPos().getX(),(int)e.getPos().getY()-(this.game.getTileSize()/this.game.getScale()),this.game.getTileSize(),this.game.getTileSize(), null);
         }
         else{
-            g.drawImage(this.enemiesAsset.get(3),(int) this.enemy.getPos().getX(),(int)this.enemy.getPos().getY()-(this.game.getTileSize()/this.game.getScale()),this.game.getTileSize(),this.game.getTileSize(), null);
+            g.drawImage(this.enemiesAsset.get(3+p),(int) e.getPos().getX(),(int)e.getPos().getY()-(this.game.getTileSize()/this.game.getScale()),this.game.getTileSize(),this.game.getTileSize(), null);
         }   
         //g.drawImage(this.enemiesAsset.get(8),128,128,this.game.getTileSize(),this.game.getTileSize(), null);
  
-    }  
+    }
+
+    //Animation d'attaque
+    public void drawAttack(Graphics g,long time,Enemy e){
+
+        int n = (int)(450f/e.getSpeed());
+        int m = (int)(300f/e.getSpeed());
+        int k = (int)(150f/e.getSpeed());
+        int p = getEcart(e.getType());
+        
+        if(time%n<k){
+            g.drawImage(this.enemiesAsset.get(4+p),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else if(time%n<m){
+            g.drawImage(this.enemiesAsset.get(5+p),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else{
+            g.drawImage(this.enemiesAsset.get(6+p),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
+        } 
+    }
+
+    //Animation de l'enemie lorsqu'il ne bouge pas
+    public void drawStun(Graphics g, long time, Enemy e){
+        int n = (int)(400f/e.getSpeed());
+        int m = (int)(200f/e.getSpeed());
+
+        int p = getEcart(e.getType());
+        if(time%n<m){
+            g.drawImage(this.enemiesAsset.get(0+p),(int) e.getPos().getX(),(int)e.getPos().getY()-(this.game.getTileSize()/this.game.getScale()),this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else{
+            g.drawImage(this.enemiesAsset.get(1+p),(int) e.getPos().getX(),(int)e.getPos().getY()-(this.game.getTileSize()/this.game.getScale()),this.game.getTileSize(),this.game.getTileSize(), null);
+        } 
+    }
+
+    public int getEcart(int n){
+        int p = 0;
+        switch(n){
+            case 1: p=1*8;
+                break;
+            case 2: p=2*8;
+                break;
+        }
+        return p;
+    }
 
     @Override
     public void addAsset(){
@@ -51,117 +114,6 @@ public class EnemiesGraphics implements Frames{
     }
 
     public void update(){
-        updateMove(this.enemy);
+        this.enemiesConfig.update();
     }
-
-    private void updateMove(Enemy e) {
-        int newX = (int) (e.getPos().getX() + getSpeedAndWidth(e.getDir()));
-        int newY = (int) (e.getPos().getY() + getSpeedAndHeight(e.getDir()));
-
-        if(getTileType(newX, newY) == Type.PATH){
-            e.move(e.getDir());
-        }
-        else if(atEnd(e)){
-            System.out.print("END");
-        }
-        else{
-            setNewDirectionAndMove(e);
-        }
-    }
-
-    private boolean atEnd(Enemy e) {
-        return (getTile((int)e.getPos().getX(),(int)e.getPos().getY())== this.game.getMapConfig().getEnd());
-    }
-
-    private Tile getTile(int x, int y) {
-        return this.game.getTile(x,y);
-    }
-
-    public boolean isPath(int x, int y){
-        return (getTileType(x,y)== Type.PATH);
-    }
-
-    private void setNewDirectionAndMove(Enemy e) {
-        Direction dir = e.getDir();
-
-        int xCord = (int) e.getPos().getX()/64;
-        int yCord = (int) e.getPos().getY()/64;
-
-        fixEnemyOffsetTile(e,dir,xCord,yCord);
-
-        if(dir == Direction.WEST || dir == Direction.EAST){
-            int newY = (int) (e.getPos().getY() + getSpeedAndHeight(Direction.NORTH));
-            if(isPath((int)e.getPos().getX(),newY)){
-                e.move(Direction.NORTH);
-            }
-            else{
-                e.move(Direction.SOUTH);
-            }
-        }
-        else{
-            int newX = (int) (e.getPos().getX() + getSpeedAndWidth(Direction.EAST));
-            if(isPath(newX, (int)e.getPos().getY())){
-                e.move(Direction.EAST);
-            }
-            else{
-                e.move(Direction.WEST);
-            }
-        }
-    }
-
-    private void fixEnemyOffsetTile(Enemy e, Direction dir, int xCord, int yCord) {
-
-        switch(dir){
-            case EAST: 
-                if(xCord <14)
-                    xCord++;
-                break;
-            case SOUTH:
-                if(yCord <14)
-                    yCord++;
-                break;
-
-        }
-        e.setPos(xCord*64,yCord*64);
-    }
-
-    private Type getTileType(int x, int y) {
-        return game.getTileType(x,y);
-    }
-
-    private float getSpeed(Direction dir) {
-        float speed = enemy.getSpeed();
-        if (dir == Direction.NORTH) {
-            return -speed;
-        } else if (dir == Direction.SOUTH) {
-            return speed;
-        } else if (dir == Direction.WEST) {
-            return -speed;
-        } else if (dir == Direction.EAST) {
-            return speed;
-        }
-        return 0;
-    }
-    
-
-    private float getSpeedAndHeight(Direction dir) {
-        if(dir == Direction.NORTH){
-            return -enemy.getSpeed();
-        }
-        else if(dir== Direction.SOUTH){
-            return enemy.getSpeed()+64;
-        }
-        return 0;
-    }
-
-    private float getSpeedAndWidth(Direction dir) {
-        if(dir == Direction.WEST){
-            return -enemy.getSpeed();
-        }
-        else if(dir == Direction.EAST){
-            return enemy.getSpeed()+64;
-        }
-        return 0;
-    }
-
 }
