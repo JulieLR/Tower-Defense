@@ -34,19 +34,23 @@ public class TowerGraphics implements Graphic {
     public void addAsset(){
         for (int ligne=0; ligne<6; ligne++) {
             for (int col= 0; col<6; col++) {
-                towerAsset.add(this.game.getTowerImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
+                if(ligne==0){
+                    towerAsset.add(this.game.getTowerImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()*2));
+                }else{
+                    towerAsset.add(this.game.getTowerImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
+
+                }
+            }
+            if(ligne==0){
+                ligne++;
             }
         }
     }
 
-    public void drawTower(Graphics g, Tower tow) {
-        g.drawImage(this.towerAsset.get(6), (int)tow.getPos().getX(), (int)tow.getPos().getY()-32, this.game.getTileSize(),this.game.getTileSize(), null);
-    }
-
     @Override
     public void drawImages(Graphics g) {
-        for (Tower tow: tower)
-        drawTower(g, tow);
+
+        g.drawImage(towerAsset.get(1), 100, 200, this.game.getTileSize(), this.game.getTileSize()*2,null);
     }
 
 }
