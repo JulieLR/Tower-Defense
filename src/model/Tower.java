@@ -9,7 +9,7 @@ public class Tower extends Entities {
     private int type; // 0: physique, 1: magique
     private int id; // identifiant pour savoir quelle tour specifiquement
     
-    public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk, int type, int id){
+    public Tower(/* int vie, */ int prix, Coordinates pos,int degat, float vitesseAtk, int type, int id){
         super(vitesseAtk, pos, degat);
         //this.pointDeVie=vie;
         this.prix=prix;
