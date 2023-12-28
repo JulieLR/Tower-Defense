@@ -24,9 +24,10 @@ public class TowerConfig implements Serializable{
     public TowerConfig (Game game) /* throws IOException, ClassNotFoundException */ {
         this.game=game;
         //this.pos=this.game.getMapConfig().getPosTower()[0];
-        this.pos=new Coordinates(3, 3);
-        this.t= new Tower(75, pos, 40, 1, 1, 0);
+        //this.pos=new Coordinates(3, 3);
+        //this.t= new Tower(75, pos, 40, 1, 1, 0);
         createTile();
+        System.out.println(getNbTower());
 
         //towerSerialize(towerImage, "TowerManager.ser");
         //towerDeserialize("TowerManager.ser");
@@ -95,17 +96,6 @@ public class TowerConfig implements Serializable{
         }
         return null;
     }
-
-    /* private BufferedImage getSprite (int id) {
-        return towers.get(id).getTowerImage();
-    } */
-
-    public BufferedImage getSprite (int cordX, int cordY) {
-        if (cordY<2) {
-		    return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
-        }
-        return towerImage.getSubimage(cordX* 16, cordY* 16, 16, 16);
-	} 
     
     private Type getTileType(int x, int y) {
         return game.getTileType(x,y);
@@ -137,6 +127,33 @@ public class TowerConfig implements Serializable{
 
     public ArrayList<Tower> getTowers () {
         return this.towers;
+    }
+
+    public int getNbTower () {
+        int n=0;
+        for (int ligne=0; ligne<this.game.getMapConfig().getMap().length; ligne++) {
+            for (int col=0; col<this.game.getMapConfig().getMap()[1].length; col++) {
+                if (this.game.getMapConfig().getMap()[ligne][col].getType()==Type.TOWER) {
+                    n++;
+                }
+            }
+        }
+        return n;
+    }
+
+    public Coordinates[] getPosTower () {
+        Coordinates[] posTower= new Coordinates[getNbTower()];
+        int n=0;
+        for (int ligne=0; ligne<this.game.getMapConfig().getMap().length; ligne++) {
+            for (int col=0; col<this.game.getMapConfig().getMap()[0].length; col++) {
+                if (this.game.getMapConfig().getMap()[ligne][col].getType()==Type.TOWER) {
+                    posTower[n]= new Coordinates(ligne*this.game.getTileSize() , col*this.game.getTileSize()- this.game.getTileSize());
+                    n++;
+                }
+            }
+        }
+        return posTower;
+
     }
     
 }
