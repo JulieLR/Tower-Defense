@@ -218,7 +218,7 @@ public class TowerConfig implements Serializable{
                 return isEnemy(ligne, col);
             }
         }
-        return n;
+        return false;
     }
     
     // distance entre les deux personnes 
