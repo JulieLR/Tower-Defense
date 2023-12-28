@@ -11,8 +11,6 @@ import gui.Game;
 import model.Coordinates;
 import model.Enemy;
 import model.Entities;
-import gui.Game;
-import model.Coordinates;
 import model.Tower;
 import model.Tower.TowerColor;
 
@@ -104,6 +102,14 @@ public class TowerConfig implements Serializable{
         }
         return null;
     }
+
+    /* private BufferedImage getSprite (int id) {
+        return towers.get(id).getTowerImage();
+    } */
+
+    private BufferedImage getSprite (int cordX, int cordY) {
+		return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
+	} 
     
     public ArrayList<Tower> getTowers () {
         return this.towers;
@@ -131,7 +137,7 @@ public class TowerConfig implements Serializable{
     } */
  
     // attaque
-    private void attaque (Enemy enemy, Tower tower) {
+    public void attaque (Enemy enemy, Tower tower) {
         enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
         System.out.println("point de vie ennemi = "+enemy.getPointDeVie());
     }
