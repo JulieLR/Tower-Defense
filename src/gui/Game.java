@@ -66,6 +66,10 @@ public class Game extends JPanel implements Runnable {
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
 
         this.tiles= new MapConfig(this);
+
+        this.enemiesConfig = new EnemiesConfig(this,10);
+        this.enemies= new EnemiesGraphics(this,this.enemiesConfig);
+
         this.towerButton= new TowerBottomBar(this);
         add(towerButton);
 
