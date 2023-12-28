@@ -1,13 +1,13 @@
 package gui;
 
 import javax.imageio.ImageIO;
-import javax.print.attribute.standard.MediaSize.Engineering;
 import javax.swing.JPanel;
 
 import config.EnemiesConfig;
 import config.MapConfig;
 import config.Tile;
 import config.Tile.Type;
+import model.Base;
 import inputs.Keyboard_Listener;
 import inputs.Mouse_Listener;
 
@@ -43,6 +43,7 @@ public class Game extends JPanel implements Runnable {
 
     private BufferedImage mapImage;
     private MapConfig tiles;
+    private MapGraphics mapGraphics;
 
     private BufferedImage enemyImage;
 
@@ -52,23 +53,33 @@ public class Game extends JPanel implements Runnable {
     private BufferedImage towerImage;
     private JPanel towerButton;
 
+    private Base base;
+
     private Thread gameThread;
     private final double FPS_SET= 120.0;
     private final double UPS_SET= 60.0;
+    
     
     // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
     private Mouse_Listener mouseListener; 
     private Keyboard_Listener keyboardlistener;
 
     public Game(){
+
         this.mapImage = getImage("src/ressources/map/sprite1.png");
         this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
 
         this.tiles= new MapConfig(this);
+        this.mapGraphics= new MapGraphics(this, tiles);
+
+        this.base = new Base(this,1000);
 
         this.enemiesConfig = new EnemiesConfig(this,10);
         this.enemies= new EnemiesGraphics(this,this.enemiesConfig);
+
+        this.towerButton= new TowerBottomBar(this);
+        add(towerButton);
 
         this.towerButton= new TowerBottomBar(this);
         add(towerButton);
@@ -132,14 +143,22 @@ public class Game extends JPanel implements Runnable {
         return tiles;
     }
 
+    public Base getBase() {
+        return base;
+    }
+
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
 
-        tiles.drawImages(g); //draw map à mettre avant le draw des characters
+        mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
         enemies.drawImages(g);
-        tiles.drawStartTile(g);
+        mapGraphics.drawStartTile(g);
 
         g.dispose(); //
+    }
+
+    public void enemiesUpdate(Graphics g){
+        enemies.drawImages(g);
     }
 
     private void start() {
@@ -147,9 +166,12 @@ public class Game extends JPanel implements Runnable {
         gameThread.start();
     }
     private void updateGame () {
-
         //System.out.println("Game Updated");
         this.enemies.update();
+        if(this.base.isDestroyed()){
+            System.exit(0);
+            System.out.println("DESTROYED");
+        }
     }
 
     @Override
@@ -164,7 +186,7 @@ public class Game extends JPanel implements Runnable {
         int frames=0;
         int updates= 0;
 
-        double spawnInterval = 5000000000d;//5s
+        double spawnInterval = 3000000000d;//3s
         double delta =0;
         long currentTime;
         long lastTime = System.nanoTime();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import config.Tile.Type;
 import gui.Game;
+import model.Base;
 import model.Coordinates;
 import model.Direction;
 import model.Enemy;
@@ -11,6 +12,7 @@ import model.Enemy;
 public class EnemiesConfig {
 
     private Game game;
+    private Base base;
     private ArrayList<Enemy> enemies= new ArrayList<>();
 
     private int nbEnemies;
@@ -22,11 +24,13 @@ public class EnemiesConfig {
     public EnemiesConfig(Game game,int n){
 
         this.game=game;
+        this.base = this.game.getBase();
         this.nbEnemies=n;
         this.nbSpawned=1;
         this.start = this.game.getMapConfig().getStartCoor();
         this.end = this.game.getMapConfig().getEndCoor();
         this.e= new Enemy(200,start,20, 4f,1);
+
         makeEnemies(nbEnemies);
         enemies.get(0).setSpawned(true);
         //this.enemies.add(e);
@@ -36,27 +40,32 @@ public class EnemiesConfig {
         return enemies;
     }
 
+    /*On change les valeurs de spawn et alive des ennemies par true */
     public void spawn() {
         if(nbSpawned<nbEnemies){
             enemies.get(nbSpawned).setSpawned(true);
+            enemies.get(nbSpawned).setAlived(true);
             nbSpawned++;
         }
 
     }
-
+    //Création d'enemies(ajout dans l'arraylist)
     private void makeEnemies(int n) {
-        int a = (int)(n*0.5f);
-        int b = (int)(n*0.3f);
-        int c = (int)(n*0.2f);
+        int a = (int)(n*0.5f);//50% d'ennemies faible
+        int b = (int)(n*0.3f);//30% d'ennemies moyen
+        int c = (int)(n*0.2f);//20% d'ennemies fort
 
+        //ajout enemies faible
         for(int i=0;i<a;i++){
-            this.enemies.add(new Enemy(200, start, 20, 0.5f, 0));
+            this.enemies.add(new Enemy(50, start, 5, 0.5f, 0));
         }
+        //ajout enemies moyen
         for(int j=0;j<b;j++){
-            this.enemies.add(new Enemy(200, start, 20, 0.5f, 1));
+            this.enemies.add(new Enemy(100, start, 10, 1f, 1));
         }
+        //ajout enemies fort
         for(int k=0;k<c;k++){
-            this.enemies.add(new Enemy(200, start, 20, 0.5f, 2));
+            this.enemies.add(new Enemy(150, start, 15, 2f, 2));
         }
     }
 
@@ -64,6 +73,7 @@ public class EnemiesConfig {
         return e;
     }
 
+    /* Pour chaque enemies, si il est déjà spawn alors on update ses mouvements */
     public void update(){
         for( Enemy e : enemies){
             if(e.isSpawned()){
@@ -72,15 +82,20 @@ public class EnemiesConfig {
         }
     }
 
+    //update la position de l'enemie
     private void updateMove(Enemy e) {
-        int newX = (int) (e.getPos().getX() + getHorizontalSpeed(e.getDir(),e));
-        int newY = (int) (e.getPos().getY() + getVerticalSpeed(e.getDir(),e));
+        //On initialise deux
+        Coordinates next = new Coordinates((int) (e.getPos().getX() + getHorizontalSpeed(e.getDir(),e)), (int) (e.getPos().getY() + getVerticalSpeed(e.getDir(),e)));
 
-        if(getTileType(newX, newY) == Type.PATH){
+        /*Si la prochaine coordonée est un chemin alors on avance
+         * Sinon on vérifie si le personnage est arrivé au chateau, sinon on change sa direction
+        */
+        if(isPath(next)){
             e.move(e.getDir());
         }
-        else if(isAtEnd(newX,newY)){
+        else if(isAtEnd(next)){
                 e.setAtEnd(true);
+                attaque(base, e);
                 System.out.println("u lost one life dang it");
         }
         else{
@@ -88,68 +103,68 @@ public class EnemiesConfig {
         }
     }
 
-    private boolean isAtEnd(int x, int y) {
-        return (getTileType(x, y)== Type.CASTLE);
+    public boolean isAtEnd(Coordinates c) {
+        return (getTileType((int)c.getX(), (int)c.getY())== Type.CASTLE);
     }
 
-    private Tile getTile(int x, int y) {
+    public Tile getTile(int x, int y) {
         return this.game.getTile(x,y);
     }
 
-    public boolean isPath(int x, int y){
-        return (getTileType(x,y)== Type.PATH);
+    public boolean isPath(Coordinates c){
+        return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH);
     }
 
-    private void setNextDir(Enemy e) {
+    //Change la direction de l'enemie
+    public void setNextDir(Enemy e) {
         Direction dir = e.getDir();
+        Direction nextDir=e.getDir();
 
-        int xCord = (int) e.getPos().getX()/this.game.getTileSize();
-        int yCord = (int) e.getPos().getY()/this.game.getTileSize();
+        int x = (int) e.getPos().getX()/this.game.getTileSize();
+        int y = (int) e.getPos().getY()/this.game.getTileSize();
+        
+        //si la direction etait EAST ou SOUTH on centre le perso car il atteind jamais le centre dans ces cas
+        setAtCenterTile(e,dir,x,y);
 
-        atCenterTile(e,dir,xCord,yCord);
-
-        //Si on allait de horizontalement alors le prochain c'est vertical
-        if(dir == Direction.WEST || dir == Direction.EAST){
-            int newY = (int) (e.getPos().getY() + getVerticalSpeed(Direction.NORTH,e));
-            if(isPath((int)e.getPos().getX(),newY)){
-                e.move(Direction.NORTH);
+        //Si on allait verticalement alors la prochaine direction sera horizontale
+        if(dir == Direction.NORTH || dir == Direction.SOUTH){
+            int newX = (int) (e.getPos().getX() + getHorizontalSpeed(Direction.EAST,e));
+            if(isPath(new Coordinates(newX, (int)e.getPos().getY()))){
+                nextDir=Direction.EAST;
             }
             else{
-                e.move(Direction.SOUTH);
+                nextDir=Direction.WEST;
             }
         }
         else{
-            int newX = (int) (e.getPos().getX() + getHorizontalSpeed(Direction.EAST,e));
-            if(isPath(newX, (int)e.getPos().getY())){
-                e.move(Direction.EAST);
+            int newY = (int) (e.getPos().getY() + getVerticalSpeed(Direction.NORTH,e));
+            if(isPath(new Coordinates((int)e.getPos().getX(),newY))){
+                nextDir=Direction.NORTH;
             }
             else{
-                e.move(Direction.WEST);
+                nextDir=Direction.SOUTH;
             }
         }
+        e.move(nextDir);
     }
 
-    public float getSpeed(Direction d, Direction cur){
-        return 0;
-    }
-
-    private void atCenterTile(Enemy e, Direction dir, int x, int y) {
-        if(dir == Direction.EAST && x<14){
+    public void setAtCenterTile(Enemy e, Direction dir, int x, int y) {
+        if(dir == Direction.EAST){
             x++;
         }
         else{
-            if(dir == Direction.SOUTH && y<14){
+            if(dir == Direction.SOUTH){
                 y++;
             }
         }
         e.setPos(x*this.game.getTileSize(),y*this.game.getTileSize());
     }
 
-    private Type getTileType(int x, int y) {
+    public Type getTileType(int x, int y) {
         return game.getTileType(x,y);
     }
 
-    private float getVerticalSpeed(Direction dir,Enemy e) {
+    public float getVerticalSpeed(Direction dir,Enemy e) {
         if(dir == Direction.NORTH){
             return -e.getSpeed();
         }
@@ -159,7 +174,7 @@ public class EnemiesConfig {
         return 0;
     }
 
-    private float getHorizontalSpeed(Direction dir,Enemy e) {
+    public float getHorizontalSpeed(Direction dir,Enemy e) {
         if(dir == Direction.WEST){
             return -e.getSpeed();
         }
@@ -167,6 +182,16 @@ public class EnemiesConfig {
             return e.getSpeed()+this.game.getTileSize();
         }
         return 0;
+    }
+
+    public void attaque(Base base, Enemy e){
+        if(base.getPointDeVie()-e.getDegat()<0){
+            base.setPointDeVie(0);
+        }
+        else{
+            base.setPointDeVie(base.getPointDeVie()-e.getDegat());
+        }
+        System.out.println(base.getPointDeVie());
     }
 
 }

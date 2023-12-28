@@ -1,10 +1,7 @@
 package gui;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 
 import inputs.Keyboard_Listener;
@@ -41,11 +38,12 @@ public class App extends JFrame{
         requestFocus();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         System.out.println("Hey");
         App app = new App();
         app.initInput();
         //Menu menu = new Menu();
+        
         
     }
 }
