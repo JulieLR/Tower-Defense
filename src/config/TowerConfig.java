@@ -110,6 +110,14 @@ public class TowerConfig implements Serializable{
         }
         return null;
     }
+
+    /* private BufferedImage getSprite (int id) {
+        return towers.get(id).getTowerImage();
+    } */
+
+    private BufferedImage getSprite (int cordX, int cordY) {
+		return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
+	} 
     
     private Type getTileType(int x, int y) {
         return game.getTileType(x,y);
@@ -219,7 +227,6 @@ public class TowerConfig implements Serializable{
         Math.pow(p.position.x()-this.position.x(),2) +
         Math.pow(p.position.y()-this.position.y(),2));
     }*/
-
     
     
 }
