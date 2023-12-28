@@ -11,6 +11,8 @@ import gui.Game;
 import model.Coordinates;
 import model.Enemy;
 import model.Entities;
+import gui.Game;
+import model.Coordinates;
 import model.Tower;
 import model.Tower.TowerColor;
 
@@ -223,5 +225,4 @@ public class TowerConfig implements Serializable{
         Math.pow(p.position.x()-this.position.x(),2) +
         Math.pow(p.position.y()-this.position.y(),2));
     }*/
-
 }
