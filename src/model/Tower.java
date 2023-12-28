@@ -8,13 +8,15 @@ public class Tower extends Entities {
     private int prix;
     private String type; // type de tour
     private int id; // identifiant pour savoir quelle tour specifiquement
+    private BufferedImage towerImage;
     
-public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk, String type, int id, int cd){
+public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk, String type, int id, BufferedImage towerImage){
     super(vitesseAtk, pos, degat);
     //this.pointDeVie=vie;
     this.prix=prix;
     this.type=type;
     this.id= id;
+    this.towerImage=towerImage;
     }
 
     // Methodes
@@ -46,6 +48,13 @@ public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk,
     }
     public void setid(int id) {
         this.id= id;
+    }
+
+    public BufferedImage getTowerImage () {
+        return this.towerImage;
+    }
+    public void setTowerImage (BufferedImage towerImage) {
+        this.towerImage=towerImage;
     }
 
     // isDead
