@@ -102,10 +102,6 @@ public class TowerConfig implements Serializable{
         }
         return null;
     }
-
-    //public Tower getTower () {
-    //    return this.t;
-    //}
     
     public ArrayList<Tower> getTowers () {
         return this.towers;
@@ -227,13 +223,5 @@ public class TowerConfig implements Serializable{
         Math.pow(p.position.x()-this.position.x(),2) +
         Math.pow(p.position.y()-this.position.y(),2));
     }*/
-    
-    // distance entre les deux personnes 
-   /*  public double disBetween (Personnages p) {
-        return Math.sqrt(
-        Math.pow(p.position.x()-this.position.x(),2) +
-        Math.pow(p.position.y()-this.position.y(),2));
-    }*/
 
-    
 }
