@@ -102,8 +102,11 @@ public class TowerConfig implements Serializable{
         return towers.get(id).getTowerImage();
     } */
 
-    private BufferedImage getSprite (int cordX, int cordY) {
-		return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
+    public BufferedImage getSprite (int cordX, int cordY) {
+        if (cordY<2) {
+		    return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
+        }
+        return towerImage.getSubimage(cordX* 16, cordY* 16, 16, 16);
 	} 
     
     private Type getTileType(int x, int y) {
@@ -122,7 +125,7 @@ public class TowerConfig implements Serializable{
     } */
  
     // attaque
-    public void attaque (Enemy enemy, Tower tower) {
+    private void attaque (Enemy enemy, Tower tower) {
         enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
         System.out.println("point de vie ennemi = "+enemy.getPointDeVie());
     }
@@ -185,6 +188,7 @@ public class TowerConfig implements Serializable{
         Math.pow(p.position.x()-this.position.x(),2) +
         Math.pow(p.position.y()-this.position.y(),2));
     }*/
+
     
     
 }
