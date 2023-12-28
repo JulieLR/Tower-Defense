@@ -11,7 +11,7 @@ import model.Enemy;
 import model.Coordinates;
 import model.Direction;
 
-public class EnemiesGraphics implements Frames{
+public class EnemiesGraphics implements Graphic{
     
     private Game game;
     private EnemiesConfig enemiesConfig;
@@ -31,13 +31,14 @@ public class EnemiesGraphics implements Frames{
     public void drawImages(Graphics g){
         long time = System.currentTimeMillis();
         for(Enemy e: enemies){
-            if(e.isSpawned()){
+            if(e.isSpawned()&& e.isAlived()){
                 if(e.isAtEnd()){
                     drawAttack(g, time,e);
                     //drawStun(g, time,e);
                 }
                 else{
                     drawWalking(g, time,e);
+                    //drawDead(g, time, e);
                 }
             }
         }
@@ -93,6 +94,32 @@ public class EnemiesGraphics implements Frames{
         } 
     }
 
+    public void drawDead(Graphics g, long time, Enemy e){
+        int n = (int)(500f/0.5f);
+        int m = (int)(400f/0.5f);
+        int k = (int)(300f/0.5f);
+        int l = (int)(200f/0.5f);
+        int o = (int)(100f/0.5f);
+        int p = 23;
+
+        if(time%n<o){
+            g.drawImage(this.enemiesAsset.get(p),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else if(time%n<l){
+            g.drawImage(this.enemiesAsset.get(p+1),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else if(time%n<k){
+            g.drawImage(this.enemiesAsset.get(p+2),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else if(time%n<m){
+            g.drawImage(this.enemiesAsset.get(p+3),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else{
+            g.drawImage(this.enemiesAsset.get(p+4),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
+        } 
+    }
+
+    //Ecart dans le sprite des enemies pour les chevaliers
     public int getEcart(int n){
         int p = 0;
         switch(n){
@@ -106,7 +133,7 @@ public class EnemiesGraphics implements Frames{
 
     @Override
     public void addAsset(){
-        for(int ligne=0;ligne<6;ligne++){
+        for(int ligne=0;ligne<7;ligne++){
             for(int col=0;col<4;col++){
                 enemiesAsset.add(this.game.getEnemyImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
             }

@@ -9,8 +9,8 @@ public class Tile {
     public enum Type{PATH,GRASS,WATER,CASTLE,TOWER,BAR,END};
     private BufferedImage image; // image du tile
     private BufferedImage secondImg;
+    private int img, sndImg;
 
-    private boolean isPath=false;
     private int value;
     private Coordinates tileCoor;
 
@@ -20,7 +20,7 @@ public class Tile {
 
     private Type type;
 
-    public Tile(BufferedImage img, Type type, int v,Coordinates coor){
+    /* public Tile(BufferedImage img, Type type, int v,Coordinates coor){
         this.image=img;
         this.type=type;
         this.value=v;
@@ -31,7 +31,22 @@ public class Tile {
         this.image=img;
         this.secondImg=sImg;
         this.type=type;
+        this.value=v; 
+    }*/
+
+    public Tile(int img, Type type, int v,Coordinates coor){
+        this.img=img;
+        this.type=type;
         this.value=v;
+        this.tileCoor=coor;
+    }
+
+    public Tile(int img, int sndImg, Type type, int v,Coordinates coor){
+        this.img=img;
+        this.sndImg=sndImg;
+        this.type=type;
+        this.value=v;
+        this.tileCoor=coor;
     }
 
     public Type getType() {
@@ -50,8 +65,12 @@ public class Tile {
         return secondImg;
     }
 
-    public boolean isPath(){
-        return(this.type == Type.PATH);
+    public int getImg() {
+        return img;
+    }
+
+    public int getSndImg() {
+        return sndImg;
     }
 
     public String typeToString(){
