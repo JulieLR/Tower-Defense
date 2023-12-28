@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import config.EnemiesConfig;
 import config.MapConfig;
 import config.Tile;
+import config.TowerConfig;
 import config.Tile.Type;
 import model.Base;
 import inputs.Keyboard_Listener;
@@ -51,6 +52,9 @@ public class Game extends JPanel implements Runnable {
     private EnemiesConfig enemiesConfig;
     private EnemiesGraphics enemies;
 
+    private TowerConfig towerConfig;
+    private TowerGraphics towerGraphics;
+
     private BufferedImage towerImage;
     private JPanel towerButton;
 
@@ -80,8 +84,11 @@ public class Game extends JPanel implements Runnable {
         this.enemiesConfig = new EnemiesConfig(this,10);
         this.enemies= new EnemiesGraphics(this,this.enemiesConfig);
 
-        this.towerButton= new TowerBottomBar(this);
-        add(towerButton);
+        this.towerConfig= new TowerConfig(this);
+        this.towerGraphics= new TowerGraphics(this, towerConfig);
+
+        //this.towerButton= new TowerBottomBar(this);
+        //add(towerButton);
 
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
@@ -138,6 +145,10 @@ public class Game extends JPanel implements Runnable {
         return enemyImage;
     }
 
+    public BufferedImage getTowerImage () {
+        return this.towerImage;
+    }
+
     public MapConfig getMapConfig() {
         return tiles;
     }
@@ -156,6 +167,7 @@ public class Game extends JPanel implements Runnable {
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
         enemies.drawImages(g);
         mapGraphics.drawBottomBar(g);
+
 
         g.dispose(); //
     }
