@@ -59,7 +59,7 @@ public class Game extends JPanel implements Runnable{
         this.tiles= new MapConfig(this);
         this.mapGraphics= new MapGraphics(this, tiles);
 
-        this.base = new Base(this,200);
+        this.base = new Base(this,1000);
 
         this.enemiesConfig = new EnemiesConfig(this,10);
         this.enemies= new EnemiesGraphics(this,this.enemiesConfig);
@@ -145,8 +145,8 @@ public class Game extends JPanel implements Runnable{
 
     @Override
     public void run() {
-        double timePerFrame= 1000000000.0/FPS_SET;
-        double timePerUpdate= 1000000000.0/FPS_SET;
+        double timePerFrame= 1000000000.0/UPS_SET;
+        double timePerUpdate= 1000000000.0/UPS_SET;
 
         long lastFrame= System.nanoTime();
         long lastUpdate= System.nanoTime();
