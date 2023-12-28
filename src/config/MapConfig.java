@@ -16,7 +16,7 @@ public class MapConfig {
     private Tile end;
     private Coordinates endCoor;
     private Coordinates start;
-    private Coordinates[] posTower;
+    //private Coordinates[] posTower;
 
 
     Random random = new Random();
@@ -55,9 +55,9 @@ public class MapConfig {
         return start;
     }
 
-    public Coordinates[] getPosTower () {
+    /* public Coordinates[] getPosTower () {
         return this.posTower;
-    }
+    } */
 
     
     public void mapFromFile(String path, String path2){
@@ -113,8 +113,8 @@ public class MapConfig {
                     }
                     else if(readline.charAt(i) == 'T'){//Tower place
                         this.map[ligne][col] = new Tile(17,18, Type.TOWER,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
-                        this.posTower[nbTower]= new Coordinates(ligne, col);
-                        nbTower++;
+                        //this.posTower[nbTower]= new Coordinates(ligne, col);
+                        //nbTower++;
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'S'){//ennemies start
