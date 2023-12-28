@@ -87,9 +87,6 @@ public class Game extends JPanel implements Runnable {
         this.towerConfig= new TowerConfig(this);
         this.towerGraphics= new TowerGraphics(this, towerConfig);
 
-        //this.towerButton= new TowerBottomBar(this);
-        //add(towerButton);
-
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
 
