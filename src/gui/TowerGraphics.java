@@ -50,7 +50,7 @@ public class TowerGraphics implements Graphic {
     @Override
     public void drawImages(Graphics g) {
         //g.drawImage(towerAsset.get(1), 100, 200, this.game.getTileSize(), this.game.getTileSize()*2,null);
-        for (int i=0; i<this.towerConfig.getNbTower(); i++) {
+        for (int i=0; i<this.towerConfig.getNbTower()&& i<6; i++) {
             g.drawImage(towerAsset.get(i+1), (int)this.towerConfig.getPosTower()[i].getX(), (int)this.towerConfig.getPosTower()[i].getY(), this.game.getTileSize(), this.game.getTileSize()*2,null);
         }
     }
