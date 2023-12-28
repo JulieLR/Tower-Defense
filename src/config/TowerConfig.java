@@ -19,22 +19,27 @@ public class TowerConfig implements Serializable{
     private ArrayList<Tower> towers= new ArrayList<> ();
     private Coordinates pos;
     private Game game;
+    private Tower t;
     
-    public TowerConfig (Game game) throws IOException, ClassNotFoundException {
+    public TowerConfig (Game game) /* throws IOException, ClassNotFoundException */ {
         this.game=game;
+        //this.pos=this.game.getMapConfig().getPosTower()[0];
+        this.pos=new Coordinates(0, 0);
+        this.t= new Tower(75, pos, 40, 1, 1, 0);
         createTile();
+
         //towerSerialize(towerImage, "TowerManager.ser");
         //towerDeserialize("TowerManager.ser");
-        loadTowerImage();
+        //loadTowerImage();
     }
 
     private void createTile() {
-        towers.add(TOWER_BLUE= new Tower(75, pos, 40, 1, 1, 0, getSprite(0, 0)));
-        towers.add(TOWER_ORANGE= new Tower(150, pos, 65, 3, 1, 0, getSprite(1, 0)));
-        towers.add(TOWER_RED= new Tower(200, pos, 100, 5, 1, 0, getSprite(2, 0)));
-        towers.add(TOWER_SMALL= new Tower(25, pos, 10, 2, 0, 0, getSprite(3, 0)));
-        towers.add(TOWER_MEDIUM= new Tower(50, pos, 20, 5, 0, 0, getSprite(4, 0)));
-        towers.add(TOWER_EXTRA= new Tower(150, pos, 60, 15, 0, 0, getSprite(5, 0)));
+        towers.add(TOWER_BLUE= new Tower(75, pos, 40, 1, 1, 0));
+        towers.add(TOWER_ORANGE= new Tower(150, pos, 65, 3, 1, 1));
+        towers.add(TOWER_RED= new Tower(200, pos, 100, 5, 1, 2));
+        towers.add(TOWER_SMALL= new Tower(25, pos, 10, 2, 0, 3));
+        towers.add(TOWER_MEDIUM= new Tower(50, pos, 20, 5, 0, 4));
+        towers.add(TOWER_EXTRA= new Tower(150, pos, 60, 15, 0, 5));
     }
 
     private void loadTowerImage () {
@@ -95,8 +100,11 @@ public class TowerConfig implements Serializable{
         return towers.get(id).getTowerImage();
     } */
 
-    private BufferedImage getSprite (int cordX, int cordY) {
-		return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
+    public BufferedImage getSprite (int cordX, int cordY) {
+        if (cordY<2) {
+		    return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
+        }
+        return towerImage.getSubimage(cordX* 16, cordY* 16, 16, 16);
 	} 
     
     private Type getTileType(int x, int y) {
@@ -115,7 +123,7 @@ public class TowerConfig implements Serializable{
     } */
  
     // attaque
-    public void attaque (Enemy enemy, Tower tower) {
+    private void attaque (Enemy enemy, Tower tower) {
         enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
         System.out.println("point de vie ennemi = "+enemy.getPointDeVie());
     }
@@ -126,5 +134,9 @@ public class TowerConfig implements Serializable{
         Math.pow(p.position.x()-this.position.x(),2) +
         Math.pow(p.position.y()-this.position.y(),2));
     }*/
+
+    public ArrayList<Tower> getTowers () {
+        return this.towers;
+    }
     
 }
