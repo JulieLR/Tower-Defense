@@ -8,6 +8,9 @@ import config.EnemiesConfig;
 import config.Tile;
 import config.Tile.Type;
 import model.Enemy;
+import model.Knight;
+import model.Slime;
+import model.Bat;
 import model.Coordinates;
 import model.Direction;
 
@@ -37,11 +40,22 @@ public class EnemiesGraphics implements Graphic{
                     //drawKnightStun(g, time,e);
                 }
                 else{
-                    drawSlimeWalk(g, time, e);
-                    //drawBatFlying(g, time, e);
-                    //drawKnightWalking(g, time,e);
-                    //drawDead(g, time, e);
+                    if(e instanceof Knight){
+                        drawKnightWalking(g, time,e);
+                    }
+                    else{
+                        if(e instanceof Slime){
+                            drawSlimeWalk(g, time, e);
+                        }
+                        else{
+                            if(e instanceof Bat){
+                                drawBatFlying(g, time, e);
+                            }
+                        }
+                    }
                 }
+                    //drawDead(g, time, e);
+                
             }
         }
     }
@@ -90,16 +104,16 @@ public class EnemiesGraphics implements Graphic{
         int l = (int)(100f/e.getSpeed());
         
         if(time%n<l){
-            g.drawImage(this.enemiesAsset.get(44+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+            g.drawImage(this.enemiesAsset.get(44+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
         }
         else if(time%n<k){
-            g.drawImage(this.enemiesAsset.get(45+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+            g.drawImage(this.enemiesAsset.get(45+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
         }
         else if(time%n<m){
-            g.drawImage(this.enemiesAsset.get(46+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+            g.drawImage(this.enemiesAsset.get(46+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
         }
         else{
-            g.drawImage(this.enemiesAsset.get(47+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+            g.drawImage(this.enemiesAsset.get(47+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
         } 
     }
     

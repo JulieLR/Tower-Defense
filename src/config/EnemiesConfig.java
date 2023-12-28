@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import config.Tile.Type;
 import gui.Game;
 import model.Base;
+import model.Bat;
 import model.Coordinates;
 import model.Direction;
 import model.Enemy;
+import model.Knight;
+import model.Slime;
 
 public class EnemiesConfig {
 
@@ -57,16 +60,14 @@ public class EnemiesConfig {
 
         //ajout enemies faible
         for(int i=0;i<a;i++){
-            this.enemies.add(new Enemy(50, start, 5, 0.5f, 0,5));
+            this.enemies.add(new Knight(0, start));
         }
         //ajout enemies moyen
         for(int j=0;j<b;j++){
-            this.enemies.add(new Enemy(100, start, 10, 1f, 1,10));
-        }
+            this.enemies.add(new Slime(start));        }
         //ajout enemies fort
         for(int k=0;k<c;k++){
-            this.enemies.add(new Enemy(150, start, 15, 2f, 2,15));
-        }
+            this.enemies.add(new Bat(start));        }
     }
 
     public Enemy getE() {
