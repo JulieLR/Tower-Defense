@@ -102,17 +102,6 @@ public class TowerConfig implements Serializable{
         }
         return null;
     }
-
-    /* private BufferedImage getSprite (int id) {
-        return towers.get(id).getTowerImage();
-    } */
-
-    public BufferedImage getSprite (int cordX, int cordY) {
-        if (cordY<2) {
-		    return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
-        }
-        return towerImage.getSubimage(cordX* 16, cordY* 16, 16, 16);
-	} 
     
     public ArrayList<Tower> getTowers () {
         return this.towers;
