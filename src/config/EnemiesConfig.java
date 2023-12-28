@@ -57,15 +57,15 @@ public class EnemiesConfig {
 
         //ajout enemies faible
         for(int i=0;i<a;i++){
-            this.enemies.add(new Enemy(50, start, 20, 0.5f, 0));
+            this.enemies.add(new Enemy(50, start, 5, 0.5f, 0));
         }
         //ajout enemies moyen
         for(int j=0;j<b;j++){
-            this.enemies.add(new Enemy(100, start, 20, 1f, 1));
+            this.enemies.add(new Enemy(100, start, 10, 1f, 1));
         }
         //ajout enemies fort
         for(int k=0;k<c;k++){
-            this.enemies.add(new Enemy(150, start, 20, 2f, 2));
+            this.enemies.add(new Enemy(150, start, 15, 2f, 2));
         }
     }
 
