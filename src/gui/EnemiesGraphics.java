@@ -133,7 +133,7 @@ public class EnemiesGraphics implements Graphic{
 
     @Override
     public void addAsset(){
-        for(int ligne=0;ligne<7;ligne++){
+        for(int ligne=0;ligne<11;ligne++){
             for(int col=0;col<4;col++){
                 enemiesAsset.add(this.game.getEnemyImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
             }
