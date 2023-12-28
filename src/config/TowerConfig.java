@@ -4,8 +4,11 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
+import config.Tile.Type;
 import gui.Game;
 import model.Coordinates;
+import model.Enemy;
+import model.Entities;
 import model.Tower;
 
 public class TowerConfig implements Serializable{
@@ -88,13 +91,40 @@ public class TowerConfig implements Serializable{
         return null;
     }
 
-    public BufferedImage getSprite (int id) {
+    /* private BufferedImage getSprite (int id) {
         return towers.get(id).getTowerImage();
+    } */
+
+    private BufferedImage getSprite (int cordX, int cordY) {
+		return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
+	} 
+    
+    private Type getTileType(int x, int y) {
+        return game.getTileType(x,y);
     }
 
-    public BufferedImage getSprite (int cordX, int cordY) {
-		return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
-		} 
+    private boolean isTower(Coordinates c){
+        return(getTileType((int)c.getX(),(int)c.getY())==Type.TOWER);
+    }
 
+    private boolean isPath(Coordinates c){
+        return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH);
+    }
+    /* private boolean isEnemy(Coordinates c){
+        return(getTileType((int)c.getX(),(int)c.getY())==Type.TOWER);
+    } */
+ 
+    // attaque
+    public void attaque (Enemy enemy, Tower tower) {
+        enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
+        System.out.println("point de vie ennemi = "+enemy.getPointDeVie());
+    }
+
+    // distance entre les deux personnes 
+   /*  public double disBetween (Personnages p) {
+        return Math.sqrt(
+        Math.pow(p.position.x()-this.position.x(),2) +
+        Math.pow(p.position.y()-this.position.y(),2));
+    }*/
     
 }
