@@ -27,9 +27,8 @@ public class TowerConfig implements Serializable{
         //this.pos=this.game.getMapConfig().getPosTower()[0];
         //this.pos=new Coordinates(3, 3);
         //this.t= new Tower(75, pos, 40, 1, 1, 0);
-        //createTile();
-        //System.out.println(getNbTower());
-        addTower(getPosTower());
+        createTile();
+        System.out.println(getNbTower());
 
         //towerSerialize(towerImage, "TowerManager.ser");
         //towerDeserialize("TowerManager.ser");
@@ -110,17 +109,6 @@ public class TowerConfig implements Serializable{
         }
         return null;
     }
-
-    /* private BufferedImage getSprite (int id) {
-        return towers.get(id).getTowerImage();
-    } */
-
-    public BufferedImage getSprite (int cordX, int cordY) {
-        if (cordY<2) {
-		    return towerImage.getSubimage(cordX* 16, cordY* 29, 16, 29);
-        }
-        return towerImage.getSubimage(cordX* 16, cordY* 16, 16, 16);
-	} 
     
     private Type getTileType(int x, int y) {
         return game.getTileType(x,y);
@@ -230,7 +218,6 @@ public class TowerConfig implements Serializable{
         Math.pow(p.position.x()-this.position.x(),2) +
         Math.pow(p.position.y()-this.position.y(),2));
     }*/
-
 
     
 }
