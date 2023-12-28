@@ -23,8 +23,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 
-
-
 public class Game extends JPanel implements Runnable {
     
      //Tiles
@@ -83,10 +81,24 @@ public class Game extends JPanel implements Runnable {
         this.towerButton= new TowerBottomBar(this);
         add(towerButton);
 
+        this.towerButton= new TowerBottomBar(this);
+        add(towerButton);
+
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
 
         start();
+    }
+
+    public void initInput() {
+        mouseListener= new Mouse_Listener();
+        keyboardlistener= new Keyboard_Listener();
+
+        addMouseListener(mouseListener);
+        addMouseMotionListener(mouseListener);
+        addKeyListener(keyboardlistener);
+
+        requestFocus();
     }
 
     public void initInput() {
