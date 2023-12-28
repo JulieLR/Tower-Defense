@@ -24,7 +24,7 @@ public class TowerConfig implements Serializable{
     public TowerConfig (Game game) /* throws IOException, ClassNotFoundException */ {
         this.game=game;
         //this.pos=this.game.getMapConfig().getPosTower()[0];
-        this.pos=new Coordinates(10, 10);
+        this.pos=new Coordinates(3, 3);
         this.t= new Tower(75, pos, 40, 1, 1, 0);
         createTile();
 
