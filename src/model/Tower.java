@@ -6,11 +6,11 @@ public class Tower extends Entities {
     // Attribut
     //private int pointDeVie;
     private int prix;
-    private String type; // type de tour
+    private int type; // 0: physique, 1: magique
     private int id; // identifiant pour savoir quelle tour specifiquement
     private BufferedImage towerImage;
     
-public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk, String type, int id, BufferedImage towerImage){
+public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk, int type, int id, BufferedImage towerImage){
     super(vitesseAtk, pos, degat);
     //this.pointDeVie=vie;
     this.prix=prix;
@@ -36,11 +36,11 @@ public Tower(/* int vie, */ int prix, Coordinates pos,int degat, int vitesseAtk,
         this.prix=prix;
     }
 
-    public String getType () {
+    public int getType () {
         return this.type;
     }
-    public void setType (String nom) {
-        this.type= nom;
+    public void setType (int type) {
+        this.type= type;
     }
 
     public int getId () {
