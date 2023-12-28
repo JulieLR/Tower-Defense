@@ -87,6 +87,9 @@ public class Game extends JPanel implements Runnable {
         this.towerConfig= new TowerConfig(this);
         this.towerGraphics= new TowerGraphics(this, towerConfig);
 
+        //this.towerButton= new TowerBottomBar(this);
+        //add(towerButton);
+
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
 
@@ -167,6 +170,7 @@ public class Game extends JPanel implements Runnable {
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
         enemies.drawImages(g);
         mapGraphics.drawBottomBar(g);
+
 
 
         g.dispose(); //
