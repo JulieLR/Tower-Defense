@@ -4,10 +4,10 @@ import java.awt.image.BufferedImage;
 
 import config.MapConfig;
 
-public class TowerConfig {
+public class TowerGraphics {
     private BufferedImage[] towerImage;
 
-    public TowerConfig () {
+    public TowerGraphics () {
         loadTowerImages();
     }
 

@@ -1,17 +1,19 @@
-package gui;
+package config;
 
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
-public class TowerManager implements Serializable{
+import gui.TowerTile;
+
+public class TowerConfig implements Serializable{
     public TowerTile TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA;
     public BufferedImage towerImage;
     // public transient BufferedImage towerImageTransient; // transient pour igniorer le serializes
     // private static final int serialVersionUID= 1;
     public ArrayList<TowerTile> tile= new ArrayList<> ();
     
-    public TowerManager () throws IOException, ClassNotFoundException {
+    public TowerConfig () throws IOException, ClassNotFoundException {
         createTile();
         //towerSerialize(towerImage, "TowerManager.ser");
         //towerDeserialize("TowerManager.ser");
