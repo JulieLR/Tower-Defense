@@ -4,16 +4,21 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 
-import gui.TowerTile;
+import gui.Game;
+import model.Coordinates;
+import model.Tower;
 
 public class TowerConfig implements Serializable{
-    public TowerTile TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA;
-    public BufferedImage towerImage;
+    private Tower TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA;
+    private BufferedImage towerImage;
     // public transient BufferedImage towerImageTransient; // transient pour igniorer le serializes
     // private static final int serialVersionUID= 1;
-    public ArrayList<TowerTile> tile= new ArrayList<> ();
+    private ArrayList<Tower> towers= new ArrayList<> ();
+    private Coordinates pos;
+    private Game game;
     
-    public TowerConfig () throws IOException, ClassNotFoundException {
+    public TowerConfig (Game game) throws IOException, ClassNotFoundException {
+        this.game=game;
         createTile();
         //towerSerialize(towerImage, "TowerManager.ser");
         //towerDeserialize("TowerManager.ser");
@@ -21,12 +26,12 @@ public class TowerConfig implements Serializable{
     }
 
     private void createTile() {
-        tile.add(TOWER_BLUE= new TowerTile(getSprite(0, 0)));
-        tile.add(TOWER_ORANGE= new TowerTile(getSprite(1, 0)));
-        tile.add(TOWER_RED= new TowerTile(getSprite(2, 0)));
-        tile.add(TOWER_SMALL= new TowerTile(getSprite(3, 0)));
-        tile.add(TOWER_MEDIUM= new TowerTile(getSprite(4, 0)));
-        tile.add(TOWER_EXTRA= new TowerTile(getSprite(5, 0)));
+        towers.add(TOWER_BLUE= new Tower(75, pos, 40, 1, 1, 0, getSprite(0, 0)));
+        towers.add(TOWER_ORANGE= new Tower(150, pos, 65, 3, 1, 0, getSprite(1, 0)));
+        towers.add(TOWER_RED= new Tower(200, pos, 100, 5, 1, 0, getSprite(2, 0)));
+        towers.add(TOWER_SMALL= new Tower(25, pos, 10, 2, 0, 0, getSprite(3, 0)));
+        towers.add(TOWER_MEDIUM= new Tower(50, pos, 20, 5, 0, 0, getSprite(4, 0)));
+        towers.add(TOWER_EXTRA= new Tower(150, pos, 60, 15, 0, 0, getSprite(5, 0)));
     }
 
     private void loadTowerImage () {
@@ -84,7 +89,7 @@ public class TowerConfig implements Serializable{
     }
 
     public BufferedImage getSprite (int id) {
-        return tile.get(id).getTower();
+        return towers.get(id).getTowerImage();
     }
 
     public BufferedImage getSprite (int cordX, int cordY) {
