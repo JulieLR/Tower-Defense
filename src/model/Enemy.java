@@ -9,6 +9,8 @@ public class Enemy extends Entities{
 
     private int pointDeVie;
     private int type;
+    private int prime;
+
     private Rectangle zone;
     private boolean atEnd;
     private boolean isSpawned;
@@ -18,10 +20,11 @@ public class Enemy extends Entities{
     private Random r = new Random();
 
 
-    public Enemy(int vie, Coordinates pos,int degat, float vitesseAtk,int type){
+    public Enemy(int vie, Coordinates pos,int degat, float vitesseAtk,int type, int prime){
         super(vitesseAtk, pos, degat);
         this.pointDeVie=vie;
         this.type=type;
+        this.prime=prime;
         this.zone= new Rectangle( (int) super.getPos().getX(), (int) super.getPos().getY(),48,48);
     }
 
@@ -94,6 +97,14 @@ public class Enemy extends Entities{
 
     public void setAlived(boolean isAlived) {
         this.isAlived = isAlived;
+    }
+
+    public int getPrime() {
+        return prime;
+    }
+
+    public void setPrime(int prime) {
+        this.prime = prime;
     }
 
     public void move(float x, float y){
