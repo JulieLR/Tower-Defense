@@ -101,17 +101,6 @@ public class Game extends JPanel implements Runnable {
         requestFocus();
     }
 
-    public void initInput() {
-        mouseListener= new Mouse_Listener();
-        keyboardlistener= new Keyboard_Listener();
-
-        addMouseListener(mouseListener);
-        addMouseMotionListener(mouseListener);
-        addKeyListener(keyboardlistener);
-
-        requestFocus();
-    }
-
     public BufferedImage getImage(String chemin){
         try {
             BufferedImage image = ImageIO.read(new File(chemin));

@@ -1,5 +1,7 @@
 package gui;
 
+import java.io.IOException;
+
 import javax.swing.JFrame;
 
 import inputs.Keyboard_Listener;
@@ -23,17 +25,6 @@ public class App extends JFrame{
         this.pack();
         setLocationRelativeTo(null);
         setVisible(true);
-    }
-
-    public void initInput() {
-        mouseListener= new Mouse_Listener();
-        keyboardlistener= new Keyboard_Listener();
-
-        addMouseListener(mouseListener);
-        addMouseMotionListener(mouseListener);
-        addKeyListener(keyboardlistener);
-
-        requestFocus();
     }
 
     public void initInput() {
