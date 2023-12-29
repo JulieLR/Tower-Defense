@@ -155,6 +155,10 @@ public class Game extends JPanel implements Runnable {
         return base;
     }
 
+    public EnemiesConfig getEnemyConfig () {
+        return this.enemiesConfig;
+    }
+
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
 
