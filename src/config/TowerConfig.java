@@ -20,22 +20,29 @@ public class TowerConfig implements Serializable{
     private ArrayList<Tower> towers= new ArrayList<> ();
     private Coordinates pos;
     private Game game;
-    private Tower t;
+    //private Tower t;
     
     public TowerConfig (Game game) /* throws IOException, ClassNotFoundException */ {
         this.game=game;
-        this.t= new Tower(75, pos, 40, 1, 1, TowerColor.TOWER_BLUE);
+        //this.t= new Tower(75, pos, 40, 1, 0);
+        //createTile();
         addTower(getPosTower());
         //loadTowerImage();
     }
 
     private void createTile() {
-        towers.add(new Tower(75, pos, 40, 1, 1, t.towerBlue()));
-        towers.add(new Tower(150, pos, 65, 3, 1, t.towerOrange()));
-        towers.add(new Tower(200, pos, 100, 5, 1, t.towerRed()));
-        towers.add(new Tower(25, pos, 10, 2, 0, t.towerSmall()));
-        towers.add(new Tower(50, pos, 20, 5, 0, t.towerMedium()));
-        towers.add(new Tower(150, pos, 60, 15, 0, t.towerExtra()));
+        towers.add(new Tower(75, pos, 40, 1, 0));
+        towers.add(new Tower(150, pos, 65, 3, 1));
+        towers.add(new Tower(200, pos, 100, 5, 2));
+        towers.add(new Tower(25, pos, 10, 2, 3));
+        towers.add(new Tower(50, pos, 20, 5, 4));
+        towers.add(new Tower(150, pos, 60, 15, 5));
+    }
+
+    public void addTower(Coordinates [] c){
+        for(int i=0;i<c.length;i++){
+            this.towers.add(new Tower(20, c[i], 5, 0.5f, i));
+        }
     }
 
     private void loadTowerImage () {
@@ -92,18 +99,12 @@ public class TowerConfig implements Serializable{
         return null;
     }
 
-    public Tower getTower () {
-        return this.t;
-    }
+    //public Tower getTower () {
+    //    return this.t;
+    //}
     
     public ArrayList<Tower> getTowers () {
         return this.towers;
-    }
-
-    public void addTower(Coordinates [] c){
-        for(int i=0;i<c.length;i++){
-            this.towers.add(new Tower(20, c[i], 5, 0.5f, 0, t.ColorTower(i)));
-        }
     }
     
     // si la tour fait des degats magiques
