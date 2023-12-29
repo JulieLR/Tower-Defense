@@ -19,12 +19,14 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Menu extends JFrame {
+public class Menu extends JFrame implements MouseListener{
 
     private BufferedImage buttonImage;
     private BufferedImage fondMenuImage;
     private BufferedImage fondImage;
     private ArrayList<BufferedImage> assets = new ArrayList<>();
+
+    private JButton quitButton,playButton,settingsButton;
 
     public Menu(){
 
@@ -48,24 +50,31 @@ public class Menu extends JFrame {
         fond.setBounds(this.getWidth()/3, this.getHeight()/4, 282, 336); */
 
         JButton playButton = new JButton();
+        this.playButton=playButton;
         playButton.setBounds(this.getWidth()/3+70, (this.getHeight()/2)-50, 140, 56);
         playButton.setBackground(null);
         playButton.setIcon(new ImageIcon(assets.get(0)));
+        makeTransparentBackground(playButton);
         playButton.addActionListener(e -> playAction());
         fond.add(playButton);
 
         JButton settingsButton = new JButton();
+        this.settingsButton=settingsButton;
         settingsButton.setBounds(this.getWidth()/3+70, (this.getHeight()/2+15), 140, 56);
         settingsButton.setBackground(null);
         settingsButton.setIcon(new ImageIcon(assets.get(2)));
+        makeTransparentBackground(settingsButton);
         settingsButton.addActionListener(e -> new Settings(this));
         fond.add(settingsButton);
 
         JButton quitButton = new JButton();
+        this.quitButton=quitButton;
         quitButton.setBounds(this.getWidth()/3+70, (this.getHeight()/2)+80, 140, 56);
         quitButton.setBackground(null);
         quitButton.setIcon(new ImageIcon(assets.get(4)));
+        makeTransparentBackground(quitButton);
         quitButton.addActionListener(e -> this.dispose());
+        quitButton.addMouseListener(this);
         fond.add(quitButton); 
 
         this.add(fond);
@@ -119,5 +128,40 @@ public class Menu extends JFrame {
         }
     }
 
+    public void makeTransparentBackground(JButton j){
+        j.setOpaque(false);
+        j.setContentAreaFilled(false);
+        j.setBorderPainted(false);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
+    }
 
 }
