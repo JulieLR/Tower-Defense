@@ -46,6 +46,7 @@ public class Game extends JPanel implements Runnable {
     private MapGraphics mapGraphics;
 
     private BufferedImage enemyImage;
+    private BufferedImage batImage;
 
     private EnemiesConfig enemiesConfig;
     private EnemiesGraphics enemies;
@@ -66,8 +67,9 @@ public class Game extends JPanel implements Runnable {
 
     public Game(){
 
-        this.mapImage = getImage("src/ressources/map/sprite1.png");
+        this.mapImage = getImage("src/ressources/map/sprite.png");
         this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
+        this.batImage = getImage("src/ressources/enemies/batSprite.png");
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
 
         this.tiles= new MapConfig(this);
@@ -147,12 +149,16 @@ public class Game extends JPanel implements Runnable {
         return base;
     }
 
+    public BufferedImage getBatImage() {
+        return batImage;
+    }
+
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
 
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
         enemies.drawImages(g);
-        mapGraphics.drawStartTile(g);
+        mapGraphics.drawBottomBar(g);
 
         g.dispose(); //
     }
@@ -207,7 +213,7 @@ public class Game extends JPanel implements Runnable {
             }
 
             if (System.currentTimeMillis()- lastTimeCheck>= 1000) {
-                // System.out.println("FPS: "+ frames+ " | UPS: "+ updates);
+                System.out.println("FPS: "+ frames+ " | UPS: "+ updates);
                 frames= 0;
                 updates= 0;
                 lastTimeCheck= System.currentTimeMillis();

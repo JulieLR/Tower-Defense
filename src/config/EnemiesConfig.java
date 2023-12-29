@@ -96,8 +96,9 @@ public class EnemiesConfig {
         }
         else if(isAtEnd(next)){
                 e.setAtEnd(true);
-                attaque(base, e);
-                System.out.println("u lost one life dang it");
+                if(getTile((int)e.getPos().getX(),(int) e.getPos().getY()-1).getType()== Type.CASTLE){
+                    attaque(base, e); 
+                }       
         }
         else{
             setNextDir(e);

@@ -19,6 +19,7 @@ public class EnemiesGraphics implements Graphic{
     private Game game;
     private EnemiesConfig enemiesConfig;
     private ArrayList<BufferedImage> enemiesAsset = new ArrayList<>();
+    private ArrayList<BufferedImage> batAsset = new ArrayList<>();
     private ArrayList<Enemy> enemies;
 
     public EnemiesGraphics(Game game,EnemiesConfig e){
@@ -36,7 +37,11 @@ public class EnemiesGraphics implements Graphic{
         for(Enemy e: enemies){
             if(e.isSpawned()&& e.isAlived()){
                 if(e.isAtEnd()){
-                    drawKnightAttack(g, time,e);
+                    if(e instanceof Knight){
+                        drawKnightAttack(g, time,e);
+                    }else if(e instanceof Bat){
+                        drawBatAttack(g, time, e);
+                    }
                     //drawKnightStun(g, time,e);
                 }
                 else{
@@ -58,6 +63,8 @@ public class EnemiesGraphics implements Graphic{
                 
             }
         }
+        g.drawImage(this.enemiesAsset.get(8),(int)this.game.getMapConfig().getEndCoor().getX(),(int)this.game.getMapConfig().getEndCoor().getY(),this.game.getTileSize(),this.game.getTileSize(), null);
+
     }
 
     public int getEcartDirection(Direction dir){
@@ -104,16 +111,47 @@ public class EnemiesGraphics implements Graphic{
         int l = (int)(100f/e.getSpeed());
         
         if(time%n<l){
-            g.drawImage(this.enemiesAsset.get(44+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+            g.drawImage(this.batAsset.get(0+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
         }
         else if(time%n<k){
-            g.drawImage(this.enemiesAsset.get(45+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+            g.drawImage(this.batAsset.get(1+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
         }
         else if(time%n<m){
-            g.drawImage(this.enemiesAsset.get(46+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+            g.drawImage(this.batAsset.get(2+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
         }
         else{
-            g.drawImage(this.enemiesAsset.get(47+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+            g.drawImage(this.batAsset.get(3+d),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+        } 
+    }
+
+    public void drawBatAttack(Graphics g, long time, Enemy e){
+        int x = 16;
+
+        int a = (int)(600f/e.getSpeed());
+        int b = (int)(500f/e.getSpeed());
+        int c= (int)(400f/e.getSpeed());
+        int d = (int)(300f/e.getSpeed());
+        int f = (int)(200f/e.getSpeed());
+        int h = (int)(100f/e.getSpeed());
+        
+        
+        if(time%a<h){
+            g.drawImage(this.batAsset.get(0+x),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+        }
+        else if(time%a<f){
+            g.drawImage(this.batAsset.get(1+x),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+        }
+        else if(time%a<d){
+            g.drawImage(this.batAsset.get(2+x),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+        }
+        else if(time%a<c){
+            g.drawImage(this.batAsset.get(3+x),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+        }
+        else if(time%a<b){
+            g.drawImage(this.batAsset.get(4+x),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
+        }
+        else{
+            g.drawImage(this.batAsset.get(5+x),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
         } 
     }
     
@@ -206,15 +244,15 @@ public class EnemiesGraphics implements Graphic{
 
     @Override
     public void addAsset(){
-        for(int ligne=0;ligne<19;ligne++){
+        for(int ligne=0;ligne<11;ligne++){
             for(int col=0;col<4;col++){
-                //pour chauve souris 16x32
-                if(ligne>10){
-                    enemiesAsset.add(this.game.getEnemyImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize()*2, this.game.getInitialTileSize()));
-                    col++;
-                }else{
-                    enemiesAsset.add(this.game.getEnemyImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
-                }
+                enemiesAsset.add(this.game.getEnemyImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
+            }
+        }
+        for(int ligne=0;ligne<6;ligne++){
+            for(int col=0;col<8;col++){
+                batAsset.add(this.game.getBatImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize()*2, this.game.getInitialTileSize()));
+                col++;
             }
         }
     }

@@ -27,23 +27,32 @@ public class MapGraphics implements Graphic {
 
     @Override
     public void addAsset() {
-        for(int ligne=0;ligne<5;ligne++){
+        for(int ligne=0;ligne<6;ligne++){
             for(int col=0;col<6;col++){
-                tiles.add(this.game.getMapImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
+                if(ligne==5){
+                    break;
+                }
+                if(ligne>3){
+                    tiles.add(this.game.getMapImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()*2));
+                }
+                else{
+                    tiles.add(this.game.getMapImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
+                }
             }
         }
     }
     @Override
     public void drawImages(Graphics g) {
         for(int x=0;x<this.map.length;x++){
-            for(int y=0;y<this.map[0].length;y++){
+            for(int y=0;y<this.map[0].length-2;y++){
                 /*si ce n'est pas un chateau alors on change la rotation de l'image avec la valeur du tile
                  * sinon la valeur sert à afficher la bonne image de chateau*/
                 if(this.map[x][y].getType()!= Type.CASTLE){
                     g.drawImage(rotate(this.tiles.get(map[x][y].getImg()),90*map[x][y].getValue()),x*game.getTileSize(), y*game.getTileSize(), game.getTileSize(), game.getTileSize(), null);
                 }
                 else{
-                    g.drawImage(this.tiles.get(map[x][y].getImg()),x*game.getTileSize(), y*game.getTileSize(), game.getTileSize(), game.getTileSize(), null);
+                    g.drawImage(this.tiles.get(17),x*game.getTileSize(), y*game.getTileSize(), game.getTileSize(), game.getTileSize(), null);
+                    g.drawImage(this.tiles.get(map[x][y].getImg()),x*game.getTileSize(), y*game.getTileSize()-this.game.getTileSize(), game.getTileSize(), game.getTileSize()*2, null);
    
                 }
                 //Si c'est de l'herbe on rajoute de la décoration par dessus
@@ -54,9 +63,12 @@ public class MapGraphics implements Graphic {
         }
     }
 
-    public void drawStartTile(Graphics g){
-        g.drawImage(tiles.get(28), (int)this.mapConfig.getStart().getX(),(int) this.mapConfig.getStart().getY(), game.getTileSize(), game.getTileSize(), game);
-
+    public void drawBottomBar(Graphics g){
+        for(int x=0;x<this.map.length;x++){
+            for(int y = this.map[0].length-2; y<this.map[0].length;y++){
+                g.drawImage(rotate(this.tiles.get(map[x][y].getImg()),90*map[x][y].getValue()),x*game.getTileSize(), y*game.getTileSize(), game.getTileSize(), game.getTileSize(), null);
+            }
+        }
     }
 
     public static BufferedImage rotate(BufferedImage img, double angle) {

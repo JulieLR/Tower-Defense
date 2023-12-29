@@ -89,21 +89,21 @@ public class MapConfig {
                     }
                     else if(readline.charAt(i) == 'C'){//castle
                         int x =Character.getNumericValue(readline2.charAt(i));//type of castle
-                        this.map[ligne][col] = new Tile(21+x, Type.CASTLE,0,new Coordinates(ligne, col));
-                        this.end=this.map[ligne-1][col];
-                        this.endCoor = new Coordinates(((ligne-1)*this.game.getTileSize()), col*this.game.getTileSize());
+                        this.map[ligne][col] = new Tile(24+x, Type.CASTLE,0,new Coordinates(ligne, col));
+                        this.end=this.map[ligne][col];
+                        this.endCoor = new Coordinates((ligne*this.game.getTileSize()), col*this.game.getTileSize());
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'B'){//Bar border
-                        this.map[ligne][col] = new Tile(28, Type.BAR,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
+                        this.map[ligne][col] = new Tile(22, Type.BAR,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'b'){//Bar corner
-                        this.map[ligne][col] = new Tile(27, Type.BAR,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
+                        this.map[ligne][col] = new Tile(21, Type.BAR,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'X'){//Bar inside
-                        this.map[ligne][col] = new Tile(29, Type.BAR,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
+                        this.map[ligne][col] = new Tile(23, Type.BAR,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'T'){//Tower place
@@ -111,7 +111,7 @@ public class MapConfig {
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'S'){//ennemies start
-                        this.map[ligne][col] = new Tile(28, Type.PATH,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
+                        this.map[ligne][col] = new Tile(22, Type.PATH,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         this.start= new Coordinates(ligne*this.game.getTileSize(), col*this.game.getTileSize());
                         ligne++;
                     }
