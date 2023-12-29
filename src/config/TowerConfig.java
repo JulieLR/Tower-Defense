@@ -29,6 +29,7 @@ public class TowerConfig implements Serializable{
         //createTile();
         addTower(getPosTower());
         //loadTowerImage();
+        System.out.println("ok");
     }
 
     private void createTile() {
@@ -44,8 +45,7 @@ public class TowerConfig implements Serializable{
         Random random= new Random();
         for(int i=0;i<c.length;i++){
             int r= random.nextInt(6);
-            t.towerEnum(r);
-            this.towers.add(t);
+            this.towers.add(new Tower(20, c[i], 20, 5, r));
         }
     }
 

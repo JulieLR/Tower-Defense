@@ -4,18 +4,16 @@ import java.lang.Math.*;
 
 public class Tower extends Entities {
     // Attribut
-    //private int pointDeVie;
     private int prix;
-    private int type; // 0: physique, 1: magique
-    //private int id; // identifiant pour savoir quelle tour specifiquement
+    private int type;
     public enum TowerColor {TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA};
     private TowerColor towerColor;
     
     public Tower(int prix, Coordinates pos,int degat,float vitesseAtk, int n){
         super(vitesseAtk, pos, degat);
         this.prix=prix;
-        this.towerColor=colorTower(n);
-        towerType();
+        this.towerColor=this.colorTower(n);
+        this.towerType();
         
     }
 
