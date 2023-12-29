@@ -134,6 +134,7 @@ public class EnemiesGraphics implements Graphic{
         int f = (int)(200f/e.getSpeed());
         int h = (int)(100f/e.getSpeed());
         
+        
         if(time%a<h){
             g.drawImage(this.batAsset.get(0+x),(int) e.getPos().getX()-this.game.getTileSize()/2,(int)e.getPos().getY()-this.game.getTileSize(),this.game.getTileSize()*2,this.game.getTileSize(), null);
         }

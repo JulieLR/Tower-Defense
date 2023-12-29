@@ -67,7 +67,7 @@ public class Game extends JPanel implements Runnable {
 
     public Game(){
 
-        this.mapImage = getImage("src/ressources/map/sprite1.png");
+        this.mapImage = getImage("src/ressources/map/sprite.png");
         this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
         this.batImage = getImage("src/ressources/enemies/batSprite.png");
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
@@ -158,7 +158,7 @@ public class Game extends JPanel implements Runnable {
 
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
         enemies.drawImages(g);
-        mapGraphics.drawStartTile(g);
+        mapGraphics.drawBottomBar(g);
 
         g.dispose(); //
     }
