@@ -70,17 +70,16 @@ public class TowerGraphics implements Graphic {
         int t0= (int) (n/t.getVitesseAtk());
         int t1= (int) (n*2/t.getVitesseAtk());
         int t2= (int) (n*3/t.getVitesseAtk());
-        g.
 
-        /* if (time%t0<t1) {
-            g.drawImage(this.towerAsset.get(t.getId()+6), (int)t.getPos().getX(), (int)t.getPos().getY(), this.game.getTileSize(),this.game.getTileSize(), null);
+        if (time%t0<t1) {
+            //g.drawImage(this.towerAsset.get(t.getId()+6), (int)t.getPos().getX(), (int)t.getPos().getY(), this.game.getTileSize(),this.game.getTileSize(), null);
         } 
         else if (time%t0<t2) {
-            g.drawImage(this.towerAsset.get(t.getId()+6*2), (int)t.getPos().getX(), (int)t.getPos().getY(), this.game.getTileSize(),this.game.getTileSize(), null);
+            //g.drawImage(this.towerAsset.get(t.getId()+6*2), (int)t.getPos().getX(), (int)t.getPos().getY(), this.game.getTileSize(),this.game.getTileSize(), null);
         }
         else {
-            g.drawImage(this.towerAsset.get(t.getId()+6*3), (int)t.getPos().getX(), (int)t.getPos().getY(), this.game.getTileSize(),this.game.getTileSize(), null);
-        } */
+            //g.drawImage(this.towerAsset.get(t.getId()+6*3), (int)t.getPos().getX(), (int)t.getPos().getY(), this.game.getTileSize(),this.game.getTileSize(), null);
+        } 
 
 
     }
@@ -108,7 +107,7 @@ public class TowerGraphics implements Graphic {
         long time= System.currentTimeMillis();
         for (int i=0; i<this.towerConfig.getNbTower()&& i<6; i++) {
             g.drawImage(towerAsset.get(i+1), (int)this.towerConfig.getPosTower()[i].getX(), (int)this.towerConfig.getPosTower()[i].getY(), this.game.getTileSize(), this.game.getTileSize()*2,null);  
-            System.out.println(this.tower.get(i+1).getId());
+            //System.out.println(this.tower.get(i+1).getId());
         }
         for (Tower t: tower) {
             attaqueDraw(g, time, t);
