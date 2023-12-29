@@ -64,6 +64,24 @@ public class TowerGraphics implements Graphic {
         return 0;
     }
 
+    private void attackTowerBlueDraw (Graphics g, long time, Tower t, Direction d) {
+        float n= 150f;
+        int t0= (int) (n/t.getVitesseAtk());
+        int t1= (int) (n*2/t.getVitesseAtk());
+        int t2= (int) (n*3/t.getVitesseAtk());
+        int t3= (int) (n*4/t.getVitesseAtk());
+
+        int nb=6;
+        System.out.println(t.idColorTower());
+        if (time%t3<t0) {
+            g.drawImage(this.towerAsset.get(t.idColorTower()+nb), (int)t.getPos().getX()+this.game.getTileSize()*attaqueDirection(d)[0], (int)t.getPos().getY()+this.game.getTileSize()*attaqueDirection(d)[1], this.game.getTileSize(),this.game.getTileSize(), null);
+        } else if (time%t3<t1) {
+            g.drawImage(this.towerAsset.get(t.idColorTower()+nb*2), (int)t.getPos().getX()+this.game.getTileSize()*2*attaqueDirection(d)[0], (int)t.getPos().getY()+this.game.getTileSize()*2*attaqueDirection(d)[1], this.game.getTileSize(),this.game.getTileSize(), null);
+        } else if (time%t3<t2) {
+            g.drawImage(this.towerAsset.get(t.idColorTower()+nb*3), (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0], (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1], this.game.getTileSize(),this.game.getTileSize(), null);
+        } 
+    }
+
     private void attackTowerRedDraw (Graphics g, long time, Tower t, Direction d) {
         float n= 150f;
         int t0= (int) (n/t.getVitesseAtk());
@@ -72,16 +90,14 @@ public class TowerGraphics implements Graphic {
         int t3= (int) (n*4/t.getVitesseAtk());
 
         int nb=6;
-        System.out.println(this.towerConfig.getTowers().get(1).idTower());
-        //if (isMagic(t.getId())) {
+        System.out.println(t.idColorTower());
         if (time%t3<t0) {
-            g.drawImage(this.towerAsset.get(this.towerConfig.getTowers().get(2).idTower()+nb), (int)t.getPos().getX()+this.game.getTileSize()*attaqueDirection(d)[0], (int)t.getPos().getY()+this.game.getTileSize()*attaqueDirection(d)[1], this.game.getTileSize(),this.game.getTileSize(), null);
+            g.drawImage(this.towerAsset.get(t.idColorTower()+nb), (int)t.getPos().getX()+this.game.getTileSize()*attaqueDirection(d)[0], (int)t.getPos().getY()+this.game.getTileSize()*attaqueDirection(d)[1], this.game.getTileSize(),this.game.getTileSize(), null);
         } else if (time%t3<t1) {
-            g.drawImage(this.towerAsset.get(this.towerConfig.getTowers().get(2).idTower()+nb*2), (int)t.getPos().getX()+this.game.getTileSize()*2*attaqueDirection(d)[0], (int)t.getPos().getY()+this.game.getTileSize()*2*attaqueDirection(d)[1], this.game.getTileSize(),this.game.getTileSize(), null);
+            g.drawImage(this.towerAsset.get(t.idColorTower()+nb*2), (int)t.getPos().getX()+this.game.getTileSize()*2*attaqueDirection(d)[0], (int)t.getPos().getY()+this.game.getTileSize()*2*attaqueDirection(d)[1], this.game.getTileSize(),this.game.getTileSize(), null);
         } else if (time%t3<t2) {
-            g.drawImage(this.towerAsset.get(this.towerConfig.getTowers().get(2).idTower()+nb*3), (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0], (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1], this.game.getTileSize(),this.game.getTileSize(), null);
+            g.drawImage(this.towerAsset.get(t.idColorTower()+nb*3), (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0], (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1], this.game.getTileSize(),this.game.getTileSize(), null);
         } 
-        //}
     }
 
 
@@ -105,15 +121,26 @@ public class TowerGraphics implements Graphic {
     @Override
     public void drawImages(Graphics g) {
         long time= System.currentTimeMillis();
-        for (int i=0; i<this.towerConfig.getNbTower()&& i<6; i++) {
-            g.drawImage(towerAsset.get(i+1), (int)this.towerConfig.getPosTower()[i].getX(), (int)this.towerConfig.getPosTower()[i].getY(), this.game.getTileSize(), this.game.getTileSize()*2,null);  
-            //System.out.println(this.tower.get(i+1).getId());
+        for (int i=0; i<this.towerConfig.getNbTower(); i++) {
+            g.drawImage(towerAsset.get(this.towerConfig.getTowers().get(i).idColorTower()), (int)this.towerConfig.getPosTower()[i].getX(), (int)this.towerConfig.getPosTower()[i].getY(), this.game.getTileSize(), this.game.getTileSize()*2,null);  
+            System.out.println(this.towerConfig.getTowers().get(i).idColorTower());
         }
         for (Tower t: tower) {
-            if (t.getTowerColor()==TowerColor.TOWER_RED) {
-                attackTowerRedDraw(g, time, t, Direction.EAST);
-            }
+            switch (t.getTowerColor()) {
+                case TOWER_BLUE: attackTowerBlueDraw(g, time, t, Direction.NORTH); break;
+                case TOWER_ORANGE: 
+                    break;
+                case TOWER_RED: attackTowerRedDraw(g, time, t, Direction.WEST); break;
+                case TOWER_SMALL: 
+                    break;
+                case TOWER_MEDIUM:
+                    break;
+                case TOWER_EXTRA:
+                    break;
+            } 
+
         }
+        
         // attaqueDraw(g, time, this.towerConfig.getTowers().get(1));
     }
 

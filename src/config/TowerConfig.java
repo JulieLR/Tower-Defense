@@ -4,6 +4,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 import config.Tile.Type;
 import gui.Game;
@@ -40,8 +41,10 @@ public class TowerConfig implements Serializable{
     }
 
     public void addTower(Coordinates [] c){
+        Random random= new Random();
         for(int i=0;i<c.length;i++){
-            this.towers.add(new Tower(20, c[i], 5, 0.5f, i));
+            int r= random.nextInt(6);
+            this.towers.add(new Tower(20, c[i], 5, 0.5f, r));
         }
     }
 
