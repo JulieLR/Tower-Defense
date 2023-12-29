@@ -33,13 +33,22 @@ public class Tower extends Entities {
         return this.type;
     }
     public void towerType () {
-        type=-1;
+        this.type=-1;
         if (0>=idColorTower() && idColorTower()>=2) {
-            this.type=0;
-        }
-        else if (3>=idColorTower() && idColorTower()>=5) {
             this.type=1;
         }
+        else if (3>=idColorTower() && idColorTower()>=5) {
+            this.type=0;
+        }
+    }
+    // si la tour fait des degats magiques
+    public boolean isMagic () {
+        return this.getTowerColor()==TowerColor.TOWER_BLUE || this.getTowerColor()==TowerColor.TOWER_ORANGE || this.getTowerColor()==TowerColor.TOWER_RED;
+    }
+
+    // si la tour fait des degats physiques
+    public boolean isPhysic () {
+        return this.getTowerColor()==TowerColor.TOWER_SMALL || this.getTowerColor()==TowerColor.TOWER_MEDIUM || this.getTowerColor()==TowerColor.TOWER_EXTRA;
     }
 
     public TowerColor getTowerColor () {
