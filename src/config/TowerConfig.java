@@ -212,11 +212,13 @@ public class TowerConfig implements Serializable{
 
     }
 
+    // zone d'attaque rectangulaire de la i-ème tour
     private Rectangle zoneAtk (int width, int height, int iTower) {
         Rectangle zone= new Rectangle((int)this.getPosTower()[iTower].getX()-width/2, (int)this.getPosTower()[iTower].getY()-height/2, width, height);
         return zone;  
     }
 
+    // si aux coordonnees (x, y) il y a un ennemi
     private boolean isEnemy (int x, int y) {
         if (this.game.getEnemyConfig().getE().getPos().getX()==x && this.game.getEnemyConfig().getE().getPos().getY()==y) {
             return true;
@@ -224,6 +226,7 @@ public class TowerConfig implements Serializable{
         return false;
     }
 
+    // si dans la zone rectangulaire il y a un ennemi
     private boolean isEnemyInZone (int width, int height, int iTower) {
         for (int ligne= 0; ligne<zoneAtk(width, height, iTower).getWidth(); ligne++) {
             for (int col= 0; col<zoneAtk(width, height, iTower).getWidth(); col++) {
@@ -231,6 +234,10 @@ public class TowerConfig implements Serializable{
             }
         }
         return true;
+    }
+
+    public int idTowerBlue () {
+        return this.TOWER_BLUE.getId();
     }
     
     // distance entre les deux personnes 
