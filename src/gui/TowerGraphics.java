@@ -100,7 +100,7 @@ public class TowerGraphics implements Graphic {
                     null);
             } else if (t.isPhysic()) {
                 g.drawImage(
-                    this.towerAsset.get(t.idColorTower()+nb), 
+                    this.towerAsset.get(t.idColorTower()+nb*2), 
                     (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0], 
                     (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1], 
                     this.game.getTileSize(),
@@ -151,7 +151,7 @@ public class TowerGraphics implements Graphic {
             // System.out.println(this.towerConfig.getTowers().get(i).idColorTower());
         }
         for (Tower t: tower) {
-            attackTowerDraw(g, time, t, Direction.EAST);
+            attackTowerDraw(g, time, t, Direction.NORTH);
         }
         
         // attaqueDraw(g, time, this.towerConfig.getTowers().get(1));
