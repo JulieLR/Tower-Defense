@@ -11,50 +11,31 @@ import model.Coordinates;
 import model.Enemy;
 import model.Entities;
 import model.Tower;
+import model.Tower.TowerColor;
 
 public class TowerConfig implements Serializable{
-    private enum TowerType {TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA};
     private BufferedImage towerImage;
     // public transient BufferedImage towerImageTransient; // transient pour igniorer le serializes
     // private static final int serialVersionUID= 1;
     private ArrayList<Tower> towers= new ArrayList<> ();
     private Coordinates pos;
     private Game game;
-    // private Tower t;
+    private Tower t;
     
     public TowerConfig (Game game) /* throws IOException, ClassNotFoundException */ {
         this.game=game;
-        //this.pos=this.game.getMapConfig().getPosTower()[0];
-        //this.pos=new Coordinates(3, 3);
-        //this.t= new Tower(75, pos, 40, 1, 1, 0);
-        //createTile();
-        //System.out.println(getNbTower());
+        this.t= new Tower(75, pos, 40, 1, 1, TowerColor.TOWER_BLUE);
         addTower(getPosTower());
-
-        //towerSerialize(towerImage, "TowerManager.ser");
-        //towerDeserialize("TowerManager.ser");
         //loadTowerImage();
     }
 
     private void createTile() {
-        towers.add(new Tower(75, pos, 40, 1, 1, idTower(TowerType.TOWER_BLUE)));
-        towers.add(new Tower(150, pos, 65, 3, 1, idTower(TowerType.TOWER_ORANGE)));
-        towers.add(new Tower(200, pos, 100, 5, 1, idTower(TowerType.TOWER_RED)));
-        towers.add(new Tower(25, pos, 10, 2, 0, idTower(TowerType.TOWER_SMALL)));
-        towers.add(new Tower(50, pos, 20, 5, 0, idTower(TowerType.TOWER_MEDIUM)));
-        towers.add(new Tower(150, pos, 60, 15, 0, idTower(TowerType.TOWER_EXTRA)));
-    }
-    
-    public int idTower (TowerType t) {
-        switch (t) {
-            case TOWER_BLUE: return 0;
-            case TOWER_ORANGE: return 1;
-            case TOWER_RED: return 2;
-            case TOWER_SMALL: return 3;
-            case TOWER_MEDIUM: return 4;
-            case TOWER_EXTRA: return 5;
-        }
-        return -1;
+        towers.add(new Tower(75, pos, 40, 1, 1, t.towerBlue()));
+        towers.add(new Tower(150, pos, 65, 3, 1, t.towerOrange()));
+        towers.add(new Tower(200, pos, 100, 5, 1, t.towerRed()));
+        towers.add(new Tower(25, pos, 10, 2, 0, t.towerSmall()));
+        towers.add(new Tower(50, pos, 20, 5, 0, t.towerMedium()));
+        towers.add(new Tower(150, pos, 60, 15, 0, t.towerExtra()));
     }
 
     private void loadTowerImage () {
@@ -110,19 +91,49 @@ public class TowerConfig implements Serializable{
         }
         return null;
     }
+
+    public Tower getTower () {
+        return this.t;
+    }
     
+    public ArrayList<Tower> getTowers () {
+        return this.towers;
+    }
+
+    public void addTower(Coordinates [] c){
+        for(int i=0;i<c.length;i++){
+            this.towers.add(new Tower(20, c[i], 5, 0.5f, 0, t.ColorTower(i)));
+        }
+    }
+    
+    // si la tour fait des degats magiques
+    public boolean isPhysic (int ind) {
+        return this.towers.get(ind).getType()==0;
+    }
+
+    // si la tour fait des degats physiques
+    public boolean isMagic (int ind) {
+        return this.towers.get(ind).getType()==1;
+    }
+    
+    /* 
+    // le type de la tuile aux coordonnées (x, y)
     private Type getTileType(int x, int y) {
         return game.getTileType(x,y);
     }
 
+    // si la tuile aux coordonnees c correspond a une tour
     private boolean isTower(Coordinates c){
         return(getTileType((int)c.getX(),(int)c.getY())==Type.TOWER);
     }
 
+    // si la tuile aux coordonnees c correspond a une route (pour les ennemis)
     private boolean isPath(Coordinates c){
         return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH);
     }
-    /* private boolean isEnemy(Coordinates c){
+    
+    // si la tuile aux coordonnees c contient un ennemis (pas fini, et marche pas)
+    private boolean isEnemy(Coordinates c){
         return(getTileType((int)c.getX(),(int)c.getY())==Type.TOWER);
     } */
  
@@ -130,10 +141,6 @@ public class TowerConfig implements Serializable{
     private void attaque (Enemy enemy, Tower tower) {
         enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
         System.out.println("point de vie ennemi = "+enemy.getPointDeVie());
-    }
-
-    public ArrayList<Tower> getTowers () {
-        return this.towers;
     }
 
     // le nombre de tours qu'il y a sur la map
@@ -162,12 +169,6 @@ public class TowerConfig implements Serializable{
             }
         }
         return posTower;
-    }
-
-    public void addTower(Coordinates [] c){
-        for(int i=0;i<c.length;i++){
-            this.towers.add(new Tower(20, c[i], 5, 0.5f, 0, 0));
-        }
     }
 
     // zone d'attaque rectangulaire de la i-ème tour
