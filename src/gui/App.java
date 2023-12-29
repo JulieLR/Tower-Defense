@@ -10,6 +10,7 @@ import inputs.Mouse_Listener;
 public class App extends JFrame{
 
     private Game game;
+    private Menu menu;
     private Mouse_Listener mouseListener; 
     private Keyboard_Listener keyboardlistener;
 
@@ -40,8 +41,9 @@ public class App extends JFrame{
 
     public static void main(String[] args) throws IOException {
         System.out.println("Hey");
-        App app = new App();
-        app.initInput();
+        //App app = new App();
+        Menu menu = new Menu();
+        //app.initInput();
         //Menu menu = new Menu();
         
         
