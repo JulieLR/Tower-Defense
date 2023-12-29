@@ -70,6 +70,7 @@ public class TowerGraphics implements Graphic {
         int t0= (int) (n/t.getVitesseAtk());
         int t1= (int) (n*2/t.getVitesseAtk());
         int t2= (int) (n*3/t.getVitesseAtk());
+        g.
 
         /* if (time%t0<t1) {
             g.drawImage(this.towerAsset.get(t.getId()+6), (int)t.getPos().getX(), (int)t.getPos().getY(), this.game.getTileSize(),this.game.getTileSize(), null);
@@ -112,6 +113,7 @@ public class TowerGraphics implements Graphic {
         for (Tower t: tower) {
             attaqueDraw(g, time, t);
         }
+        // attaqueDraw(g, time, this.towerConfig.getTowers().get(1));
     }
 
 }
