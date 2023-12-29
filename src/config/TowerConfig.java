@@ -110,16 +110,6 @@ public class TowerConfig implements Serializable{
         return this.towers;
     }
     
-    // si la tour fait des degats magiques
-    public boolean isPhysic (int ind) {
-        return this.towers.get(ind).getType()==0;
-    }
-
-    // si la tour fait des degats physiques
-    public boolean isMagic (int ind) {
-        return this.towers.get(ind).getType()==1;
-    }
-    
     /* 
     // le type de la tuile aux coordonnées (x, y)
     private Type getTileType(int x, int y) {
