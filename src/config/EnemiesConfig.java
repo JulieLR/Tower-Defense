@@ -96,9 +96,7 @@ public class EnemiesConfig {
         }
         else if(isAtEnd(next)){
                 e.setAtEnd(true);
-                attaque(base, e);
-                System.out.println("u lost one life dang it");
-        }
+                attaque(base, e);        }
         else{
             setNextDir(e);
         }
