@@ -1,10 +1,6 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
 import java.awt.image.BufferedImage;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -16,7 +12,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Menu extends JFrame implements MouseListener{
@@ -46,16 +41,13 @@ public class Menu extends JFrame implements MouseListener{
         Fond fond = new Fond(this.fondImage, this.fondMenuImage,this.getWidth()/3, this.getHeight()/4);
         fond.setBounds(0, 0, this.fondImage.getWidth(), this.fondImage.getHeight());
 
-        /* Fond fond = new Fond(this.fondMenuImage);
-        fond.setBounds(this.getWidth()/3, this.getHeight()/4, 282, 336); */
-
         JButton playButton = new JButton();
         this.playButton=playButton;
         playButton.setBounds(this.getWidth()/3+70, (this.getHeight()/2)-50, 140, 56);
         playButton.setBackground(null);
         playButton.setIcon(new ImageIcon(assets.get(0)));
         makeTransparentBackground(playButton);
-        playButton.addActionListener(e -> playAction());
+        playButton.addMouseListener(this);
         fond.add(playButton);
 
         JButton settingsButton = new JButton();
@@ -64,7 +56,7 @@ public class Menu extends JFrame implements MouseListener{
         settingsButton.setBackground(null);
         settingsButton.setIcon(new ImageIcon(assets.get(2)));
         makeTransparentBackground(settingsButton);
-        settingsButton.addActionListener(e -> new Settings(this));
+        settingsButton.addMouseListener(this);
         fond.add(settingsButton);
 
         JButton quitButton = new JButton();
@@ -73,7 +65,6 @@ public class Menu extends JFrame implements MouseListener{
         quitButton.setBackground(null);
         quitButton.setIcon(new ImageIcon(assets.get(4)));
         makeTransparentBackground(quitButton);
-        quitButton.addActionListener(e -> this.dispose());
         quitButton.addMouseListener(this);
         fond.add(quitButton); 
 
@@ -104,7 +95,7 @@ public class Menu extends JFrame implements MouseListener{
     }
 
     public void playAction(){
-
+        playButton.setIcon(new ImageIcon(assets.get(1)));
         new App();
         dispose();
 
@@ -136,32 +127,44 @@ public class Menu extends JFrame implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseClicked'");
+        
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mousePressed'");
+        if(e.getSource()== playButton){
+            playButton.setIcon(new ImageIcon(assets.get(1)));
+        }
+        else if((e.getSource()== settingsButton)){
+            settingsButton.setIcon(new ImageIcon(assets.get(3)));
+        }
+        else if((e.getSource()== quitButton)){
+            quitButton.setIcon(new ImageIcon(assets.get(5)));
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseReleased'");
+        if(e.getSource()== playButton){
+            playButton.setIcon(new ImageIcon(assets.get(0)));
+            playAction();
+        }
+        else if((e.getSource()== settingsButton)){
+            settingsButton.setIcon(new ImageIcon(assets.get(2)));
+            new Settings(this);
+        }
+        else if((e.getSource()== quitButton)){
+            quitButton.setIcon(new ImageIcon(assets.get(4)));
+            this.dispose();
+        }
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseEntered'");
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mouseExited'");
     }
 
 }
