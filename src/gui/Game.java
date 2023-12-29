@@ -160,6 +160,9 @@ public class Game extends JPanel implements Runnable {
     public BufferedImage getBatImage() {
         return batImage;
     }
+    public EnemiesConfig getEnemyConfig () {
+        return this.enemiesConfig;
+    }
 
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
