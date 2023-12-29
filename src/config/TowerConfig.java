@@ -162,8 +162,12 @@ public class TowerConfig implements Serializable{
         return false;
     }
 
-    private boolean isEnemyInZone () {
-        
+    private boolean isEnemyInZone (int width, int height, int iTower) {
+        for (int ligne= 0; ligne<zoneAtk(width, height, iTower).getWidth(); ligne++) {
+            for (int col= 0; col<zoneAtk(width, height, iTower).getWidth(); col++) {
+                return isEnemy(ligne, col);
+            }
+        }
         return true;
     }
     
