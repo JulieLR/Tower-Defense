@@ -27,8 +27,9 @@ public class TowerConfig implements Serializable{
         //this.pos=this.game.getMapConfig().getPosTower()[0];
         //this.pos=new Coordinates(3, 3);
         //this.t= new Tower(75, pos, 40, 1, 1, 0);
-        createTile();
+        //createTile();
         System.out.println(getNbTower());
+        addTower(getPosTower());
 
         //towerSerialize(towerImage, "TowerManager.ser");
         //towerDeserialize("TowerManager.ser");
@@ -149,7 +150,12 @@ public class TowerConfig implements Serializable{
             }
         }
         return posTower;
+    }
 
+    public void addTower(Coordinates [] c){
+        for(int i=0;i<c.length;i++){
+            this.towers.add(new Tower(20, c[i], 5, 0.5f, 0, 0));
+        }
     }
 
     // zone d'attaque rectangulaire de la i-ème tour
