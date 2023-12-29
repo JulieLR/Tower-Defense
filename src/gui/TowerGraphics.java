@@ -22,7 +22,7 @@ public class TowerGraphics implements Graphic {
         this.towerConfig= towerConfig;
         this.tower= towerConfig.getTowers();
 
-        addAsset();
+        this.addAsset();
         //loadTowerImages();
     }
 
@@ -45,31 +45,12 @@ public class TowerGraphics implements Graphic {
          
     }
 
-    // la i-eme attaque (boule, ou fleche)
-    private int idAttaqueTower (int id) {
-        switch (id%6) {
-            case 0: return id;
-            case 1: 
-                break;
-            case 2: 
-                break;
-            case 3: 
-                break;
-            case 4: 
-                break;
-            case 5:
-                break;
-        }
-
-        return 0;
-    }
-
     private void attackTowerDraw (Graphics g, long time, Tower t, Direction d) {
         float n= 150f;
         int t0= (int) (n/t.getVitesseAtk());
-        int t1= (int) (n*2/t.getVitesseAtk());
-        int t2= (int) (n*3/t.getVitesseAtk());
-        int t3= (int) (n*4/t.getVitesseAtk());
+        int t1= (int) (n*2.0f/t.getVitesseAtk());
+        int t2= (int) (n*3.0f/t.getVitesseAtk());
+        int t3= (int) (n*4.0f/t.getVitesseAtk());
 
         int nb=6;
         // System.out.println(t.isMagic());
@@ -151,7 +132,7 @@ public class TowerGraphics implements Graphic {
             // System.out.println(this.towerConfig.getTowers().get(i).idColorTower());
         }
         for (Tower t: tower) {
-            attackTowerDraw(g, time, t, Direction.NORTH);
+            attackTowerDraw(g, time, t, Direction.EAST);
         }
         
         // attaqueDraw(g, time, this.towerConfig.getTowers().get(1));
