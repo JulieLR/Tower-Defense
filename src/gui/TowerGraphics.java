@@ -151,7 +151,7 @@ public class TowerGraphics implements Graphic {
             // System.out.println(this.towerConfig.getTowers().get(i).idColorTower());
         }
         for (Tower t: tower) {
-            attackTowerDraw(g, time, t, Direction.NORTH);
+            attackTowerDraw(g, time, t, Direction.EAST);
         }
         
         // attaqueDraw(g, time, this.towerConfig.getTowers().get(1));
