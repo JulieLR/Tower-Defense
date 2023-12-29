@@ -21,7 +21,7 @@ public class TowerConfig implements Serializable{
     private ArrayList<Tower> towers= new ArrayList<> ();
     private Coordinates pos;
     private Game game;
-    private Tower t;
+    //private Tower t;
     
     public TowerConfig (Game game) /* throws IOException, ClassNotFoundException */ {
         this.game=game;
@@ -102,9 +102,9 @@ public class TowerConfig implements Serializable{
         return null;
     }
 
-    public Tower getTower () {
-        return this.t;
-    }
+    //public Tower getTower () {
+    //    return this.t;
+    //}
     
     public ArrayList<Tower> getTowers () {
         return this.towers;
