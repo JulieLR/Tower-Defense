@@ -171,8 +171,6 @@ public class Game extends JPanel implements Runnable {
         enemies.drawImages(g);
         mapGraphics.drawBottomBar(g);
 
-
-
         g.dispose(); //
     }
 

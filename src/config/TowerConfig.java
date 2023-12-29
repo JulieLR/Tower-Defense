@@ -208,25 +208,6 @@ public class TowerConfig implements Serializable{
     public void enemyOvertake (Enemy e0, Enemy e1) {
 
     }
-
-
-
-    // si dans la zone rectangulaire il y a un ennemi
-    private boolean isEnemyInZone (int width, int height, int iTower) {
-        for (int ligne= 0; ligne<zoneAtk(width, height, iTower).getWidth(); ligne++) {
-            for (int col= 0; col<zoneAtk(width, height, iTower).getWidth(); col++) {
-                return isEnemy(ligne, col);
-            }
-        }
-        return n;
-    }
-    
-    // distance entre les deux personnes 
-   /*  public double disBetween (Personnages p) {
-        return Math.sqrt(
-        Math.pow(p.position.x()-this.position.x(),2) +
-        Math.pow(p.position.y()-this.position.y(),2));
-    }*/
     
     // distance entre les deux personnes 
    /*  public double disBetween (Personnages p) {
@@ -235,5 +216,6 @@ public class TowerConfig implements Serializable{
         Math.pow(p.position.y()-this.position.y(),2));
     }*/
 
+    
     
 }
