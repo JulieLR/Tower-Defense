@@ -21,11 +21,9 @@ public class TowerConfig implements Serializable{
     private ArrayList<Tower> towers= new ArrayList<> ();
     private Coordinates pos;
     private Game game;
-    private Tower t;
     
     public TowerConfig (Game game) /* throws IOException, ClassNotFoundException */ {
         this.game=game;
-        //this.t= new Tower(75, pos, 40, 1, 0);
         //createTile();
         addTower(getPosTower());
         //loadTowerImage();
@@ -41,7 +39,7 @@ public class TowerConfig implements Serializable{
         towers.add(new Tower(150, pos, 60, 15, 5));
     }
 
-    public void addTower(Coordinates [] c){
+    public void addTower(Coordinates[] c){
         Random random= new Random();
         for(int i=0;i<c.length;i++){
             int r= random.nextInt(6);
@@ -102,10 +100,6 @@ public class TowerConfig implements Serializable{
         }
         return null;
     }
-
-    //public Tower getTower () {
-    //    return this.t;
-    //}
     
     public ArrayList<Tower> getTowers () {
         return this.towers;
