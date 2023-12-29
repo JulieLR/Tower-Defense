@@ -11,11 +11,11 @@ public class Tower extends Entities {
     public enum TowerColor {TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA};
     private TowerColor towerColor;
     
-    public Tower(int prix, Coordinates pos,int degat,float vitesseAtk, int type, TowerColor towerColor){
+    public Tower(int prix, Coordinates pos,int degat,float vitesseAtk, int n){
     super(vitesseAtk, pos, degat);
     this.prix=prix;
-    this.type=type;
-    this.towerColor=towerColor;
+    this.towerColor=ColorTower(n);
+    towerType();
     }
 
     // Methodes
@@ -31,8 +31,14 @@ public class Tower extends Entities {
     public int getType () {
         return this.type;
     }
-    public void setType (int type) {
-        this.type= type;
+    public void towerType () {
+        type=-1;
+        if (0>=idTower() && idTower()>=2) {
+            this.type=0;
+        }
+        else if (3>=idTower() && idTower()>=5) {
+            this.type=1;
+        }
     }
 
     public TowerColor getTowerColor () {
