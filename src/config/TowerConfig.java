@@ -29,6 +29,7 @@ public class TowerConfig implements Serializable{
         //createTile();
         addTower(getPosTower());
         //loadTowerImage();
+        System.out.println("ok");
     }
 
     private void createTile() {
