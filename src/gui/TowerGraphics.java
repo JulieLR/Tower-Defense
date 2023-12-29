@@ -67,18 +67,18 @@ public class TowerGraphics implements Graphic {
 
     private void attaqueDraw (Graphics g, long time, Tower t) {
         float n= 200f;
-        int t0= (int) (n/t.getVitesseAtk());
+        int t0= (int) (n*3/t.getVitesseAtk());
         int t1= (int) (n*2/t.getVitesseAtk());
-        int t2= (int) (n*3/t.getVitesseAtk());
+        int t2= (int) (n/t.getVitesseAtk());
 
-        if (time%t0<t1) {
-            //g.drawImage(this.towerAsset.get(t.getId()+6), (int)t.getPos().getX(), (int)t.getPos().getY(), this.game.getTileSize(),this.game.getTileSize(), null);
+        if (time%t0<t2) {
+            g.drawImage(this.towerAsset.get(t.getId()+6), (int)t.getPos().getX(), (int)t.getPos().getY()+this.game.getTileSize(), this.game.getTileSize(),this.game.getTileSize(), null);
         } 
-        else if (time%t0<t2) {
-            //g.drawImage(this.towerAsset.get(t.getId()+6*2), (int)t.getPos().getX(), (int)t.getPos().getY(), this.game.getTileSize(),this.game.getTileSize(), null);
+        else if (time%t0<t1) {
+            g.drawImage(this.towerAsset.get(t.getId()+6*2), (int)t.getPos().getX(), (int)t.getPos().getY()+this.game.getTileSize()*2, this.game.getTileSize(),this.game.getTileSize(), null);
         }
         else {
-            //g.drawImage(this.towerAsset.get(t.getId()+6*3), (int)t.getPos().getX(), (int)t.getPos().getY(), this.game.getTileSize(),this.game.getTileSize(), null);
+            g.drawImage(this.towerAsset.get(t.getId()+6*3), (int)t.getPos().getX(), (int)t.getPos().getY()+this.game.getTileSize()*3, this.game.getTileSize(),this.game.getTileSize(), null);
         } 
 
 
