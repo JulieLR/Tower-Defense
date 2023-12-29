@@ -1,10 +1,9 @@
 package gui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.GridLayout;
-import java.awt.LayoutManager;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -13,103 +12,159 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class Menu extends JFrame {
+public class Menu extends JFrame implements MouseListener{
 
-    private JLabel fond;
-    private JPanel boutons= new JPanel();
-    private JButton playButton, quitButton;
     private BufferedImage buttonImage;
+    private BufferedImage fondMenuImage;
     private BufferedImage fondImage;
     private ArrayList<BufferedImage> assets = new ArrayList<>();
 
+    private JButton quitButton,playButton,settingsButton;
+
     public Menu(){
-        
-        /*this.buttonImage=getImage("src/ressources/buttons.png");
-        this.fondImage=getImage("src/ressources/background.png");
 
-        //setSize(350,470);
-        setSize(700,700);
-        setBounds(0, 0, 700, 700);
-        setVisible(true);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        this.getContentPane().setBackground(new Color(51, 50, 61));
-
-        this.fond=new JLabel(new ImageIcon(this.fondImage), JLabel.CENTER);   
-        addAsset();
-        assets.add(fondImage);
-        
-        this.fond.setBounds(60, 20, 564, 672);
-        fond.setIcon(new ImageIcon(assets.get(6)));
-
-        playButton = new JButton();
-        playButton.setIcon(new ImageIcon(assets.get(0)));
-        playButton.setBorder(null);
-        playButton.setBackground(null);
-        playButton.setVisible(true);
-
-        quitButton = new JButton();
-        quitButton.setIcon(new ImageIcon(assets.get(1)));
-
-        quitButton.setVisible(true);
-        quitButton.setBorder(null);
-        quitButton.setBackground(null);
-
-
-        //boutons.setLayout(new GridLayout(2, 1));
-        //boutons.setSize(new Dimension(50, 50));
-        boutons.setBounds(200,200,120,20);
-        boutons.add(playButton);
-        boutons.setVisible(true);
-        //boutons.add(quitButton);
-
-        this.getContentPane().add(boutons);
-        this.getContentPane().add(fond);
-        //add(boutons);*/
-
+        this.fondMenuImage = getImage("src/ressources/menu/background.png");
+        this.fondImage= getImage("src/ressources/menu/fond.png");
+        this.buttonImage = getImage("src/ressources/menu/buttons2.png");
 
         setLayout(null);
-        setBounds(0, 0, 700, 700);
+        setBounds(0, 0, 960, 640);
+        this.setTitle("TOWER DEFENSE");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         setVisible(true);
+        
+        addAsset();
 
-        JPanel panel = new JPanel();
-        panel.setBounds(this.getWidth()/4, this.getHeight()/4, 282, 336);
-        panel.setBackground(Color.BLACK);
+        Fond fond = new Fond(this.fondImage, this.fondMenuImage,this.getWidth()/3, this.getHeight()/4);
+        fond.setBounds(0, 0, this.fondImage.getWidth(), this.fondImage.getHeight());
 
-        JButton playButton = new JButton("PLAY");
-        playButton.setBounds(90, 120, 100, 50);
-        panel.add(playButton);
+        JButton playButton = new JButton();
+        this.playButton=playButton;
+        playButton.setBounds(this.getWidth()/3+70, (this.getHeight()/2)-50, 140, 56);
+        playButton.setBackground(null);
+        playButton.setIcon(new ImageIcon(assets.get(0)));
+        makeTransparentBackground(playButton);
+        playButton.addMouseListener(this);
+        fond.add(playButton);
 
-        JButton quitButton = new JButton("QUIT");
-        quitButton.setBounds(90, 180, 100, 50);
-        panel.add(quitButton);
+        JButton settingsButton = new JButton();
+        this.settingsButton=settingsButton;
+        settingsButton.setBounds(this.getWidth()/3+70, (this.getHeight()/2+15), 140, 56);
+        settingsButton.setBackground(null);
+        settingsButton.setIcon(new ImageIcon(assets.get(2)));
+        makeTransparentBackground(settingsButton);
+        settingsButton.addMouseListener(this);
+        fond.add(settingsButton);
 
-        this.add(panel);
+        JButton quitButton = new JButton();
+        this.quitButton=quitButton;
+        quitButton.setBounds(this.getWidth()/3+70, (this.getHeight()/2)+80, 140, 56);
+        quitButton.setBackground(null);
+        quitButton.setIcon(new ImageIcon(assets.get(4)));
+        makeTransparentBackground(quitButton);
+        quitButton.addMouseListener(this);
+        fond.add(quitButton); 
+
+        this.add(fond);
+
+    }
+
+    public class Fond extends JPanel{
+
+        private BufferedImage fondMenu;
+        private BufferedImage fond;
+        private int x, y;
+
+        public Fond(BufferedImage fond,BufferedImage fondMenu,int x,int y){
+            this.fond= fond;
+            this.fondMenu=fondMenu;
+            this.x=x;
+            this.y=y;
+
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            g.drawImage(fond, 0, 0, fond.getWidth(), fond.getHeight(), null);
+            g.drawImage(fondMenu, x, y, fondMenu.getWidth(), fondMenu.getHeight(), null);
+        }
+    }
+
+    public void playAction(){
+        playButton.setIcon(new ImageIcon(assets.get(1)));
+        new App();
+        dispose();
 
     }
 
     public BufferedImage getImage(String chemin){
-        BufferedImage img=null;
         try {
-            img = ImageIO.read(new File(chemin));
+            BufferedImage image = ImageIO.read(new File(chemin));
+            return image;
         }catch(IOException e){
             e.printStackTrace();
         }
-        return img;
+        return null;
     }
 
     public void addAsset() {
-        for(int i=0; i<3;i++){
-            for(int j=0;j<3;j++){
-                if(j!=1){
-                    assets.add(buttonImage.getSubimage(i*140, j*56, 140, 56));
-                }
+        for(int ligne=0; ligne<3;ligne++){
+            for(int col=0;col<2;col++){
+                assets.add(buttonImage.getSubimage(col*140,ligne*56, 140, 56));
             }
         }
+    }
+
+    public void makeTransparentBackground(JButton j){
+        j.setOpaque(false);
+        j.setContentAreaFilled(false);
+        j.setBorderPainted(false);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if(e.getSource()== playButton){
+            playButton.setIcon(new ImageIcon(assets.get(1)));
+        }
+        else if((e.getSource()== settingsButton)){
+            settingsButton.setIcon(new ImageIcon(assets.get(3)));
+        }
+        else if((e.getSource()== quitButton)){
+            quitButton.setIcon(new ImageIcon(assets.get(5)));
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if(e.getSource()== playButton){
+            playButton.setIcon(new ImageIcon(assets.get(0)));
+            playAction();
+        }
+        else if((e.getSource()== settingsButton)){
+            settingsButton.setIcon(new ImageIcon(assets.get(2)));
+            new Settings(this);
+        }
+        else if((e.getSource()== quitButton)){
+            quitButton.setIcon(new ImageIcon(assets.get(4)));
+            this.dispose();
+        }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
 
 }
