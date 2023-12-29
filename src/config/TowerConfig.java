@@ -13,7 +13,7 @@ import model.Entities;
 import model.Tower;
 
 public class TowerConfig implements Serializable{
-    private Tower TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA;
+    private enum TowerType {TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA};
     private BufferedImage towerImage;
     // public transient BufferedImage towerImageTransient; // transient pour igniorer le serializes
     // private static final int serialVersionUID= 1;
@@ -28,7 +28,7 @@ public class TowerConfig implements Serializable{
         //this.pos=new Coordinates(3, 3);
         //this.t= new Tower(75, pos, 40, 1, 1, 0);
         //createTile();
-        System.out.println(getNbTower());
+        //System.out.println(getNbTower());
         addTower(getPosTower());
 
         //towerSerialize(towerImage, "TowerManager.ser");
@@ -37,12 +37,24 @@ public class TowerConfig implements Serializable{
     }
 
     private void createTile() {
-        towers.add(TOWER_BLUE= new Tower(75, pos, 40, 1, 1, 0));
-        towers.add(TOWER_ORANGE= new Tower(150, pos, 65, 3, 1, 1));
-        towers.add(TOWER_RED= new Tower(200, pos, 100, 5, 1, 2));
-        towers.add(TOWER_SMALL= new Tower(25, pos, 10, 2, 0, 3));
-        towers.add(TOWER_MEDIUM= new Tower(50, pos, 20, 5, 0, 4));
-        towers.add(TOWER_EXTRA= new Tower(150, pos, 60, 15, 0, 5));
+        towers.add(new Tower(75, pos, 40, 1, 1, idTower(TowerType.TOWER_BLUE)));
+        towers.add(new Tower(150, pos, 65, 3, 1, idTower(TowerType.TOWER_ORANGE)));
+        towers.add(new Tower(200, pos, 100, 5, 1, idTower(TowerType.TOWER_RED)));
+        towers.add(new Tower(25, pos, 10, 2, 0, idTower(TowerType.TOWER_SMALL)));
+        towers.add(new Tower(50, pos, 20, 5, 0, idTower(TowerType.TOWER_MEDIUM)));
+        towers.add(new Tower(150, pos, 60, 15, 0, idTower(TowerType.TOWER_EXTRA)));
+    }
+    
+    public int idTower (TowerType t) {
+        switch (t) {
+            case TOWER_BLUE: return 0;
+            case TOWER_ORANGE: return 1;
+            case TOWER_RED: return 2;
+            case TOWER_SMALL: return 3;
+            case TOWER_MEDIUM: return 4;
+            case TOWER_EXTRA: return 5;
+        }
+        return -1;
     }
 
     private void loadTowerImage () {
@@ -172,18 +184,33 @@ public class TowerConfig implements Serializable{
         return false;
     }
 
-    // si dans la zone rectangulaire il y a un ennemi
-    private boolean isEnemyInZone (int width, int height, int iTower) {
-        for (int ligne= 0; ligne<zoneAtk(width, height, iTower).getWidth(); ligne++) {
-            for (int col= 0; col<zoneAtk(width, height, iTower).getWidth(); col++) {
-                return isEnemy(ligne, col);
+    // nombre d'enemis dans la zone rectangulaire
+    private int numberEnemyInZone (int width, int height, int iTower) {
+        int n=0;
+        for (int ligne= (int) zoneAtk(width, height, iTower).getX(); ligne<zoneAtk(width, height, iTower).getWidth(); ligne++) {
+            for (int col= (int) zoneAtk(width, height, iTower).getY(); col<zoneAtk(width, height, iTower).getWidth(); col++) {
+            n++;
             }
         }
-        return true;
+        return n;
     }
 
-    public int idTowerBlue () {
-        return this.TOWER_BLUE.getId();
+    // tableau des coordonnees des ennemis dans la zone de la tour voulu
+    public Coordinates[] CoordinatesEnemyInZone (Enemy e, int width, int height, int iTower) {
+        Coordinates[] coordinates= new Coordinates[numberEnemyInZone(width, height, iTower)];
+        int n=0;
+        for (int ligne= (int) zoneAtk(width, height, iTower).getX(); ligne<zoneAtk(width, height, iTower).getWidth(); ligne++) {
+            for (int col= (int) zoneAtk(width, height, iTower).getY(); col<zoneAtk(width, height, iTower).getWidth(); col++) {
+                coordinates[n]=new Coordinates(ligne, height);
+                n++;
+            }
+        }
+        return coordinates;
+    }
+
+    // inverse les positions de deux ennemis dans le tableau, si un ennemis depasse un autre
+    public void enemyOvertake (Enemy e0, Enemy e1) {
+
     }
     
     // distance entre les deux personnes 
