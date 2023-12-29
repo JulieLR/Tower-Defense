@@ -28,7 +28,7 @@ public class TowerConfig implements Serializable{
         //this.pos=new Coordinates(3, 3);
         //this.t= new Tower(75, pos, 40, 1, 1, 0);
         //createTile();
-        System.out.println(getNbTower());
+        //System.out.println(getNbTower());
         addTower(getPosTower());
 
         //towerSerialize(towerImage, "TowerManager.ser");
@@ -222,7 +222,7 @@ public class TowerConfig implements Serializable{
                 return isEnemy(ligne, col);
             }
         }
-        return true;
+        return n;
     }
     
     // distance entre les deux personnes 
