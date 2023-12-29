@@ -27,8 +27,9 @@ public class TowerConfig implements Serializable{
         //this.pos=this.game.getMapConfig().getPosTower()[0];
         //this.pos=new Coordinates(3, 3);
         //this.t= new Tower(75, pos, 40, 1, 1, 0);
-        createTile();
+        //createTile();
         System.out.println(getNbTower());
+        addTower(getPosTower());
 
         //towerSerialize(towerImage, "TowerManager.ser");
         //towerDeserialize("TowerManager.ser");
@@ -212,19 +213,7 @@ public class TowerConfig implements Serializable{
 
     }
 
-    // zone d'attaque rectangulaire de la i-ème tour
-    private Rectangle zoneAtk (int width, int height, int iTower) {
-        Rectangle zone= new Rectangle((int)this.getPosTower()[iTower].getX()-width/2, (int)this.getPosTower()[iTower].getY()-height/2, width, height);
-        return zone;  
-    }
 
-    // si aux coordonnees (x, y) il y a un ennemi
-    private boolean isEnemy (int x, int y) {
-        if (this.game.getEnemyConfig().getE().getPos().getX()==x && this.game.getEnemyConfig().getE().getPos().getY()==y) {
-            return true;
-        }
-        return false;
-    }
 
     // si dans la zone rectangulaire il y a un ennemi
     private boolean isEnemyInZone (int width, int height, int iTower) {
@@ -234,10 +223,6 @@ public class TowerConfig implements Serializable{
             }
         }
         return true;
-    }
-
-    public int idTowerBlue () {
-        return this.TOWER_BLUE.getId();
     }
     
     // distance entre les deux personnes 
