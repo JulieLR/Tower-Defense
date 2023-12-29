@@ -211,6 +211,30 @@ public class TowerConfig implements Serializable{
     public void enemyOvertake (Enemy e0, Enemy e1) {
 
     }
+
+    private Rectangle zoneAtk (int width, int height, int iTower) {
+        Rectangle zone= new Rectangle((int)this.getPosTower()[iTower].getX()-width/2, (int)this.getPosTower()[iTower].getY()-height/2, width, height);
+        return zone;  
+    }
+
+    private boolean isEnemy (int x, int y) {
+        if (this.game.getEnemyConfig().getE().getPos().getX()==x && this.game.getEnemyConfig().getE().getPos().getY()==y) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isEnemyInZone () {
+        
+        return true;
+    }
+    
+    // distance entre les deux personnes 
+   /*  public double disBetween (Personnages p) {
+        return Math.sqrt(
+        Math.pow(p.position.x()-this.position.x(),2) +
+        Math.pow(p.position.y()-this.position.y(),2));
+    }*/
     
     // distance entre les deux personnes 
    /*  public double disBetween (Personnages p) {
