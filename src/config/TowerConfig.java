@@ -118,7 +118,7 @@ public class TowerConfig implements Serializable{
         for (int ligne=0; ligne<this.game.getMapConfig().getMap().length; ligne++) {
             for (int col=0; col<this.game.getMapConfig().getMap()[0].length; col++) {
                 if (this.game.getMapConfig().getMap()[ligne][col].getType()==Type.TOWER) {
-                    posTower[n]= new Coordinates(ligne*this.game.getTileSize() , col*this.game.getTileSize()- this.game.getTileSize());
+                    posTower[n]= new Coordinates(ligne*this.game.getTileSize() , col*this.game.getTileSize());
                     n++;
                 }
             }

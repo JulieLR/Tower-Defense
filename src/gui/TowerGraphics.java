@@ -50,7 +50,7 @@ public class TowerGraphics implements Graphic {
             g.drawImage(
                 this.towerAsset.get(t.idColorTower()+nb), 
                 (int)t.getPos().getX()+this.game.getTileSize()*attaqueDirection(d)[0], 
-                (int)t.getPos().getY()+this.game.getTileSize()*attaqueDirection(d)[1], 
+                (int)t.getPos().getY()+this.game.getTileSize()*attaqueDirection(d)[1]- this.game.getTileSize(), 
                 this.game.getTileSize(),
                 this.game.getTileSize(), 
                 null);
@@ -59,7 +59,7 @@ public class TowerGraphics implements Graphic {
             g.drawImage(
                 this.towerAsset.get(t.idColorTower()+nb*2), 
                 (int)t.getPos().getX()+this.game.getTileSize()*2*attaqueDirection(d)[0], 
-                (int)t.getPos().getY()+this.game.getTileSize()*2*attaqueDirection(d)[1], 
+                (int)t.getPos().getY()+this.game.getTileSize()*2*attaqueDirection(d)[1]- this.game.getTileSize(), 
                 this.game.getTileSize(),
                 this.game.getTileSize(), 
                 null);
@@ -68,7 +68,7 @@ public class TowerGraphics implements Graphic {
                 g.drawImage(
                     this.towerAsset.get(t.idColorTower()+nb*3), 
                     (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0], 
-                    (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1], 
+                    (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1]- this.game.getTileSize(), 
                     this.game.getTileSize(),
                     this.game.getTileSize(), 
                     null);
@@ -76,7 +76,7 @@ public class TowerGraphics implements Graphic {
                 g.drawImage(
                     this.towerAsset.get(t.idColorTower()+nb*2), 
                     (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0], 
-                    (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1], 
+                    (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1]- this.game.getTileSize(), 
                     this.game.getTileSize(),
                     this.game.getTileSize(), 
                     null);
@@ -118,7 +118,7 @@ public class TowerGraphics implements Graphic {
             g.drawImage(
                 towerAsset.get(this.towerConfig.getTowers().get(i).idColorTower()), 
                 (int)this.towerConfig.getPosTower()[i].getX(), 
-                (int)this.towerConfig.getPosTower()[i].getY(), 
+                (int)this.towerConfig.getPosTower()[i].getY()- this.game.getTileSize(), 
                 this.game.getTileSize(), 
                 this.game.getTileSize()*2,
                 null);  
