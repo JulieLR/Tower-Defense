@@ -49,7 +49,6 @@ public class TowerGraphics implements Graphic {
                 this.game.getTileSize(),
                 this.game.getTileSize(), 
                 null);
-                
         } else if (time%t3<t1) {
             g.drawImage(
                 this.towerAsset.get(t.idColorTower()+nb*2), 

@@ -218,7 +218,7 @@ public class TowerConfig implements Serializable{
         return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH);
     }
     
-    // tableau de tableau de boolean pour savoir les tiles qui sont des routes (donc ou il peut y avoir un ennemi)
+    /* // tableau de tableau de boolean pour savoir les tiles qui sont des routes (donc ou il peut y avoir un ennemi)
     private boolean[][] tabPath (Tower tower) {
         boolean[][] tab= new boolean[(int)tower.getAttackZone().getWidth()][(int)tower.getAttackZone().getHeight()];
         for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
@@ -229,12 +229,27 @@ public class TowerConfig implements Serializable{
             }
         }
         return tab;
-    } 
+    } */
+
+    private int nbPath (Tower tower) {
+        int n=0;
+        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
+            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
+                if (isPath(new Coordinates(ligne, col))) {
+                    n++;
+               }
+            }
+        } 
+        return n;
+    }
+    
 
     // distance entre une tour et une tile route 
-    //private double[] distanceTowerPath (Tower t, Tile path) {
-        
-    //}
+    private double[] distanceTowerPath (Tower t, Tile path) {
+        double[] distance= new double[nbPath(t)];
+
+        return distance;
+    }
 
     // le temps que mets un projectile pour arriver à un path
     private long timeProjectileToPath () {
