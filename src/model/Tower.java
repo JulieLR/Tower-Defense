@@ -75,12 +75,12 @@ public class Tower extends Entities {
 
     public Tower towerEnum (int n){
         switch (n) {
-            case 0: return new Tower(1, this.getPos(), 40, n, 75, 30, 30);
-            case 1: return new Tower(3, this.getPos(), 65, n, 150, 40, 40);
-            case 2: return new Tower(5, this.getPos(), 100, n, 200, 45, 45);
-            case 3: return new Tower(2, this.getPos(), 10, n, 25, 5, 5);
-            case 4: return new Tower(5, this.getPos(), 20, n, 50, 10, 10);
-            case 5: return new Tower(15, this.getPos(), 60, n, 150, 20, 20);
+            case 0: return new Tower(1, this.getPos(), 40, n, 75, 100, 100);
+            case 1: return new Tower(3, this.getPos(), 65, n, 150, 130, 130);
+            case 2: return new Tower(5, this.getPos(), 100, n, 200, 150, 150);
+            case 3: return new Tower(2, this.getPos(), 10, n, 25, 50, 30);
+            case 4: return new Tower(5, this.getPos(), 20, n, 50, 80, 60);
+            case 5: return new Tower(15, this.getPos(), 60, n, 150, 110, 80);
         }
         return null;
     }
