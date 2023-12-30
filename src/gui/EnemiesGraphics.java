@@ -59,6 +59,7 @@ public class EnemiesGraphics implements Graphic{
                         }
                     }
                 }
+                g.drawRect((int)e.getZone().getX(), (int)e.getZone().getY(), 64, 64);
                     //drawDead(g, time, e);
                 
             }

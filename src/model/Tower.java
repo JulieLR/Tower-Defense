@@ -19,16 +19,21 @@ public class Tower extends Entities {
         super(attackSpeed, position, degat);
         this.towerColor=this.colorTower(color);
         this.getType();
-        this.price=price;
-        this.game=game;
-        Coordinates c = pos(position, width, height, this.game.getTileSize());
-        this.attackZone= new Rectangle((int) c.getX(), (int) c.getY(), width, height);
+        this.price=prix;
+        this.attackZone= new Rectangle((int) (pos.getX()-width/2), (int) (pos.getX()-height/2), width, height);
     }
-
 
     // Methodes
 
     // getter et setter
+    public Enemy getTarget() {
+        return target;
+    }
+
+    public void setTarget(Enemy target) {
+        this.target = target;
+    }
+
     public TowerColor getTowerColor () {
         return this.towerColor;
     }

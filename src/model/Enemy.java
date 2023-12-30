@@ -5,7 +5,11 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
+import gui.Game;
+
 public class Enemy extends Entities{
+
+    private Game game;
 
     private int pointDeVie;
     private int type;
@@ -20,12 +24,13 @@ public class Enemy extends Entities{
     private Random r = new Random();
 
 
-    public Enemy(int vie, Coordinates pos,int degat, float vitesseAtk,int type, int prime){
+    public Enemy(int vie, Coordinates pos,int degat, float vitesseAtk,int type, int prime, Game game){
         super(vitesseAtk, pos, degat);
         this.pointDeVie=vie;
         this.type=type;
         this.prime=prime;
-        this.zone= new Rectangle( (int) super.getPos().getX(), (int) super.getPos().getY(),48,48);
+        this.game=game;
+        this.zone= new Rectangle( (int) this.getPos().getX(), (int) this.getPos().getY()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize());
     }
 
     public int getPointDeVie() {
@@ -56,8 +61,8 @@ public class Enemy extends Entities{
         return zone;
     }
 
-    public void setZone(Rectangle zone) {
-        this.zone = zone;
+    public void setZone() {
+        this.zone = new Rectangle( (int) this.getPos().getX(), (int) this.getPos().getY()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize());
     }
 
     public Coordinates getPos(){
@@ -114,15 +119,16 @@ public class Enemy extends Entities{
     public void move(Direction dir){
         this.dir=dir;
         switch(dir){
-            case EAST:this.setPos(new Coordinates(this.getPos().getX()+super.getVitesseAtk(), this.getPos().getY()));
+            case EAST:this.setPos(new Coordinates(this.getPos().getX()+this.getVitesseAtk(), this.getPos().getY()));
                 break;
-            case NORTH: this.setPos(new Coordinates(this.getPos().getX(), this.getPos().getY()-super.getVitesseAtk()));
+            case NORTH: this.setPos(new Coordinates(this.getPos().getX(), this.getPos().getY()-this.getVitesseAtk()));
                 break;
-            case SOUTH: this.setPos(new Coordinates(this.getPos().getX(), this.getPos().getY()+super.getVitesseAtk()));
+            case SOUTH: this.setPos(new Coordinates(this.getPos().getX(), this.getPos().getY()+this.getVitesseAtk()));
                 break;
-            case WEST: this.setPos(new Coordinates(this.getPos().getX()-super.getVitesseAtk(), this.getPos().getY()));
+            case WEST: this.setPos(new Coordinates(this.getPos().getX()-this.getVitesseAtk(), this.getPos().getY()));
                 break;
-        } 
+        }
+        this.setZone(); 
     }
 
     public void setPos(int x, int y){
