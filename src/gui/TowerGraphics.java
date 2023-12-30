@@ -213,9 +213,10 @@ public class TowerGraphics implements Graphic {
             // System.out.println(this.towerConfig.getTowers().get(i).idColorTower());
         }
         for (Tower t: tower) {
-            //attackTowerDirectionDraw(g, time, t, Direction.EAST);
+            ////attackTowerDirectionDraw(g, time, t, Direction.SOUTH);
+            attackTower(g, time, t);
             //attackTowerDraw(g,time,t,Direction.EAST);
-            attackTowerCornerDraw(g, time, t, Math.PI/4);
+            //attackTowerCornerDraw(g, time, t, Math.PI/4);
             //attackTowerCornerDraw(g, time, t, Math.PI);
             drawZone(g,t);
         }
