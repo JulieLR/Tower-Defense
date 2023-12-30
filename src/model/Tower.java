@@ -8,14 +8,14 @@ public class Tower extends Entities {
     public enum TowerColor {TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA};
     private TowerColor towerColor;
     private int type;
-    private int prix;
+    private int price;
     private Rectangle attackZone;
     
-    public Tower(float vitesseAtk, Coordinates pos, int degat, int color, int prix, int width, int height){
-        super(vitesseAtk, pos, degat);
+    public Tower(float attackSpeed, Coordinates pos, int degat, int color, int price, int width, int height){
+        super(attackSpeed, pos, degat);
         this.towerColor=this.colorTower(color);
         this.getType();
-        this.prix=prix;
+        this.price=price;
         this.attackZone= new Rectangle((int) (pos.getX()-width/2), (int) (pos.getX()-height/2), width, height);
     }
 
@@ -107,11 +107,11 @@ public class Tower extends Entities {
         return this.getTowerColor()==TowerColor.TOWER_SMALL || this.getTowerColor()==TowerColor.TOWER_MEDIUM || this.getTowerColor()==TowerColor.TOWER_EXTRA;
     }
 
-    public int getPrix () {
-        return this.prix;
+    public int getPrice () {
+        return this.price;
     }
-    public void setPrix (int prix) {
-        this.prix=prix;
+    public void setPrix (int price) {
+        this.price=price;
     }
 
     public Rectangle getAttackZone () {
