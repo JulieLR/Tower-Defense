@@ -92,17 +92,8 @@ public class TowerConfig implements Serializable{
         towerSerialize(towerImage, "TowerManager.ser");
         towerImage= towerDeserialize("TowerManager.ser");
     }
-    
-    /* 
-    // le type de la tuile aux coordonnées (x, y)
-    private Type getTileType(int x, int y) {
-        return game.getTileType(x,y);
-    }
 
-    // si la tuile aux coordonnees c correspond a une route (pour les ennemis)
-    private boolean isPath(Coordinates c){
-        return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH);
-    } */
+
 
     // le nombre de tours qu'il y a sur la map
     public int getNbTower () {
@@ -205,10 +196,39 @@ public class TowerConfig implements Serializable{
     }
 
     
-    // distance entre les deux personnes 
-   /*  public double disBetween (Personnages p) {
+    // distance entre une tour et un enemy 
+    public double disBetween (Enemy e, Tower t) {
         return Math.sqrt(
-        Math.pow(p.position.x()-this.position.x(),2) +
-        Math.pow(p.position.y()-this.position.y(),2));
-    }*/
+        Math.pow(e.getPos().getX()-t.getPos().getX(),2) +
+        Math.pow(e.getPos().getY()-t.getPos().getY(),2));
+    }
+    
+    // le type de la tuile aux coordonnées (x, y)
+    private Type getTileType(int x, int y) {
+        return game.getTileType(x,y);
+    }
+
+    // si la tuile aux coordonnees c correspond a une route (pour les ennemis)
+    private boolean isPath(Coordinates c){
+        return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH);
+    }
+    
+    // tableau de tableau de boolean pour savoir les tiles qui sont des routes (donc ou il peut y avoir un ennemi)
+    private boolean[][] tabPath (Tower tower) {
+        boolean[][] tab= new boolean[(int)tower.getAttackZone().getWidth()][(int)tower.getAttackZone().getHeight()];
+        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
+            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
+                if (isPath(new Coordinates(ligne, col))) {
+                    tab[ligne][col]= true;
+                }
+            }
+        }
+        return tab;
+    } 
+
+    // le temps que mets un projectile pour arriver à un path
+    private long timeProjectileToPath () {
+        return 0;
+    }
+
 }

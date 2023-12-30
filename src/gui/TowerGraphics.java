@@ -93,6 +93,7 @@ public class TowerGraphics implements Graphic {
         } 
     }
 
+    
     @Override
     public void addAsset(){
         for (int ligne=0; ligne<6; ligne++) {
