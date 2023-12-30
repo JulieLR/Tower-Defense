@@ -53,12 +53,11 @@ public class MapConfig {
     public Coordinates getStart() {
         return start;
     }
-
     
     public void mapFromFile(String path, String path2){
         try{
             int ligne = 0;
-            int col = 0;
+            int col = 0;int nbTower=0;
             BufferedReader reader_2 = new BufferedReader(new FileReader(path2));
             BufferedReader reader = new BufferedReader(new FileReader(path));
             String readline;
