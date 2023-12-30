@@ -17,12 +17,14 @@ import model.Tower.TowerColor;
 public class TowerConfig implements Serializable{
     private Game game;
     private ArrayList<Tower> towers= new ArrayList<> ();
+    private ArrayList<Enemy> enemies= new ArrayList<> ();
     private BufferedImage towerImage;
     // public transient BufferedImage towerImageTransient; // transient pour igniorer le serializes
     // private static final int serialVersionUID= 1;
     
     public TowerConfig (Game game) /* throws IOException, ClassNotFoundException */ {
         this.game=game;
+        this.enemies=this.game.getEnemyConfig().getEnemies();
         addTower(getPosTower());
         //loadTowerImage();
     }
@@ -35,7 +37,7 @@ public class TowerConfig implements Serializable{
         Random random= new Random();
         for(int i=0;i<c.length;i++){
             int r= random.nextInt(6);
-            Tower t= new Tower(0.1f, c[i], 10, r, 20, 10, 10);
+            Tower t= new Tower(0.1f, c[i], 10, r, 20, 10, 10, this.game);
             t=t.towerEnum(r);
             this.towers.add(t);
 
@@ -199,7 +201,7 @@ public class TowerConfig implements Serializable{
     }
 
     
-    // distance entre une tour et un enemy 
+    // distance entre une tour et un ennemi
     public double distanceTowerEnemy (Tower t, Enemy e) {
         return Math.sqrt(
         Math.pow(e.getPos().getX()-t.getPos().getX(),2) +
@@ -237,6 +239,18 @@ public class TowerConfig implements Serializable{
     // le temps que mets un projectile pour arriver à un path
     private long timeProjectileToPath () {
         return 0;
+    }
+
+    private void getTarget(){
+        for(Tower t : towers){
+            for(Enemy e : enemies){
+                if(t.getTarget()==null){
+                    if(t.isInZone(e)){
+                        t.setTarget(e);
+                    }
+                }
+            }
+        }
     }
 
 }

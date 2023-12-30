@@ -126,9 +126,13 @@ public class TowerGraphics implements Graphic {
         }
         for (Tower t: tower) {
             attackTowerDraw(g, time, t, Direction.EAST);
+            drawZone(g,t);
         }
         
         // attaqueDraw(g, time, this.towerConfig.getTowers().get(1));
+    }
+    public void drawZone(Graphics g, Tower t){
+        g.drawRect((int)t.getAttackZone().getX(), (int)t.getAttackZone().getY(), (int)t.getAttackZone().getWidth(), (int)t.getAttackZone().getHeight());
     }
 
 }
