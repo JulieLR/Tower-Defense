@@ -15,41 +15,28 @@ import model.Tower;
 import model.Tower.TowerColor;
 
 public class TowerConfig implements Serializable{
+    private Game game;
+    private ArrayList<Tower> towers= new ArrayList<> ();
     private BufferedImage towerImage;
     // public transient BufferedImage towerImageTransient; // transient pour igniorer le serializes
     // private static final int serialVersionUID= 1;
-    private ArrayList<Tower> towers= new ArrayList<> ();
-    private Coordinates pos;
-    private Game game;
     
     public TowerConfig (Game game) /* throws IOException, ClassNotFoundException */ {
         this.game=game;
-        //createTile();
         addTower(getPosTower());
         //loadTowerImage();
-        System.out.println("ok");
     }
 
-    private void createTile() {
-        towers.add(new Tower(75, pos, 40, 1, 0));
-        towers.add(new Tower(150, pos, 65, 3, 1));
-        towers.add(new Tower(200, pos, 100, 5, 2));
-        towers.add(new Tower(25, pos, 10, 2, 3));
-        towers.add(new Tower(50, pos, 20, 5, 4));
-        towers.add(new Tower(150, pos, 60, 15, 5));
+    public ArrayList<Tower> getTowers () {
+        return this.towers;
     }
 
     public void addTower(Coordinates[] c){
         Random random= new Random();
         for(int i=0;i<c.length;i++){
             int r= random.nextInt(6);
-            this.towers.add(new Tower(20, c[i], 2, 0.5f, r));
+            this.towers.add(new Tower(0.5f, c[i], 10, r, 20, 10, 10));
         }
-    }
-
-    private void loadTowerImage () {
-        towerSerialize(towerImage, "TowerManager.ser");
-        towerImage= towerDeserialize("TowerManager.ser");
     }
 
     // conversion des donnees en fichier binaire
@@ -100,9 +87,10 @@ public class TowerConfig implements Serializable{
         }
         return null;
     }
-    
-    public ArrayList<Tower> getTowers () {
-        return this.towers;
+
+    private void loadTowerImage () {
+        towerSerialize(towerImage, "TowerManager.ser");
+        towerImage= towerDeserialize("TowerManager.ser");
     }
     
     /* 
@@ -111,26 +99,10 @@ public class TowerConfig implements Serializable{
         return game.getTileType(x,y);
     }
 
-    // si la tuile aux coordonnees c correspond a une tour
-    private boolean isTower(Coordinates c){
-        return(getTileType((int)c.getX(),(int)c.getY())==Type.TOWER);
-    }
-
     // si la tuile aux coordonnees c correspond a une route (pour les ennemis)
     private boolean isPath(Coordinates c){
         return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH);
-    }
-    
-    // si la tuile aux coordonnees c contient un ennemis (pas fini, et marche pas)
-    private boolean isEnemy(Coordinates c){
-        return(getTileType((int)c.getX(),(int)c.getY())==Type.TOWER);
     } */
- 
-    // attaque
-    private void attaque (Enemy enemy, Tower tower) {
-        enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
-        System.out.println("point de vie ennemi = "+enemy.getPointDeVie());
-    }
 
     // le nombre de tours qu'il y a sur la map
     public int getNbTower () {
@@ -159,11 +131,11 @@ public class TowerConfig implements Serializable{
         }
         return posTower;
     }
-
-    // zone d'attaque rectangulaire de la i-ème tour
-    private Rectangle zoneAtk (int width, int height, int iTower) {
-        Rectangle zone= new Rectangle((int)this.getPosTower()[iTower].getX()-width/2, (int)this.getPosTower()[iTower].getY()-height/2, width, height);
-        return zone;  
+ 
+    // attaque
+    private void attaque (Enemy enemy, Tower tower) {
+        enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
+        System.out.println("point de vie ennemi = "+enemy.getPointDeVie());
     }
 
     // si aux coordonnees (x, y) il y a un ennemi
@@ -174,23 +146,37 @@ public class TowerConfig implements Serializable{
         return false;
     }
 
+    // si dans la zone rectangulaire il y a un ennemi
+    private boolean isEnemyInZone (int width, int height, Tower tower) {
+        for (int ligne= 0; ligne<tower.getAttackZone().getWidth(); ligne++) {
+            for (int col= 0; col<tower.getAttackZone().getHeight(); col++) {
+                if (isEnemy(ligne, col)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     // nombre d'enemis dans la zone rectangulaire
-    private int numberEnemyInZone (int width, int height, int iTower) {
+    private int numberEnemyInZone (int width, int height, Tower tower) {
         int n=0;
-        for (int ligne= (int) zoneAtk(width, height, iTower).getX(); ligne<zoneAtk(width, height, iTower).getWidth(); ligne++) {
-            for (int col= (int) zoneAtk(width, height, iTower).getY(); col<zoneAtk(width, height, iTower).getWidth(); col++) {
-            n++;
+        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
+            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
+                if (isEnemy(ligne, col)) {
+                    n++;
+                }
             }
         }
         return n;
     }
 
     // tableau des coordonnees des ennemis dans la zone de la tour voulu
-    public Coordinates[] CoordinatesEnemyInZone (Enemy e, int width, int height, int iTower) {
-        Coordinates[] coordinates= new Coordinates[numberEnemyInZone(width, height, iTower)];
+    public Coordinates[] CoordinatesEnemyInZone (Enemy e, int width, int height, Tower tower) {
+        Coordinates[] coordinates= new Coordinates[numberEnemyInZone(width, height, tower)];
         int n=0;
-        for (int ligne= (int) zoneAtk(width, height, iTower).getX(); ligne<zoneAtk(width, height, iTower).getWidth(); ligne++) {
-            for (int col= (int) zoneAtk(width, height, iTower).getY(); col<zoneAtk(width, height, iTower).getWidth(); col++) {
+        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
+            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
                 coordinates[n]=new Coordinates(ligne, height);
                 n++;
             }
@@ -198,22 +184,26 @@ public class TowerConfig implements Serializable{
         return coordinates;
     }
 
+    // tableau des coordonnees des ennemis dans la zone de la tour voulu
+    public Coordinates[] nextCoordinatesEnemyInZone (Enemy e, int width, int height, Tower tower) {
+        Coordinates[] nextCoordinates= new Coordinates[numberEnemyInZone(width, height, tower)];
+        int n=0;
+        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
+            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
+                nextCoordinates[n]=new Coordinates(ligne+this.game.getTileSize()*e.getSpeed(), height+this.game.getTileSize()*e.getSpeed());
+                n++;
+            }
+        }
+        return nextCoordinates;
+    }
+
+
+
     // inverse les positions de deux ennemis dans le tableau, si un ennemis depasse un autre
     public void enemyOvertake (Enemy e0, Enemy e1) {
 
     }
 
-
-
-    // si dans la zone rectangulaire il y a un ennemi
-    private boolean isEnemyInZone (int width, int height, int iTower) {
-        for (int ligne= 0; ligne<zoneAtk(width, height, iTower).getWidth(); ligne++) {
-            for (int col= 0; col<zoneAtk(width, height, iTower).getWidth(); col++) {
-                return isEnemy(ligne, col);
-            }
-        }
-        return false;
-    }
     
     // distance entre les deux personnes 
    /*  public double disBetween (Personnages p) {

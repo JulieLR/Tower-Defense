@@ -1,54 +1,28 @@
 package model;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.lang.Math.*;
 
 public class Tower extends Entities {
     // Attribut
-    private int prix;
-    private int type;
     public enum TowerColor {TOWER_BLUE, TOWER_ORANGE, TOWER_RED, TOWER_SMALL, TOWER_MEDIUM, TOWER_EXTRA};
     private TowerColor towerColor;
+    private int type;
+    private int prix;
+    private Rectangle attackZone;
     
-    public Tower(int prix, Coordinates pos,int degat,float vitesseAtk, int n){
+    public Tower(float vitesseAtk, Coordinates pos, int degat, int color, int prix, int width, int height){
         super(vitesseAtk, pos, degat);
+        this.towerColor=this.colorTower(color);
+        this.getType();
         this.prix=prix;
-        this.towerColor=this.colorTower(n);
-        this.towerType();
-        
+        this.attackZone= new Rectangle((int) (pos.getX()-width/2), (int) (pos.getX()-height/2), width, height);
     }
+
 
     // Methodes
 
     // getter et setter
-    public int getPrix () {
-        return this.prix;
-    }
-    public void setPrix (int prix) {
-        this.prix=prix;
-    }
-
-    public int getType () {
-        return this.type;
-    }
-    public void towerType () {
-        this.type=-1;
-        if (0>=idColorTower() && idColorTower()>=2) {
-            this.type=1;
-        }
-        else if (3>=idColorTower() && idColorTower()>=5) {
-            this.type=0;
-        }
-    }
-    // si la tour fait des degats magiques
-    public boolean isMagic () {
-        return this.getTowerColor()==TowerColor.TOWER_BLUE || this.getTowerColor()==TowerColor.TOWER_ORANGE || this.getTowerColor()==TowerColor.TOWER_RED;
-    }
-
-    // si la tour fait des degats physiques
-    public boolean isPhysic () {
-        return this.getTowerColor()==TowerColor.TOWER_SMALL || this.getTowerColor()==TowerColor.TOWER_MEDIUM || this.getTowerColor()==TowerColor.TOWER_EXTRA;
-    }
-
     public TowerColor getTowerColor () {
         return this.towerColor;
     }
@@ -101,14 +75,51 @@ public class Tower extends Entities {
 
     public Tower towerEnum (int n){
         switch (n) {
-            case 0: return new Tower(75, this.getPos(), 40, 1, 0);
-            case 1: return new Tower(150, this.getPos(), 65, 3, 1);
-            case 2: return new Tower(200, this.getPos(), 100, 5, 2);
-            case 3: return new Tower(25, this.getPos(), 10, 2, 3);
-            case 4: return new Tower(50, this.getPos(), 20, 5, 4);
-            case 5: return new Tower(150, this.getPos(), 60, 15, 5);
+            case 0: return new Tower(1, this.getPos(), 40, n, 75, 30, 30);
+            case 1: return new Tower(3, this.getPos(), 65, n, 150, 40, 40);
+            case 2: return new Tower(5, this.getPos(), 100, n, 200, 45, 45);
+            case 3: return new Tower(2, this.getPos(), 10, n, 25, 5, 5);
+            case 4: return new Tower(5, this.getPos(), 20, n, 50, 10, 10);
+            case 5: return new Tower(15, this.getPos(), 60, n, 150, 20, 20);
         }
         return null;
     }
+
+    public int getType () {
+        return this.type;
+    }
+    public void setType () {
+        this.type=-1;
+        if (0>=idColorTower() && idColorTower()>=2) {
+            this.type=1;
+        }
+        else if (3>=idColorTower() && idColorTower()>=5) {
+            this.type=0;
+        }
+    }
+    // si la tour fait des degats magiques
+    public boolean isMagic () {
+        return this.getTowerColor()==TowerColor.TOWER_BLUE || this.getTowerColor()==TowerColor.TOWER_ORANGE || this.getTowerColor()==TowerColor.TOWER_RED;
+    }
+
+    // si la tour fait des degats physiques
+    public boolean isPhysic () {
+        return this.getTowerColor()==TowerColor.TOWER_SMALL || this.getTowerColor()==TowerColor.TOWER_MEDIUM || this.getTowerColor()==TowerColor.TOWER_EXTRA;
+    }
+
+    public int getPrix () {
+        return this.prix;
+    }
+    public void setPrix (int prix) {
+        this.prix=prix;
+    }
+
+    public Rectangle getAttackZone () {
+        return this.attackZone;
+    }
+    public void setAttackZone (int width, int height) {
+        this.attackZone= new Rectangle((int) (getPos().getX()-width/2), (int) (getPos().getY()-height/2), width, height);
+    }
+    
 
 }
