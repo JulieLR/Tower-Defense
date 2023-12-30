@@ -126,7 +126,7 @@ public class TowerGraphics implements Graphic {
             g.drawImage(
                 towerAsset.get(this.towerConfig.getTowers().get(i).idColorTower()), 
                 (int)this.towerConfig.getPosTower()[i].getX(), 
-                (int)this.towerConfig.getPosTower()[i].getY(), 
+                (int)this.towerConfig.getPosTower()[i].getY()- this.game.getTileSize(), 
                 this.game.getTileSize(), 
                 this.game.getTileSize()*2,
                 null);  
@@ -134,9 +134,14 @@ public class TowerGraphics implements Graphic {
         }
         for (Tower t: tower) {
             attackTowerDraw(g, time, t, Direction.EAST);
+            drawZone(g,t);
         }
         
         // attaqueDraw(g, time, this.towerConfig.getTowers().get(1));
+    }
+
+    public void drawZone(Graphics g, Tower t){
+        g.drawRect((int)t.getAttackZone().getX(), (int)t.getAttackZone().getY(), (int)t.getAttackZone().getWidth(), (int)t.getAttackZone().getHeight());
     }
 
 }
