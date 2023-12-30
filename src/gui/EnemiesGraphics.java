@@ -60,7 +60,7 @@ public class EnemiesGraphics implements Graphic{
                     }
                 }
                 g.drawRect((int)e.getZone().getX(), (int)e.getZone().getY(), 64, 64);
-                    //drawDead(g, time, e);
+                //drawDead(g, time, e);
                 
             }
         }
@@ -158,8 +158,8 @@ public class EnemiesGraphics implements Graphic{
     
     public void drawKnightWalking(Graphics g, long time,Enemy e){
         //vitesse d'animation selon la vitesse du personnage
-        int n = (int)(400f/e.getSpeed());
-        int m = (int)(200f/e.getSpeed());
+        int n = (int)(200f/e.getSpeed());
+        int m = (int)(100f/e.getSpeed());
 
         int p = getEcart(e.getType());
         //time%250<100 et +-1, % tjr ratio 2:1 et plus % haut plus lent

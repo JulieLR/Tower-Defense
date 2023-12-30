@@ -29,6 +29,12 @@ public class TowerConfig implements Serializable{
         //loadTowerImage();
     }
 
+    public void update(){
+        for(Tower t : towers){
+            getTarget(t);
+        }
+    }
+
     public ArrayList<Tower> getTowers () {
         return this.towers;
     }
@@ -256,8 +262,7 @@ public class TowerConfig implements Serializable{
         return 0;
     }
 
-    private void getTarget(){
-        for(Tower t : towers){
+    private void getTarget(Tower t){
             for(Enemy e : enemies){
                 if(t.getTarget()==null){
                     if(t.isInZone(e)){
@@ -265,7 +270,6 @@ public class TowerConfig implements Serializable{
                     }
                 }
             }
-        }
     }
 
 }

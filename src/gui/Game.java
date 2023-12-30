@@ -172,10 +172,6 @@ public class Game extends JPanel implements Runnable {
         g.dispose(); //
     }
 
-    public void enemiesUpdate(Graphics g){
-        enemies.drawImages(g);
-    }
-
     private void start() {
         gameThread= new Thread(this){};
         gameThread.start();
@@ -183,6 +179,7 @@ public class Game extends JPanel implements Runnable {
     private void updateGame () {
         //System.out.println("Game Updated");
         this.enemies.update();
+        this.towerConfig.update();
         if(this.base.isDestroyed()){
             System.exit(0);
             System.out.println("DESTROYED");

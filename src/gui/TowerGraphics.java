@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import config.MapConfig;
 import config.TowerConfig;
+import config.EnemiesConfig;
+import model.Coordinates;
 import model.Direction;
 import model.Enemy;
 import model.Tower;
@@ -30,6 +32,7 @@ public class TowerGraphics implements Graphic {
         tab[0]= Math.cos(-corner); // sens horaire, donc on doit mettre le signe - avant la valeur de l'angle
         tab[1]= Math.sin(-corner); 
         return tab;
+         
     }
 
     private void attackTowerCornerDraw (Graphics g, long time, Tower t, double corner) {
