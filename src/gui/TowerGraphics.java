@@ -27,7 +27,7 @@ public class TowerGraphics implements Graphic {
     // attaque selon l'angle en radian voulu en paramètre
     private double[] attackCorner (double corner) {
         double[] tab= new double[2]; 
-        tab[0]= Math.cos(-corner); // sens antihorraire, donc on doit mettre le signe - avant la valeur de l'angle
+        tab[0]= Math.cos(-corner); // sens horaire, donc on doit mettre le signe - avant la valeur de l'angle
         tab[1]= Math.sin(-corner); 
         return tab;
     }
