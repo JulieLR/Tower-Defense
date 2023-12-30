@@ -43,7 +43,7 @@ public class TowerConfig implements Serializable{
         Random random= new Random();
         for(int i=0;i<c.length;i++){
             int r= random.nextInt(6);
-            this.towers.add(new Tower(0.5f, c[i], 10, r, 20, 300, 300, this.game));
+            this.towers.add(new Tower(0.5f, c[i], 10, r, 20, 64*5, 64*5, this.game));
         }
     }
 
