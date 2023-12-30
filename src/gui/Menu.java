@@ -19,6 +19,7 @@ public class Menu extends JFrame implements MouseListener{
     private BufferedImage buttonImage;
     private BufferedImage fondMenuImage;
     private BufferedImage fondImage;
+    private BufferedImage settingsFond;
     private ArrayList<BufferedImage> assets = new ArrayList<>();
 
     private JButton quitButton,playButton,settingsButton;
@@ -27,6 +28,7 @@ public class Menu extends JFrame implements MouseListener{
 
         this.fondMenuImage = getImage("src/ressources/menu/background.png");
         this.fondImage= getImage("src/ressources/menu/fond.png");
+        this.settingsFond= getImage("src/ressources/menu/fondSettings.png");
         this.buttonImage = getImage("src/ressources/menu/buttons2.png");
 
         setLayout(null);
@@ -38,7 +40,7 @@ public class Menu extends JFrame implements MouseListener{
         
         addAsset();
 
-        Fond fond = new Fond(this.fondImage, this.fondMenuImage,this.getWidth()/3, this.getHeight()/4);
+        Fond fond = new Fond(this.fondImage, this.fondMenuImage,(this.getWidth()-this.fondMenuImage.getWidth())/2, (this.getHeight()-this.fondMenuImage.getHeight())/2);
         fond.setBounds(0, 0, this.fondImage.getWidth(), this.fondImage.getHeight());
 
         JButton playButton = new JButton();
@@ -91,6 +93,10 @@ public class Menu extends JFrame implements MouseListener{
             super.paintComponent(g);
             g.drawImage(fond, 0, 0, fond.getWidth(), fond.getHeight(), null);
             g.drawImage(fondMenu, x, y, fondMenu.getWidth(), fondMenu.getHeight(), null);
+        }
+
+        public BufferedImage getFond(){
+            return this.fond;
         }
     }
 
@@ -151,7 +157,8 @@ public class Menu extends JFrame implements MouseListener{
         }
         else if((e.getSource()== settingsButton)){
             settingsButton.setIcon(new ImageIcon(assets.get(2)));
-            new Settings(this);
+            Fond fondSet = new Fond(this.fondImage, this.settingsFond, this.getWidth()/3, this.getHeight()/4);
+            new Settings(this, fondSet);
         }
         else if((e.getSource()== quitButton)){
             quitButton.setIcon(new ImageIcon(assets.get(4)));
