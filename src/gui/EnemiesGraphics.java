@@ -60,8 +60,11 @@ public class EnemiesGraphics implements Graphic{
                     }
                 }
                 g.drawRect((int)e.getZone().getX(), (int)e.getZone().getY(), 64, 64);
-                //drawDead(g, time, e);
                 
+            }
+            else if(!e.isAlived()&& e.isSpawned()){
+                drawDead(g, time, e);
+
             }
         }
         g.drawImage(this.enemiesAsset.get(8),(int)this.game.getMapConfig().getEndCoor().getX(),(int)this.game.getMapConfig().getEndCoor().getY(),this.game.getTileSize(),this.game.getTileSize(), null);

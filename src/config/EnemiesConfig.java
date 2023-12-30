@@ -77,7 +77,7 @@ public class EnemiesConfig {
     /* Pour chaque enemies, si il est déjà spawn alors on update ses mouvements */
     public void update(){
         for( Enemy e : enemies){
-            if(e.isSpawned()){
+            if(e.isSpawned() && e.isAlived()){
                 updateMove(e);
             }
         }
