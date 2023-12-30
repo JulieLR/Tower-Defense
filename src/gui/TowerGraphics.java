@@ -21,16 +21,8 @@ public class TowerGraphics implements Graphic {
         this.game= game;
         this.towerConfig= towerConfig;
         this.tower= towerConfig.getTowers();
-
         this.addAsset();
-        //loadTowerImages();
     }
-
-    /* private void loadTowerImages () {
-        //towerImage= new BufferedImage[6];
-        //addAsset();
-        
-    } */
 
     // attaque dans la direction voulue en parametre
     private int[] attaqueDirection (Direction direction) {
@@ -62,6 +54,7 @@ public class TowerGraphics implements Graphic {
                 this.game.getTileSize(),
                 this.game.getTileSize(), 
                 null);
+                
         } else if (time%t3<t1) {
             g.drawImage(
                 this.towerAsset.get(t.idColorTower()+nb*2), 
@@ -87,13 +80,12 @@ public class TowerGraphics implements Graphic {
                     this.game.getTileSize(),
                     this.game.getTileSize(), 
                     null);
-                //g.rotate(Math.toRadians(45), (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0]+(this.game.getTileSize()/2), (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1]+(this.game.getTileSize()/2));
             }
 
         } 
     }
 
-    
+
     @Override
     public void addAsset(){
         for (int ligne=0; ligne<6; ligne++) {
