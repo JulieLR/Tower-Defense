@@ -32,10 +32,10 @@ public class EnemiesConfig {
         this.nbSpawned=1;
         this.start = this.game.getMapConfig().getStartCoor();
         this.end = this.game.getMapConfig().getEndCoor();
-        this.e= new Enemy(200,start,20, 4f,1,1);
+        this.e= new Enemy(200,start,20, 4f,1,1,this.game);
 
         makeEnemies(nbEnemies);
-        enemies.get(0).setSpawned(true);
+        //enemies.get(0).setSpawned(true);
         //this.enemies.add(e);
     }
 
@@ -60,14 +60,14 @@ public class EnemiesConfig {
 
         //ajout enemies faible
         for(int i=0;i<a;i++){
-            this.enemies.add(new Knight(0, start));
+            this.enemies.add(new Knight(0, start,this.game));
         }
         //ajout enemies moyen
         for(int j=0;j<b;j++){
-            this.enemies.add(new Slime(start));        }
+            this.enemies.add(new Slime(start,this.game));        }
         //ajout enemies fort
         for(int k=0;k<c;k++){
-            this.enemies.add(new Bat(start));        }
+            this.enemies.add(new Bat(start,this.game));        }
     }
 
     public Enemy getE() {
@@ -77,16 +77,20 @@ public class EnemiesConfig {
     /* Pour chaque enemies, si il est déjà spawn alors on update ses mouvements */
     public void update(){
         for( Enemy e : enemies){
-            if(e.isSpawned()){
+            if(e.isSpawned() && e.isAlived()){
                 updateMove(e);
             }
         }
     }
 
+    public Coordinates getNextCoor(Enemy e){
+        return new Coordinates((int) (e.getPos().getX() + getHorizontalSpeed(e.getDir(),e)), (int) (e.getPos().getY() + getVerticalSpeed(e.getDir(),e)));
+    }
+
     //update la position de l'enemie
     private void updateMove(Enemy e) {
         //On initialise deux
-        Coordinates next = new Coordinates((int) (e.getPos().getX() + getHorizontalSpeed(e.getDir(),e)), (int) (e.getPos().getY() + getVerticalSpeed(e.getDir(),e)));
+        Coordinates next = getNextCoor(e);
 
         /*Si la prochaine coordonée est un chemin alors on avance
          * Sinon on vérifie si le personnage est arrivé au chateau, sinon on change sa direction

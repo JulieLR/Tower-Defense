@@ -21,14 +21,28 @@ public class Tower extends Entities {
         this.getType();
         this.price=price;
         this.game=game;
-        Coordinates c = pos(position, width, height, this.game.getTileSize());
+        Coordinates c = pos(position,width,height,game.getTileSize());
         this.attackZone= new Rectangle((int) c.getX(), (int) c.getY(), width, height);
     }
 
+    public Coordinates pos(Coordinates cor, int width, int height, int size){
+        float x = cor.getX()-(width-size)/2;
+        float y = cor.getY()-(height-size)/2;
+
+        return new Coordinates((int)x, (int)y);
+    }
 
     // Methodes
 
     // getter et setter
+    public Enemy getTarget() {
+        return target;
+    }
+
+    public void setTarget(Enemy target) {
+        this.target = target;
+    }
+
     public TowerColor getTowerColor () {
         return this.towerColor;
     }
@@ -81,12 +95,12 @@ public class Tower extends Entities {
 
     public Tower towerEnum (int n){
         switch (n) {
-            case 0: return new Tower(1, this.getPos(), 40, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
-            case 1: return new Tower(3, this.getPos(), 65, n, 150, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
-            case 2: return new Tower(5, this.getPos(), 100, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
-            case 3: return new Tower(2, this.getPos(), 10, n, 25, this.game.getTileSize()*1, this.game.getTileSize()*3, this.game);
-            case 4: return new Tower(5, this.getPos(), 20, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
-            case 5: return new Tower(15, this.getPos(), 60, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
+            case 0: return new Tower(0.5f, this.getPos(), 2, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 1: return new Tower(0.5f, this.getPos(), 2, n, 150, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
+            case 2: return new Tower(0.5f, this.getPos(), 2, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
+            case 3: return new Tower(0.5f, this.getPos(), 2, n, 25, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 4: return new Tower(0.5f, this.getPos(), 2, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
+            case 5: return new Tower(0.5f, this.getPos(), 2, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
         }
         return null;
     }
@@ -127,19 +141,7 @@ public class Tower extends Entities {
         this.attackZone= new Rectangle((int) (getPos().getX()-width/2), (int) (getPos().getY()-height/2), width, height);
     }
 
-    public Coordinates pos(Coordinates cor, int width, int height, int size){
-        float x = cor.getX()-(width-size)/2;
-        float y = cor.getY()-(height-size)/2;
-        return new Coordinates((int)x, (int)y);
-    }
 
-    public Enemy getTarget() {
-        return target;
-    }
-
-    public void setTarget(Enemy target) {
-        this.target = target;
-    }
     
         public boolean isInZone(Enemy e){
         if(this.getAttackZone().contains(e.getZone())){

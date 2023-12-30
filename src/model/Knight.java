@@ -1,11 +1,13 @@
 package model;
 
+import gui.Game;
+
 public class Knight extends Enemy {
 
     private int rang;
 
-    public Knight(int n, Coordinates pos) {
-        super(200, pos, 1, 1f, 0,1);
+    public Knight(int n, Coordinates pos,Game game) {
+        super(500, pos, 1, 1f, 0,1,game);
         this.rang=n;
         if(rang==1){
             super.setPointDeVie(400);
