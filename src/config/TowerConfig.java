@@ -141,7 +141,7 @@ public class TowerConfig implements Serializable{
     }
 
     // si dans la zone rectangulaire il y a un ennemi
-    private boolean isEnemyInZone (int width, int height, Tower tower) {
+    private boolean isEnemyInZone (Tower tower) {
         for (int ligne= 0; ligne<tower.getAttackZone().getWidth(); ligne++) {
             for (int col= 0; col<tower.getAttackZone().getHeight(); col++) {
                 if (isEnemy(ligne, col)) {
@@ -153,7 +153,7 @@ public class TowerConfig implements Serializable{
     }
 
     // nombre d'enemis dans la zone rectangulaire
-    private int numberEnemyInZone (int width, int height, Tower tower) {
+    private int numberEnemyInZone (Tower tower) {
         int n=0;
         for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
             for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
@@ -166,12 +166,12 @@ public class TowerConfig implements Serializable{
     }
 
     // tableau des coordonnees des ennemis dans la zone de la tour voulu
-    public Coordinates[] CoordinatesEnemyInZone (Enemy e, int width, int height, Tower tower) {
-        Coordinates[] coordinates= new Coordinates[numberEnemyInZone(width, height, tower)];
+    public Coordinates[] CoordinatesEnemyInZone (Tower tower) {
+        Coordinates[] coordinates= new Coordinates[numberEnemyInZone(tower)];
         int n=0;
         for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
             for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                coordinates[n]=new Coordinates(ligne, height);
+                coordinates[n]=new Coordinates(ligne, col);
                 n++;
             }
         }
@@ -179,12 +179,12 @@ public class TowerConfig implements Serializable{
     }
 
     // tableau des coordonnees des ennemis dans la zone de la tour voulu
-    public Coordinates[] nextCoordinatesEnemyInZone (Enemy e, int width, int height, Tower tower) {
-        Coordinates[] nextCoordinates= new Coordinates[numberEnemyInZone(width, height, tower)];
+    public Coordinates[] nextCoordinatesEnemyInZone (Enemy e, Tower tower) {
+        Coordinates[] nextCoordinates= new Coordinates[numberEnemyInZone(tower)];
         int n=0;
         for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
             for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                nextCoordinates[n]=new Coordinates(ligne+this.game.getTileSize()*e.getSpeed(), height+this.game.getTileSize()*e.getSpeed());
+                nextCoordinates[n]=new Coordinates(ligne+this.game.getTileSize()*e.getSpeed(), col+this.game.getTileSize()*e.getSpeed());
                 n++;
             }
         }
