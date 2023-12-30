@@ -47,6 +47,42 @@ public class TowerGraphics implements Graphic {
          
     }
 
+    public Direction getVerticalPos(Coordinates t, Coordinates e){
+        if(e.getY()<t.getY()){
+            return Direction.NORTH;
+        }else{
+            return Direction.SOUTH;
+        }
+    }
+
+    public Direction getHorizontalePos(Coordinates t, Coordinates e){
+        if(e.getX()<t.getX()){
+            return Direction.WEST;
+        }else{
+            return Direction.EAST;
+        }
+    }
+
+    public float getVerticalNombre(Coordinates t, Coordinates e){
+        Direction h= getHorizontalePos(t, e);
+        if(h==Direction.NORTH){
+            return -((t.getY()-e.getY())/3);
+        }
+        else{
+            return (e.getY()-t.getY())/3;
+        }
+    }
+
+    public float getHorizontalNombre(Coordinates t, Coordinates e){
+        Direction h= getHorizontalePos(t, e);
+        if(h==Direction.EAST){
+            return (e.getX()-t.getX())/3;
+        }
+        else{
+            return -(t.getX()-e.getX())/3;
+        }
+    }
+
     private void attackTower (Graphics g, long time, Tower t) {
         
         if(t.getTarget()!=null){
@@ -58,23 +94,24 @@ public class TowerGraphics implements Graphic {
         int t3= (int) (n*4.0f/t.getVitesseAtk());
 
         Coordinates e = this.game.getEnemyConfig().getNextCoor((t.getTarget()));
-        Coordinates target = t.getTarget().getPos();
+        float y = getVerticalNombre(t.getPos(), t.getTarget().getPos());
+        float x = getHorizontalNombre(t.getPos(), t.getTarget().getPos());
 
         int nb=6;
         // System.out.println(t.isMagic());
         if (time%t3<t0) {
             g.drawImage(
                 this.towerAsset.get(t.idColorTower()+nb), 
-                (int)target.getX(), 
-                (int)target.getY(), 
+                (int)(t.getPos().getX()+x), 
+                (int)(t.getPos().getY()+y), 
                 this.game.getTileSize(),
                 this.game.getTileSize(), 
                 null);
         } else if (time%t3<t1) {
             g.drawImage(
                 this.towerAsset.get(t.idColorTower()+nb*2), 
-                (int)target.getX(), 
-                (int)target.getY(), 
+                (int)(t.getPos().getX()+x*2), 
+                (int)(t.getPos().getY()+y*2), 
                 this.game.getTileSize(),
                 this.game.getTileSize(), 
                 null);
@@ -82,16 +119,16 @@ public class TowerGraphics implements Graphic {
             if (t.isMagic()) {
                 g.drawImage(
                     this.towerAsset.get(t.idColorTower()+nb*3), 
-                    (int)(target.getX()), 
-                    (int)(target.getY()), 
+                    (int)(t.getPos().getX()+x*3), 
+                    (int)(t.getPos().getY()+y*3), 
                     this.game.getTileSize(),
                     this.game.getTileSize(), 
                     null);
             } else if (t.isPhysic()) {
                 g.drawImage(
                     this.towerAsset.get(t.idColorTower()+nb*2), 
-                    (int)(target.getX()), 
-                    (int)(target.getY()), 
+                    (int)(t.getPos().getX()+x*3), 
+                    (int)(t.getPos().getY()+y*3),  
                     this.game.getTileSize(),
                     this.game.getTileSize(), 
                     null);
