@@ -35,7 +35,7 @@ public class EnemiesConfig {
         this.e= new Enemy(200,start,20, 4f,1,1,this.game);
 
         makeEnemies(nbEnemies);
-        enemies.get(0).setSpawned(true);
+        //enemies.get(0).setSpawned(true);
         //this.enemies.add(e);
     }
 
@@ -83,10 +83,14 @@ public class EnemiesConfig {
         }
     }
 
+    public Coordinates getNextCoor(Enemy e){
+        return new Coordinates((int) (e.getPos().getX() + getHorizontalSpeed(e.getDir(),e)), (int) (e.getPos().getY() + getVerticalSpeed(e.getDir(),e)));
+    }
+
     //update la position de l'enemie
     private void updateMove(Enemy e) {
         //On initialise deux
-        Coordinates next = new Coordinates((int) (e.getPos().getX() + getHorizontalSpeed(e.getDir(),e)), (int) (e.getPos().getY() + getVerticalSpeed(e.getDir(),e)));
+        Coordinates next = getNextCoor(e);
 
         /*Si la prochaine coordonée est un chemin alors on avance
          * Sinon on vérifie si le personnage est arrivé au chateau, sinon on change sa direction

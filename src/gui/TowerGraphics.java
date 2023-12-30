@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 import config.MapConfig;
 import config.TowerConfig;
+import config.EnemiesConfig;
+import model.Coordinates;
 import model.Direction;
 import model.Enemy;
 import model.Tower;
@@ -33,16 +35,70 @@ public class TowerGraphics implements Graphic {
     } */
 
     // attaque dans la direction voulue en parametre
-    private int[] attaqueDirection (Direction direction) {
-        int[] tab= new int[2];
+    private float[] attaqueDirection (Direction direction, Tower t) {
+        float[] tab= new float[2];
         switch (direction) {
-            case WEST: tab[0]=-1; tab[1]=0; break;
-            case EAST: tab[0]=1; tab[1]=0; break;
-            case NORTH: tab[0]=0; tab[1]=-1; break;
-            case SOUTH:tab[0]=0; tab[1]=1; break;
+            case WEST: tab[0]=-t.getVitesseAtk(); tab[1]=0; break;
+            case EAST: tab[0]=t.getVitesseAtk(); tab[1]=0; break;
+            case NORTH: tab[0]=0; tab[1]=-t.getVitesseAtk(); break;
+            case SOUTH:tab[0]=0; tab[1]=t.getVitesseAtk(); break;
         }
         return tab;
          
+    }
+
+    private void attackTower (Graphics g, long time, Tower t) {
+        
+        if(t.getTarget()!=null){
+
+        float n= 100f;
+        int t0= (int) (n/t.getVitesseAtk());
+        int t1= (int) (n*2.0f/t.getVitesseAtk());
+        int t2= (int) (n*3.0f/t.getVitesseAtk());
+        int t3= (int) (n*4.0f/t.getVitesseAtk());
+
+        Coordinates e = this.game.getEnemyConfig().getNextCoor((t.getTarget()));
+        Coordinates target = t.getTarget().getPos();
+
+        int nb=6;
+        // System.out.println(t.isMagic());
+        if (time%t3<t0) {
+            g.drawImage(
+                this.towerAsset.get(t.idColorTower()+nb), 
+                (int)target.getX(), 
+                (int)target.getY(), 
+                this.game.getTileSize(),
+                this.game.getTileSize(), 
+                null);
+        } else if (time%t3<t1) {
+            g.drawImage(
+                this.towerAsset.get(t.idColorTower()+nb*2), 
+                (int)target.getX(), 
+                (int)target.getY(), 
+                this.game.getTileSize(),
+                this.game.getTileSize(), 
+                null);
+        } else if (time%t3<t2) {
+            if (t.isMagic()) {
+                g.drawImage(
+                    this.towerAsset.get(t.idColorTower()+nb*3), 
+                    (int)(target.getX()), 
+                    (int)(target.getY()), 
+                    this.game.getTileSize(),
+                    this.game.getTileSize(), 
+                    null);
+            } else if (t.isPhysic()) {
+                g.drawImage(
+                    this.towerAsset.get(t.idColorTower()+nb*2), 
+                    (int)(target.getX()), 
+                    (int)(target.getY()), 
+                    this.game.getTileSize(),
+                    this.game.getTileSize(), 
+                    null);
+                //g.rotate(Math.toRadians(45), (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0]+(this.game.getTileSize()/2), (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1]+(this.game.getTileSize()/2));
+            }
+
+        } }
     }
 
     private void attackTowerDraw (Graphics g, long time, Tower t, Direction d) {
@@ -57,16 +113,16 @@ public class TowerGraphics implements Graphic {
         if (time%t3<t0) {
             g.drawImage(
                 this.towerAsset.get(t.idColorTower()+nb), 
-                (int)t.getPos().getX()+this.game.getTileSize()*attaqueDirection(d)[0], 
-                (int)t.getPos().getY()+this.game.getTileSize()*attaqueDirection(d)[1], 
+                (int)(t.getPos().getX()+this.game.getTileSize()*attaqueDirection(d,t)[0]), 
+                (int)(t.getPos().getY()+this.game.getTileSize()*attaqueDirection(d,t)[1]), 
                 this.game.getTileSize(),
                 this.game.getTileSize(), 
                 null);
         } else if (time%t3<t1) {
             g.drawImage(
                 this.towerAsset.get(t.idColorTower()+nb*2), 
-                (int)t.getPos().getX()+this.game.getTileSize()*2*attaqueDirection(d)[0], 
-                (int)t.getPos().getY()+this.game.getTileSize()*2*attaqueDirection(d)[1], 
+                (int)(t.getPos().getX()+this.game.getTileSize()*2*attaqueDirection(d,t)[0]), 
+                (int)(t.getPos().getY()+this.game.getTileSize()*2*attaqueDirection(d,t)[1]), 
                 this.game.getTileSize(),
                 this.game.getTileSize(), 
                 null);
@@ -74,16 +130,16 @@ public class TowerGraphics implements Graphic {
             if (t.isMagic()) {
                 g.drawImage(
                     this.towerAsset.get(t.idColorTower()+nb*3), 
-                    (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0], 
-                    (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1], 
+                    (int)(t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d,t)[0]), 
+                    (int)(t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d,t)[1]), 
                     this.game.getTileSize(),
                     this.game.getTileSize(), 
                     null);
             } else if (t.isPhysic()) {
                 g.drawImage(
                     this.towerAsset.get(t.idColorTower()+nb*2), 
-                    (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0], 
-                    (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1], 
+                    (int)(t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d,t)[0]), 
+                    (int)(t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d,t)[1]), 
                     this.game.getTileSize(),
                     this.game.getTileSize(), 
                     null);
@@ -133,7 +189,8 @@ public class TowerGraphics implements Graphic {
             // System.out.println(this.towerConfig.getTowers().get(i).idColorTower());
         }
         for (Tower t: tower) {
-            attackTowerDraw(g, time, t, Direction.EAST);
+            //attackTowerDraw(g, time, t, Direction.SOUTH);
+            attackTower(g, time, t);
             drawZone(g,t);
         }
         
