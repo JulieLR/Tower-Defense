@@ -95,12 +95,12 @@ public class Tower extends Entities {
 
     public Tower towerEnum (int n){
         switch (n) {
-            case 0: return new Tower(1, this.getPos(), 40, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
-            case 1: return new Tower(3, this.getPos(), 65, n, 150, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
-            case 2: return new Tower(5, this.getPos(), 100, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
-            case 3: return new Tower(2, this.getPos(), 10, n, 25, this.game.getTileSize()*1, this.game.getTileSize()*3, this.game);
-            case 4: return new Tower(5, this.getPos(), 20, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
-            case 5: return new Tower(15, this.getPos(), 60, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
+            case 0: return new Tower(0.5f, this.getPos(), 2, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 1: return new Tower(0.5f, this.getPos(), 2, n, 150, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
+            case 2: return new Tower(0.5f, this.getPos(), 2, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
+            case 3: return new Tower(0.5f, this.getPos(), 2, n, 25, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 4: return new Tower(0.5f, this.getPos(), 2, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
+            case 5: return new Tower(0.5f, this.getPos(), 2, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
         }
         return null;
     }
