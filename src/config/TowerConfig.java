@@ -200,7 +200,7 @@ public class TowerConfig implements Serializable{
 
     
     // distance entre une tour et un enemy 
-    public double disBetween (Enemy e, Tower t) {
+    public double distanceTowerEnemy (Tower t, Enemy e) {
         return Math.sqrt(
         Math.pow(e.getPos().getX()-t.getPos().getX(),2) +
         Math.pow(e.getPos().getY()-t.getPos().getY(),2));
@@ -228,6 +228,11 @@ public class TowerConfig implements Serializable{
         }
         return tab;
     } 
+
+    // distance entre une tour et une tile route 
+    //private double[] distanceTowerPath (Tower t, Tile path) {
+        
+    //}
 
     // le temps que mets un projectile pour arriver à un path
     private long timeProjectileToPath () {
