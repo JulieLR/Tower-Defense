@@ -32,6 +32,9 @@ public class TowerConfig implements Serializable{
     public void update(){
         for(Tower t : towers){
             getTarget(t);
+            if(t.getTarget()!=null){
+                attaque(t.getTarget(),t);
+            }
         }
     }
 
@@ -136,8 +139,15 @@ public class TowerConfig implements Serializable{
  
     // attaque
     private void attaque (Enemy enemy, Tower tower) {
-        enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
-        System.out.println("point de vie ennemi = "+enemy.getPointDeVie());
+        if(enemy.getPointDeVie()-tower.getDegat()<0){
+            enemy.setPointDeVie(0);
+            enemy.setAlived(false);
+            tower.setTarget(null);
+        }
+        else{
+            enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
+        }
+        System.out.println(enemy.getPointDeVie());
     }
 
     // si aux coordonnees (x, y) il y a un ennemi
@@ -263,13 +273,15 @@ public class TowerConfig implements Serializable{
     }
 
     private void getTarget(Tower t){
-            for(Enemy e : enemies){
-                if(t.getTarget()==null){
+        for(Enemy e : enemies){
+            if(t.getTarget()==null){
+                if(e.isAlived()){
                     if(t.isInZone(e)){
                         t.setTarget(e);
                     }
                 }
             }
+        }
     }
 
 }

@@ -19,6 +19,7 @@ public class Enemy extends Entities{
     private boolean atEnd;
     private boolean isSpawned;
     private boolean isAlived;
+    private boolean deadAnimation;
 
     private Direction dir = Direction.NORTH;
     private Random r = new Random();
@@ -30,6 +31,7 @@ public class Enemy extends Entities{
         this.type=type;
         this.prime=prime;
         this.game=game;
+        this.deadAnimation=true;
         this.zone= new Rectangle( (int) this.getPos().getX(), (int) this.getPos().getY()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize());
     }
 
@@ -110,6 +112,14 @@ public class Enemy extends Entities{
 
     public void setPrime(int prime) {
         this.prime = prime;
+    }
+
+    public boolean getDeadAnimation() {
+        return deadAnimation;
+    }
+
+    public void setDeadAnimation(boolean deadAnimation) {
+        this.deadAnimation = deadAnimation;
     }
 
     public void move(float x, float y){
