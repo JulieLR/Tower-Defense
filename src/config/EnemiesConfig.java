@@ -48,6 +48,7 @@ public class EnemiesConfig {
         if(nbSpawned<nbEnemies){
             enemies.get(nbSpawned).setSpawned(true);
             enemies.get(nbSpawned).setAlived(true);
+            enemies.get(nbSpawned).setNumber(nbSpawned);
             nbSpawned++;
         }
 

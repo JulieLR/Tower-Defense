@@ -14,6 +14,7 @@ public class Enemy extends Entities{
     private int pointDeVie;
     private int type;
     private int prime;
+    private int number; 
 
     private Rectangle zone;
     private boolean atEnd;
@@ -143,5 +144,13 @@ public class Enemy extends Entities{
 
     public void setPos(int x, int y){
         super.setPos(new Coordinates(x,y));
+    }
+
+    public int getNumber() {
+        return this.number;
+    }
+    
+    public void setNumber(int n) {
+        this.number=n;
     }
 }
