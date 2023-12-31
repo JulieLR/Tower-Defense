@@ -172,18 +172,16 @@ public class Tower extends Entities {
         return target;
     }
     public void setTarget() {
-        this.target= this.minTab();
+        this.setEnemyTab();
+        this.target= this.getEnemyTab()[0];
     }
 
     public Enemy[] getEnemyTab() {
         return this.enemyTab;
     }
     public void setEnemyTab() {
-        System.out.print("oui ");
         for (Enemy e: this.enemyConfig.getEnemies()) {
-            System.out.print("enemy ");
             if (isInZone(e)) {
-                System.out.println("in");
                 addEnemyInTab(e);
             }
             /*if (isEnemyAlreadyInTab(e) && this.enemyTab.length!=0){
