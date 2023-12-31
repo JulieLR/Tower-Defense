@@ -152,7 +152,6 @@ public class TowerConfig implements Serializable{
                 tower.setTarget();
             }
         }
-        System.out.println(enemy.getPointDeVie()+ "   " + tower.numberEnemyInZone());
     }
     
     // distance entre une tour et un ennemi
@@ -164,6 +163,8 @@ public class TowerConfig implements Serializable{
 
     private void getTarget(Tower t){
         for(Enemy e : enemies){
+            //t.setEnemyTab();
+            //System.out.println(t.getEnemyTab().length+ "   "+ t.numberEnemyInZone());
             if(t.getTarget()==null){
                 if(t.isInZone(e)){
                     if(e.isAlived()){
@@ -175,6 +176,15 @@ public class TowerConfig implements Serializable{
                 
                 }   
             }
+            /* else {
+                if (isEnemyAlreadyInTab(e) && this.enemyTab.length!=0){
+                    if (!e.isAlived()) {
+                        deleteEnemyTab(e);
+                        setTarget();
+                    }
+                }
+
+            } */
         }
     }
 
