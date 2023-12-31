@@ -42,6 +42,9 @@ public class Game extends JPanel implements Runnable {
     final int width= col*tileSize; //960
     final int height= ligne*tileSize; //640+128
 
+    //Le numero de la map choisi par le joueur par défaut on l'initialise à 1
+    private int mapNumber=1;
+
     private BufferedImage mapImage;
     private MapConfig tiles;
     private MapGraphics mapGraphics;
@@ -69,12 +72,14 @@ public class Game extends JPanel implements Runnable {
     private Mouse_Listener mouseListener; 
     private Keyboard_Listener keyboardlistener;
 
-    public Game(){
+    public Game(int mapNumber){
 
         this.mapImage = getImage("src/ressources/map/sprite.png");
         this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
         this.batImage = getImage("src/ressources/enemies/batSprite.png");
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
+
+        this.mapNumber=mapNumber;
 
         this.tiles= new MapConfig(this);
         this.mapGraphics= new MapGraphics(this, tiles);
@@ -112,6 +117,10 @@ public class Game extends JPanel implements Runnable {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int getMapNumber() {
+        return mapNumber;
     }
 
     public BufferedImage getMapImage() {
@@ -165,9 +174,9 @@ public class Game extends JPanel implements Runnable {
         super.paintComponent(g);
 
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
-        enemies.drawImages(g);
         towerGraphics.drawImages(g);
-        mapGraphics.drawBottomBar(g);
+        enemies.drawImages(g);
+        mapGraphics.drawBottomBarAndScore(g);
 
         g.dispose(); //
     }

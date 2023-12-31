@@ -14,13 +14,13 @@ public class App extends JFrame{
     private Mouse_Listener mouseListener; 
     private Keyboard_Listener keyboardlistener;
 
-    public App(){
+    public App(int mapNumber){
         
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("TOWER DEFENSE");
-        //setResizable(false);
+        setResizable(false);
 
-        this.game = new Game();
+        this.game = new Game(mapNumber);
         add(game);
 
         this.pack();
