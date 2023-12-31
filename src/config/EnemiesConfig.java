@@ -43,9 +43,19 @@ public class EnemiesConfig {
         return enemies;
     }
 
+    public Direction startDirection(){
+        if(this.game.getMapNumber()==1){
+            return Direction.NORTH;
+        }
+        else{
+            return Direction.SOUTH;
+        }
+    }
+
     /*On change les valeurs de spawn et alive des ennemies par true */
     public void spawn() {
         if(nbSpawned<nbEnemies){
+            enemies.get(nbSpawned).setDir(startDirection());
             enemies.get(nbSpawned).setSpawned(true);
             enemies.get(nbSpawned).setAlived(true);
             nbSpawned++;

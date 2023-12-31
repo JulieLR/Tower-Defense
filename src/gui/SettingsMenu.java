@@ -13,16 +13,17 @@ import gui.Menu.Fond;
 
 import javax.swing.JButton;
 
-public class Settings extends JFrame implements Frame,MouseListener{
+public class SettingsMenu extends JFrame implements Frame,MouseListener{
 
     private Menu menu;
     private Fond fond;
 
+    
     private ArrayList<BufferedImage> assets;
 
     private JButton modeButton, sceneButton, backButton;
     
-    public Settings(Menu menu, Fond fond){
+    public SettingsMenu(Menu menu, Fond fond){
         
         this.menu = menu;
         this.fond= fond;
@@ -37,18 +38,15 @@ public class Settings extends JFrame implements Frame,MouseListener{
 
         fond.setBounds(0, 0, this.getWidth(), this.getHeight());
 
-        JButton test = new JButton("test");
-        test.setBounds(100, 100, 100, 50);
-        
-        this.modeButton = makeButton((this.getWidth()-140)/2, (this.getHeight()-94)/2, 140, 56, 6, assets);
+        this.modeButton = makeButton((this.getWidth()-140)/2, (this.getHeight()-124)/2, 140, 56, 6, assets);
         modeButton.addMouseListener(this);
         add(modeButton);
 
-        this.sceneButton=makeButton((this.getWidth()-140)/2, (this.getHeight()-94)/2+61, 140, 56, 8, assets);
+        this.sceneButton=makeButton((this.getWidth()-140)/2, (this.getHeight()-124)/2+61, 140, 56, 8, assets);
         sceneButton.addMouseListener(this);
         add(sceneButton);
 
-        this.backButton=makeButton((this.getWidth()-140)/2, (this.getHeight()-94)/2+122, 140, 56, 10, assets);
+        this.backButton=makeButton((this.getWidth()-140)/2, (this.getHeight()-124)/2+122, 140, 56, 10, assets);
         backButton.addMouseListener(this);
         add(backButton); 
 
@@ -80,6 +78,9 @@ public class Settings extends JFrame implements Frame,MouseListener{
         }
         else if((e.getSource()== sceneButton)){
             sceneButton.setIcon(new ImageIcon(assets.get(8)));
+            Fond fondScene = menu.new Fond(this.menu.getFondImage(), this.menu.getSceneFond(), (this.getWidth()-this.menu.getSceneFond().getWidth())/2, (this.getHeight()-this.getInsets().top-this.menu.getSceneFond().getHeight())/2);
+            new SceneMenu(menu,this, fondScene);
+            this.setVisible(false);
         }
         else if((e.getSource()== backButton)){
             backButton.setIcon(new ImageIcon(assets.get(10)));

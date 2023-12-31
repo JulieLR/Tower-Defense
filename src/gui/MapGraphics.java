@@ -63,9 +63,14 @@ public class MapGraphics implements Graphic {
         }
     }
 
-    public void drawBottomBar(Graphics g){
+    public void drawBottomBarAndScore(Graphics g){
         for(int x=0;x<this.map.length;x++){
             for(int y = this.map[0].length-2; y<this.map[0].length;y++){
+                g.drawImage(rotate(this.tiles.get(map[x][y].getImg()),90*map[x][y].getValue()),x*game.getTileSize(), y*game.getTileSize(), game.getTileSize(), game.getTileSize(), null);
+            }
+        }
+        for(int x=0;x<4;x++){
+            for(int y =0; y<2;y++){
                 g.drawImage(rotate(this.tiles.get(map[x][y].getImg()),90*map[x][y].getValue()),x*game.getTileSize(), y*game.getTileSize(), game.getTileSize(), game.getTileSize(), null);
             }
         }

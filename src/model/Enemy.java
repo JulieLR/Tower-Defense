@@ -21,7 +21,7 @@ public class Enemy extends Entities{
     private boolean isAlived;
     private boolean deadAnimation;
 
-    private Direction dir = Direction.NORTH;
+    private Direction dir = Direction.SOUTH;
     private Random r = new Random();
 
 

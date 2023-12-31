@@ -17,6 +17,11 @@ public class MapConfig {
     private Coordinates endCoor;
     private Coordinates start;
 
+    private String path1="src/config/map1T.txt";
+    private String path1C="src/config/map1C.txt";
+    private String path2="src/config/map2T.txt";
+    private String path2C="src/config/map2C.txt";
+
 
     Random random = new Random();
 
@@ -25,7 +30,12 @@ public class MapConfig {
         this.game=game;
         this.map= new Tile[this.game.getCol()][this.game.getLigne()];
         //addAsset();
-        mapFromFile("src/config/mapT.txt","src/config/map.txt");
+        if(this.game.getMapNumber()==1){
+            mapFromFile(path1,path1C);
+        }
+        else if(this.game.getMapNumber()==2){
+            mapFromFile(path2,path2C);
+        }
         //System.out.print(this.getTile(new Coordinates(130, 130)).typeToString());
     } 
 

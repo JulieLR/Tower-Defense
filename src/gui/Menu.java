@@ -20,6 +20,10 @@ public class Menu extends JFrame implements Frame,MouseListener{
     private BufferedImage fondMenuImage;
     private BufferedImage fondImage;
     private BufferedImage settingsFond;
+    private BufferedImage sceneFond;
+
+    private int mapNumber;
+
     private ArrayList<BufferedImage> assets = new ArrayList<>();
 
     private JButton quitButton,playButton,settingsButton;
@@ -30,6 +34,7 @@ public class Menu extends JFrame implements Frame,MouseListener{
         this.fondImage= getImage("src/ressources/menu/fond.png");
         this.settingsFond= getImage("src/ressources/menu/fondSettings.png");
         this.buttonImage = getImage("src/ressources/menu/buttons2.png");
+        this.sceneFond= getImage("src/ressources/menu/tableau.png");
 
         setLayout(null);
         setBounds(0, 0, 960, 640);
@@ -40,7 +45,7 @@ public class Menu extends JFrame implements Frame,MouseListener{
         
         addAsset();
 
-        Fond fond = new Fond(this.fondImage, this.fondMenuImage,(this.getWidth()-this.fondMenuImage.getWidth())/2, (this.getHeight()-this.fondMenuImage.getHeight())/2);
+        Fond fond = new Fond(this.fondImage, this.fondMenuImage,(this.getWidth()-this.fondMenuImage.getWidth())/2, (this.getHeight()-this.getInsets().top-this.fondMenuImage.getHeight())/2);
         fond.setBounds(0, 0, this.fondImage.getWidth(), this.fondImage.getHeight());
 
         /* JButton playButton = new JButton();
@@ -51,15 +56,15 @@ public class Menu extends JFrame implements Frame,MouseListener{
         makeTransparentBackground(playButton);
         playButton.addMouseListener(this); */
 
-        this.playButton = makeButton((this.getWidth()-140)/2, (this.getHeight()-112)/2, 140, 56, 0, assets);
+        this.playButton = makeButton((this.getWidth()-140)/2, (this.getHeight()-143)/2, 140, 56, 0, assets);
         playButton.addMouseListener(this);
         add(playButton);
 
-        this.settingsButton=makeButton((this.getWidth()-140)/2, (this.getHeight()-112)/2+61, 140, 56, 2, assets);
+        this.settingsButton=makeButton((this.getWidth()-140)/2, (this.getHeight()-143)/2+61, 140, 56, 2, assets);
         settingsButton.addMouseListener(this);
         add(settingsButton);
 
-        this.quitButton=makeButton((this.getWidth()-140)/2, (this.getHeight()-112)/2+122, 140, 56, 4, assets);
+        this.quitButton=makeButton((this.getWidth()-140)/2, (this.getHeight()-143)/2+122, 140, 56, 4, assets);
         quitButton.addMouseListener(this);
         add(quitButton); 
 
@@ -93,9 +98,21 @@ public class Menu extends JFrame implements Frame,MouseListener{
         }
     }
 
+    public BufferedImage getFondImage(){
+        return this.fondImage;
+    }
+
+    public BufferedImage getSceneFond() {
+        return sceneFond;
+    }
+
+    public void setMapNumber(int mapNumber) {
+        this.mapNumber = mapNumber;
+    }
+
     public void playAction(){
         playButton.setIcon(new ImageIcon(assets.get(1)));
-        new App();
+        new App(mapNumber);
         dispose();
 
     }
@@ -115,7 +132,7 @@ public class Menu extends JFrame implements Frame,MouseListener{
     }
 
     public void addAsset() {
-        for(int ligne=0; ligne<6;ligne++){
+        for(int ligne=0; ligne<7;ligne++){
             for(int col=0;col<2;col++){
                 assets.add(buttonImage.getSubimage(col*140,ligne*56, 140, 56));
             }
@@ -149,8 +166,8 @@ public class Menu extends JFrame implements Frame,MouseListener{
         }
         else if((e.getSource()== settingsButton)){
             settingsButton.setIcon(new ImageIcon(assets.get(2)));
-            Fond fondSet = new Fond(this.fondImage, this.settingsFond, (this.getWidth()-this.settingsFond.getWidth())/2, (this.getHeight()-this.settingsFond.getHeight())/2);
-            new Settings(this, fondSet);
+            Fond fondSet = new Fond(this.fondImage, this.settingsFond, (this.getWidth()-this.settingsFond.getWidth())/2, (this.getHeight()-this.getInsets().top-this.settingsFond.getHeight())/2);
+            new SettingsMenu(this, fondSet);
             this.setVisible(false);
         }
         else if((e.getSource()== quitButton)){
