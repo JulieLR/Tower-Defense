@@ -22,7 +22,7 @@ public class Menu extends JFrame implements Frame,MouseListener{
     private BufferedImage settingsFond;
     private BufferedImage sceneFond;
 
-    private int mapNumber;
+    private int mapNumber=1;
 
     private ArrayList<BufferedImage> assets = new ArrayList<>();
 
