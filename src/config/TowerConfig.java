@@ -152,7 +152,6 @@ public class TowerConfig implements Serializable{
                 tower.setTarget();
             }
         }
-        System.out.println(enemy.getPointDeVie()+ "   " + tower.numberEnemyInZone());
     }
     
     // distance entre une tour et un ennemi

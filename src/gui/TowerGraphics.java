@@ -86,7 +86,6 @@ public class TowerGraphics implements Graphic {
         float x = getHorizontalNombre(t.getPos(), t.getTarget().getPos());
 
         int nb=6;
-        // System.out.println(t.isMagic());
         if (time%t3<t0) {
             g.drawImage(
                 this.towerAsset.get(t.idColorTower()+nb), 
@@ -210,7 +209,6 @@ public class TowerGraphics implements Graphic {
                 this.game.getTileSize(), 
                 this.game.getTileSize()*2,
                 null);  
-            // System.out.println(this.towerConfig.getTowers().get(i).idColorTower());
         }
         for (Tower t: tower) {
             ////attackTowerDirectionDraw(g, time, t, Direction.SOUTH);
@@ -220,7 +218,6 @@ public class TowerGraphics implements Graphic {
             //attackTowerCornerDraw(g, time, t, Math.PI);
             drawZone(g,t);
         }
-        System.out.println(Math.cos(Math.PI));
         // attaqueDraw(g, time, this.towerConfig.getTowers().get(1));
     }
     public void drawZone(Graphics g, Tower t){

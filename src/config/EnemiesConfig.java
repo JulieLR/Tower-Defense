@@ -208,7 +208,6 @@ public class EnemiesConfig {
         else{
             base.setPointDeVie(base.getPointDeVie()-e.getDegat());
         }
-        System.out.println(base.getPointDeVie());
     }
 
 }
