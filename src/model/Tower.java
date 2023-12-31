@@ -3,6 +3,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.lang.Math.*;
 
+import config.EnemiesConfig;
 import gui.Game;
 
 public class Tower extends Entities {
@@ -14,6 +15,8 @@ public class Tower extends Entities {
     private Rectangle attackZone;
     private Game game;
     private Enemy target;
+    private EnemiesConfig enemyConfig;
+    private Enemy[] enemyTab;
     
     public Tower(float attackSpeed, Coordinates position, int degat, int color, int price, int width, int height, Game game){
         super(attackSpeed, position, degat);
@@ -21,8 +24,11 @@ public class Tower extends Entities {
         this.getType();
         this.price=price;
         this.game=game;
+        this.enemyConfig=this.game.getEnemyConfig();
         Coordinates c = pos(position,width,height,game.getTileSize());
         this.attackZone= new Rectangle((int) c.getX(), (int) c.getY(), width, height);
+        this.enemyTab= new Enemy[0];
+        this.setEnemyTab();
     }
 
     public Coordinates pos(Coordinates cor, int width, int height, int size){
@@ -35,14 +41,6 @@ public class Tower extends Entities {
     // Methodes
 
     // getter et setter
-    public Enemy getTarget() {
-        return target;
-    }
-
-    public void setTarget(Enemy target) {
-        this.target = target;
-    }
-
     public TowerColor getTowerColor () {
         return this.towerColor;
     }
@@ -141,13 +139,55 @@ public class Tower extends Entities {
         this.attackZone= new Rectangle((int) (getPos().getX()-width/2), (int) (getPos().getY()-height/2), width, height);
     }
 
-
-    
-        public boolean isInZone(Enemy e){
+    public boolean isInZone(Enemy e){
         if(this.getAttackZone().contains(e.getZone())){
-            return true;
+            return true; 
         }
         return false;
     }
+
+    public Enemy getTarget() {
+        return target;
+    }
+    public void setTarget() {
+        this.setEnemyTab();
+        if (this.getEnemyTab().length!=0) {
+            this.target= this.getEnemyTab()[0];
+        }
+        else {
+            this.target=null;
+        }
+    }
+
+    public Enemy[] getEnemyTab() {
+        return this.enemyTab;
+    }
+    public void setEnemyTab() {
+        for (Enemy e: this.enemyConfig.getEnemies()) {
+            if (isInZone(e)) {
+                addEnemyInTab(e);
+                if (!e.isAlived()) {
+                    deleteEnemyTab(e);
+                }
+            }
+        }
+    }
+    public void addEnemyInTab (Enemy e) {
+        Enemy[] tab= new Enemy[this.enemyTab.length+1];
+        for (int i=0; i<this.enemyTab.length -1; i++) {
+            tab[i]= this.enemyTab[i];
+        }
+        tab[this.enemyTab.length]=e;
+        this.enemyTab=tab;
+    }
+
+    public void deleteEnemyTab (Enemy e) {
+        Enemy[] tab= new Enemy[this.enemyTab.length-1];
+        for (int i=1; i<this.enemyTab.length-1; i++) {
+            tab[i-1]= this.enemyTab[i];
+        }
+        this.enemyTab=tab;
+    }
+
 
 }

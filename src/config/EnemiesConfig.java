@@ -58,6 +58,7 @@ public class EnemiesConfig {
             enemies.get(nbSpawned).setDir(startDirection());
             enemies.get(nbSpawned).setSpawned(true);
             enemies.get(nbSpawned).setAlived(true);
+            enemies.get(nbSpawned).setNumber(nbSpawned);
             nbSpawned++;
         }
 
@@ -207,7 +208,6 @@ public class EnemiesConfig {
         else{
             base.setPointDeVie(base.getPointDeVie()-e.getDegat());
         }
-        System.out.println(base.getPointDeVie());
     }
 
 }

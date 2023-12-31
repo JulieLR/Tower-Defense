@@ -142,80 +142,17 @@ public class TowerConfig implements Serializable{
         if(enemy.getPointDeVie()-tower.getDegat()<0){
             enemy.setPointDeVie(0);
             enemy.setAlived(false);
-            tower.setTarget(null);
+            tower.deleteEnemyTab(enemy);
+            tower.setTarget();
         }
         else{
             enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
-        }
-        System.out.println(enemy.getPointDeVie());
-    }
-
-    // si aux coordonnees (x, y) il y a un ennemi
-    private boolean isEnemy (int x, int y) {
-        if (this.game.getEnemyConfig().getE().getPos().getX()==x && this.game.getEnemyConfig().getE().getPos().getY()==y) {
-            return true;
-        }
-        return false;
-    }
-
-    // si dans la zone rectangulaire il y a un ennemi
-    private boolean isEnemyInZone (Tower tower) {
-        for (int ligne= 0; ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= 0; col<tower.getAttackZone().getHeight(); col++) {
-                if (isEnemy(ligne, col)) {
-                    return true;
-                }
+            if (!tower.isInZone(enemy)) {
+                tower.deleteEnemyTab(enemy);
+                tower.setTarget();
             }
         }
-        return false;
     }
-
-    // nombre d'enemis dans la zone rectangulaire
-    private int numberEnemyInZone (Tower tower) {
-        int n=0;
-        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                if (isEnemy(ligne, col)) {
-                    n++;
-                }
-            }
-        }
-        return n;
-    }
-
-    // tableau des coordonnees des ennemis dans la zone de la tour voulu
-    public Coordinates[] CoordinatesEnemyInZone (Tower tower) {
-        Coordinates[] coordinates= new Coordinates[numberEnemyInZone(tower)];
-        int n=0;
-        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                coordinates[n]=new Coordinates(ligne, col);
-                n++;
-            }
-        }
-        return coordinates;
-    }
-
-    // tableau des coordonnees des ennemis dans la zone de la tour voulu
-    public Coordinates[] nextCoordinatesEnemyInZone (Enemy e, Tower tower) {
-        Coordinates[] nextCoordinates= new Coordinates[numberEnemyInZone(tower)];
-        int n=0;
-        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                nextCoordinates[n]=new Coordinates(ligne+this.game.getTileSize()*e.getSpeed(), col+this.game.getTileSize()*e.getSpeed());
-                n++;
-            }
-        }
-        return nextCoordinates;
-    }
-
-
-
-    // inverse les positions de deux ennemis dans le tableau, si un ennemis depasse un autre
-    public void enemyOvertake (Enemy e0, Enemy e1) {
-
-    }
-
     
     // distance entre une tour et un ennemi
     public double distanceTowerEnemy (Tower t, Enemy e) {
@@ -223,63 +160,19 @@ public class TowerConfig implements Serializable{
         Math.pow(e.getPos().getX()-t.getPos().getX(),2) +
         Math.pow(e.getPos().getY()-t.getPos().getY(),2));
     }
-    
-    // le type de la tuile aux coordonnées (x, y)
-    private Type getTileType(int x, int y) {
-        return game.getTileType(x,y);
-    }
-
-    // si la tuile aux coordonnees c correspond a une route (pour les ennemis)
-    private boolean isPath(Coordinates c){
-        return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH);
-    }
-    
-    /* // tableau de tableau de boolean pour savoir les tiles qui sont des routes (donc ou il peut y avoir un ennemi)
-    private boolean[][] tabPath (Tower tower) {
-        boolean[][] tab= new boolean[(int)tower.getAttackZone().getWidth()][(int)tower.getAttackZone().getHeight()];
-        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                if (isPath(new Coordinates(ligne, col))) {
-                    tab[ligne][col]= true;
-                }
-            }
-        }
-        return tab;
-    } */
-
-    private int nbPath (Tower tower) {
-        int n=0;
-        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                if (isPath(new Coordinates(ligne, col))) {
-                    n++;
-               }
-            }
-        } 
-        return n;
-    }
-    
-
-    // distance entre une tour et une tile route 
-    private double[] distanceTowerPath (Tower t, Tile path) {
-        double[] distance= new double[nbPath(t)];
-
-        return distance;
-    }
-
-    // le temps que mets un projectile pour arriver à un path
-    private long timeProjectileToPath () {
-        return 0;
-    }
 
     private void getTarget(Tower t){
         for(Enemy e : enemies){
             if(t.getTarget()==null){
-                if(e.isAlived()){
-                    if(t.isInZone(e)){
-                        t.setTarget(e);
+                if(t.isInZone(e)){
+                    if(e.isAlived()){
+                        t.setTarget();
                     }
-                }
+                    /* if (t.isNextposInZone(e)) {
+                        t.deleteEnemyTab(e);
+                    } */
+                
+                }   
             }
         }
     }
