@@ -154,108 +154,12 @@ public class TowerConfig implements Serializable{
         }
         System.out.println(enemy.getPointDeVie()+ "   " + tower.numberEnemyInZone());
     }
-
-    // ajout d'un ennemis dans le tableau s'il entre dans la zone
-    private Enemy[] enemyEnterInZone (Tower tower, Enemy e) {
-        if (tower.isInZone(e)) {
-            if (tower.isEnemyAlreadyInTab(e)) {
-                return tower.getEnemyTab();
-            }
-            else  {
-                tower.addEnemyInTab(e);
-            }
-        }
-        return tower.getEnemyTab();
-
-    }
-
-    // tableau des coordonnees des ennemis dans la zone de la tour voulu
-    public Coordinates[] CoordinatesEnemyInZone (Tower tower) {
-        Coordinates[] coordinates= new Coordinates[tower.numberEnemyInZone()];
-        int n=0;
-        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                coordinates[n]=new Coordinates(ligne, col);
-                n++;
-            }
-        }
-        return coordinates;
-    }
-
-    // tableau des coordonnees des ennemis dans la zone de la tour voulu
-    public Coordinates[] nextCoordinatesEnemyInZone (Enemy e, Tower tower) {
-        Coordinates[] nextCoordinates= new Coordinates[tower.numberEnemyInZone()];
-        int n=0;
-        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                nextCoordinates[n]=new Coordinates(ligne+this.game.getTileSize()*e.getSpeed(), col+this.game.getTileSize()*e.getSpeed());
-                n++;
-            }
-        }
-        return nextCoordinates;
-    }
-
-
-
-    // inverse les positions de deux ennemis dans le tableau, si un ennemis depasse un autre
-    public void enemyOvertake (Enemy e0, Enemy e1) {
-
-    }
-
     
     // distance entre une tour et un ennemi
     public double distanceTowerEnemy (Tower t, Enemy e) {
         return Math.sqrt(
         Math.pow(e.getPos().getX()-t.getPos().getX(),2) +
         Math.pow(e.getPos().getY()-t.getPos().getY(),2));
-    }
-    
-    // le type de la tuile aux coordonnées (x, y)
-    private Type getTileType(int x, int y) {
-        return game.getTileType(x,y);
-    }
-
-    // si la tuile aux coordonnees c correspond a une route (pour les ennemis)
-    private boolean isPath(Coordinates c){
-        return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH);
-    }
-    
-    /* // tableau de tableau de boolean pour savoir les tiles qui sont des routes (donc ou il peut y avoir un ennemi)
-    private boolean[][] tabPath (Tower tower) {
-        boolean[][] tab= new boolean[(int)tower.getAttackZone().getWidth()][(int)tower.getAttackZone().getHeight()];
-        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                if (isPath(new Coordinates(ligne, col))) {
-                    tab[ligne][col]= true;
-                }
-            }
-        }
-        return tab;
-    } */
-
-    private int nbPath (Tower tower) {
-        int n=0;
-        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                if (isPath(new Coordinates(ligne, col))) {
-                    n++;
-               }
-            }
-        } 
-        return n;
-    }
-    
-
-    // distance entre une tour et une tile route 
-    private double[] distanceTowerPath (Tower t, Tile path) {
-        double[] distance= new double[nbPath(t)];
-
-        return distance;
-    }
-
-    // le temps que mets un projectile pour arriver à un path
-    private long timeProjectileToPath () {
-        return 0;
     }
 
     private void getTarget(Tower t){
