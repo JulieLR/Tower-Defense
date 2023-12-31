@@ -45,7 +45,7 @@ public class Menu extends JFrame implements MouseListener{
 
         JButton playButton = new JButton();
         this.playButton=playButton;
-        playButton.setBounds(this.getWidth()/3+70, (this.getHeight()/2)-50, 140, 56);
+        playButton.setBounds((this.getWidth()-140)/2, (this.getHeight()-112)/2, 140, 56);
         playButton.setBackground(null);
         playButton.setIcon(new ImageIcon(assets.get(0)));
         makeTransparentBackground(playButton);
@@ -54,7 +54,7 @@ public class Menu extends JFrame implements MouseListener{
 
         JButton settingsButton = new JButton();
         this.settingsButton=settingsButton;
-        settingsButton.setBounds(this.getWidth()/3+70, (this.getHeight()/2+15), 140, 56);
+        settingsButton.setBounds((this.getWidth()-140)/2, (this.getHeight()-112)/2+61, 140, 56);
         settingsButton.setBackground(null);
         settingsButton.setIcon(new ImageIcon(assets.get(2)));
         makeTransparentBackground(settingsButton);
@@ -63,7 +63,7 @@ public class Menu extends JFrame implements MouseListener{
 
         JButton quitButton = new JButton();
         this.quitButton=quitButton;
-        quitButton.setBounds(this.getWidth()/3+70, (this.getHeight()/2)+80, 140, 56);
+        quitButton.setBounds((this.getWidth()-140)/2, (this.getHeight()-112)/2+122, 140, 56);
         quitButton.setBackground(null);
         quitButton.setIcon(new ImageIcon(assets.get(4)));
         makeTransparentBackground(quitButton);
@@ -157,7 +157,7 @@ public class Menu extends JFrame implements MouseListener{
         }
         else if((e.getSource()== settingsButton)){
             settingsButton.setIcon(new ImageIcon(assets.get(2)));
-            Fond fondSet = new Fond(this.fondImage, this.settingsFond, this.getWidth()/3, this.getHeight()/4);
+            Fond fondSet = new Fond(this.fondImage, this.settingsFond, (this.getWidth()-this.settingsFond.getWidth())/2, (this.getHeight()-this.settingsFond.getHeight())/2);
             new Settings(this, fondSet);
         }
         else if((e.getSource()== quitButton)){
