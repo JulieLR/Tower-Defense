@@ -142,7 +142,7 @@ public class TowerConfig implements Serializable{
         if(enemy.getPointDeVie()-tower.getDegat()<0){
             enemy.setPointDeVie(0);
             enemy.setAlived(false);
-            tower.setTarget(null);
+            tower.setTarget();
         }
         else{
             enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
@@ -150,42 +150,23 @@ public class TowerConfig implements Serializable{
         System.out.println(enemy.getPointDeVie());
     }
 
-    // si aux coordonnees (x, y) il y a un ennemi
-    private boolean isEnemy (int x, int y) {
-        if (this.game.getEnemyConfig().getE().getPos().getX()==x && this.game.getEnemyConfig().getE().getPos().getY()==y) {
-            return true;
-        }
-        return false;
-    }
-
-    // si dans la zone rectangulaire il y a un ennemi
-    private boolean isEnemyInZone (Tower tower) {
-        for (int ligne= 0; ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= 0; col<tower.getAttackZone().getHeight(); col++) {
-                if (isEnemy(ligne, col)) {
-                    return true;
-                }
+    // ajout d'un ennemis dans le tableau s'il entre dans la zone
+    private Enemy[] enemyEnterInZone (Tower tower, Enemy e) {
+        if (tower.isInZone(e)) {
+            if (tower.isEnemyAlreadyInTab(e)) {
+                return tower.getEnemyTab();
+            }
+            else  {
+                tower.addEnemyInTab(e);
             }
         }
-        return false;
-    }
+        return tower.getEnemyTab();
 
-    // nombre d'enemis dans la zone rectangulaire
-    private int numberEnemyInZone (Tower tower) {
-        int n=0;
-        for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
-            for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
-                if (isEnemy(ligne, col)) {
-                    n++;
-                }
-            }
-        }
-        return n;
     }
 
     // tableau des coordonnees des ennemis dans la zone de la tour voulu
     public Coordinates[] CoordinatesEnemyInZone (Tower tower) {
-        Coordinates[] coordinates= new Coordinates[numberEnemyInZone(tower)];
+        Coordinates[] coordinates= new Coordinates[tower.numberEnemyInZone()];
         int n=0;
         for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
             for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
@@ -198,7 +179,7 @@ public class TowerConfig implements Serializable{
 
     // tableau des coordonnees des ennemis dans la zone de la tour voulu
     public Coordinates[] nextCoordinatesEnemyInZone (Enemy e, Tower tower) {
-        Coordinates[] nextCoordinates= new Coordinates[numberEnemyInZone(tower)];
+        Coordinates[] nextCoordinates= new Coordinates[tower.numberEnemyInZone()];
         int n=0;
         for (int ligne= (int) tower.getAttackZone().getX(); ligne<tower.getAttackZone().getWidth(); ligne++) {
             for (int col= (int) tower.getAttackZone().getY(); col<tower.getAttackZone().getHeight(); col++) {
@@ -274,13 +255,24 @@ public class TowerConfig implements Serializable{
 
     private void getTarget(Tower t){
         for(Enemy e : enemies){
+            //t.setEnemyTab();
+            //System.out.println(t.getEnemyTab().length+ "   "+ t.numberEnemyInZone());
             if(t.getTarget()==null){
                 if(e.isAlived()){
                     if(t.isInZone(e)){
-                        t.setTarget(e);
+                        t.setTarget();
                     }
                 }
             }
+            /* else {
+                if (isEnemyAlreadyInTab(e) && this.enemyTab.length!=0){
+                    if (!e.isAlived()) {
+                        deleteEnemyTab(e);
+                        setTarget();
+                    }
+                }
+
+            } */
         }
     }
 
