@@ -62,9 +62,10 @@ public class EnemiesGraphics implements Graphic{
                 g.drawRect((int)e.getZone().getX(), (int)e.getZone().getY(), 64, 64);
                 
             }
-            else if(!e.isAlived()&& e.isSpawned()){
-                drawDead(g, time, e);
-
+            else if(e.isSpawned()){
+                if(!e.getDeadAnimation()){
+                    drawDead(g, time, e);
+                }
             }
         }
         g.drawImage(this.enemiesAsset.get(8),(int)this.game.getMapConfig().getEndCoor().getX(),(int)this.game.getMapConfig().getEndCoor().getY(),this.game.getTileSize(),this.game.getTileSize(), null);
@@ -210,9 +211,11 @@ public class EnemiesGraphics implements Graphic{
     }
 
     public void drawDead(Graphics g, long time, Enemy e){
-        int n = (int)(500f/0.5f);
-        int m = (int)(400f/0.5f);
-        int k = (int)(300f/0.5f);
+
+        int n = (int)(1000f/0.5f);
+        int h = (int)(800f/0.5f);
+        int m = (int)(600f/0.5f);
+        int k = (int)(400f/0.5f);
         int l = (int)(200f/0.5f);
         int o = (int)(100f/0.5f);
         int p = 23;
@@ -229,9 +232,14 @@ public class EnemiesGraphics implements Graphic{
         else if(time%n<m){
             g.drawImage(this.enemiesAsset.get(p+3),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else{
+        else if(time%n<h){
             g.drawImage(this.enemiesAsset.get(p+4),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else if(time%n>h){
+            e.setDeadAnimation(true);
+
         } 
+        
     }
 
     //Ecart dans le sprite des enemies pour les chevaliers

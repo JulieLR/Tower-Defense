@@ -174,6 +174,7 @@ public class Game extends JPanel implements Runnable {
         super.paintComponent(g);
 
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
+        mapGraphics.drawBottomBarAndScore(g);
         towerGraphics.drawImages(g);
         enemies.drawImages(g);
         mapGraphics.drawBottomBarAndScore(g);
@@ -187,8 +188,8 @@ public class Game extends JPanel implements Runnable {
     }
     private void updateGame () {
         //System.out.println("Game Updated");
-        this.enemies.update();
         this.towerConfig.update();
+        this.enemies.update();
         if(this.base.isDestroyed()){
             System.exit(0);
             System.out.println("DESTROYED");

@@ -32,7 +32,7 @@ public class Enemy extends Entities{
         this.type=type;
         this.prime=prime;
         this.game=game;
-        this.deadAnimation=true;
+        this.deadAnimation=false;
         this.zone= new Rectangle( (int) this.getPos().getX(), (int) this.getPos().getY()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize());
     }
 
