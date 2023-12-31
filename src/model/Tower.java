@@ -146,6 +146,13 @@ public class Tower extends Entities {
         return false;
     }
 
+    public boolean isNextposInZone(Enemy e){
+        if(this.getAttackZone().contains(new Rectangle((int) enemyConfig.getNextCoor(e).getX(), (int) enemyConfig.getNextCoor(e).getX()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize()))){
+            return true; 
+        }
+        return false;
+    }
+
 
     // nombre d'ennemis dans la zone
     public int numberEnemyInZone () {
@@ -173,7 +180,12 @@ public class Tower extends Entities {
     }
     public void setTarget() {
         this.setEnemyTab();
-        this.target= this.getEnemyTab()[0];
+        if (this.getEnemyTab().length!=0) {
+            this.target= this.getEnemyTab()[0];
+        }
+        else {
+            this.target=null;
+        }
     }
 
     public Enemy[] getEnemyTab() {
@@ -183,13 +195,16 @@ public class Tower extends Entities {
         for (Enemy e: this.enemyConfig.getEnemies()) {
             if (isInZone(e)) {
                 addEnemyInTab(e);
-            }
-            /*if (isEnemyAlreadyInTab(e) && this.enemyTab.length!=0){
                 if (!e.isAlived()) {
                     deleteEnemyTab(e);
-                    setTarget();
                 }
-            //} */
+                //if (this.enemyConfig.getNextCoor(e)) {
+                    //deleteEnemyTab(e);
+                //}
+            }
+            //if (isEnemyAlreadyInTab(e) && this.enemyTab.length!=0){
+            
+            //} 
         }
     }
     public void addEnemyInTab (Enemy e) {

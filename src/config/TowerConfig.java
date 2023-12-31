@@ -142,12 +142,17 @@ public class TowerConfig implements Serializable{
         if(enemy.getPointDeVie()-tower.getDegat()<0){
             enemy.setPointDeVie(0);
             enemy.setAlived(false);
+            tower.deleteEnemyTab(enemy);
             tower.setTarget();
         }
         else{
             enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
+            if (!tower.isInZone(enemy)) {
+                tower.deleteEnemyTab(enemy);
+                tower.setTarget();
+            }
         }
-        System.out.println(enemy.getPointDeVie());
+        System.out.println(enemy.getPointDeVie()+ "   " + tower.numberEnemyInZone());
     }
 
     // ajout d'un ennemis dans le tableau s'il entre dans la zone
@@ -255,24 +260,17 @@ public class TowerConfig implements Serializable{
 
     private void getTarget(Tower t){
         for(Enemy e : enemies){
-            //t.setEnemyTab();
-            //System.out.println(t.getEnemyTab().length+ "   "+ t.numberEnemyInZone());
             if(t.getTarget()==null){
-                if(e.isAlived()){
-                    if(t.isInZone(e)){
+                if(t.isInZone(e)){
+                    if(e.isAlived()){
                         t.setTarget();
                     }
-                }
+                    /* if (t.isNextposInZone(e)) {
+                        t.deleteEnemyTab(e);
+                    } */
+                
+                }   
             }
-            /* else {
-                if (isEnemyAlreadyInTab(e) && this.enemyTab.length!=0){
-                    if (!e.isAlived()) {
-                        deleteEnemyTab(e);
-                        setTarget();
-                    }
-                }
-
-            } */
         }
     }
 
