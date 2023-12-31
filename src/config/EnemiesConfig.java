@@ -58,6 +58,7 @@ public class EnemiesConfig {
             enemies.get(nbSpawned).setDir(startDirection());
             enemies.get(nbSpawned).setSpawned(true);
             enemies.get(nbSpawned).setAlived(true);
+            enemies.get(nbSpawned).setNumber(nbSpawned);
             nbSpawned++;
         }
 
