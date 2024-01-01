@@ -182,8 +182,7 @@ public class TowerGraphics implements Graphic,Frame {
                 }
                 //System.out.println(Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos()))));
             }
-            System.out.println(Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos()))));
-        }}
+        }
     }
 
     private void attackTowerCornerDraw (Graphics g, long time, Tower t, double corner) {
