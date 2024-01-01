@@ -135,7 +135,7 @@ public class TowerGraphics implements Graphic,Frame {
         }
     }
 
-    /* private void attackTowerDraw (Graphics g, long time, Tower t, Direction d) {
+    private void attackTowerDraw (Graphics g, long time, Tower t, double corner) {
         float n= 150f;
         int t0= (int) (n/t.getVitesseAtk());
         int t1= (int) (n*2.0f/t.getVitesseAtk());
@@ -180,7 +180,7 @@ public class TowerGraphics implements Graphic,Frame {
             }
 
         } 
-    } */
+    } 
     public BufferedImage rotate(BufferedImage img, double angle) {
         int w = img.getWidth();    
         int h = img.getHeight();
