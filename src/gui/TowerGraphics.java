@@ -81,11 +81,13 @@ public class TowerGraphics implements Graphic,Frame {
         }
     }
 
+    // la methode atan renvoie un angle entre -pi/2 et pi/2
     private double angleTowerEnemy (Tower t, Enemy e) {
-        return Math.atan( 
-            Math.abs(t.getPos().getX()- e.getPos().getX())/
-            Math.abs(t.getPos().getY()- e.getPos().getY())
-        );
+        double angle= Math.atan(t.getPos().getX()- e.getPos().getX()/ t.getPos().getY()- e.getPos().getY());
+        if (t.getPos().getX()-e.getPos().getX()<0) {
+            return angle;
+        }
+        return -angle;
     }
 
     private void attackTower (Graphics g, long time, Tower t) {
@@ -144,7 +146,7 @@ public class TowerGraphics implements Graphic,Frame {
         }
     }
 
-    private void attackTowerDraw (Graphics g, long time, Tower t, double corner) {
+    private void attackTowerCornerDraw (Graphics g, long time, Tower t, double corner) {
         float n= 150f;
         int t0= (int) (n/t.getVitesseAtk());
         int t1= (int) (n*2.0f/t.getVitesseAtk());
