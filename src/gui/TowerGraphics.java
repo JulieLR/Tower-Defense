@@ -37,39 +37,39 @@ public class TowerGraphics implements Graphic,Frame {
 
 
 
-    public Direction getVerticalPos(Coordinates t, Coordinates e){
-        if(e.getY()<t.getY()){
+    public Direction getVerticalPos(Tower t){
+        if(t.getTarget().getPos().getY()<t.getPos().getY()){
             return Direction.NORTH;
         }else{
             return Direction.SOUTH;
         }
     }
 
-    public Direction getHorizontalePos(Coordinates t, Coordinates e){
-        if(e.getX()<t.getX()){
+    public Direction getHorizontalePos(Tower t){
+        if(t.getTarget().getPos().getX()<t.getPos().getX()){
             return Direction.WEST;
         }else{
             return Direction.EAST;
         }
     }
 
-    public float getVerticalNombre(Coordinates t, Coordinates e){
-        Direction v= getVerticalPos(t, e);
+    public float getVerticalNombre(Tower t){
+        Direction v= getVerticalPos(t);
         if(v==Direction.NORTH){
-            return -((t.getY()-e.getY())/3);
+            return -((t.getPos().getY()-t.getTarget().getPos().getY())/3);
         }
         else{
-            return (e.getY()-t.getY())/3;
+            return (t.getTarget().getPos().getY()-t.getPos().getY())/3;
         }
     }
 
-    public float getHorizontalNombre(Coordinates t, Coordinates e){
-        Direction h= getHorizontalePos(t, e);
+    public float getHorizontalNombre(Tower t){
+        Direction h= getHorizontalePos(t);
         if(h==Direction.EAST){
-            return (e.getX()-t.getX())/3;
+            return (t.getTarget().getPos().getX()-t.getPos().getX())/3;
         }
         else{
-            return -(t.getX()-e.getX())/3;
+            return -(t.getPos().getX()-t.getTarget().getPos().getX())/3;
         }
     }
 
@@ -86,9 +86,9 @@ public class TowerGraphics implements Graphic,Frame {
         
     }
 
-    public int getRotateCoef(Coordinates t, Coordinates e){
-        Direction h = getHorizontalePos(t, e);
-        Direction v = getVerticalPos(t, e);
+    public int getRotateCoef(Tower t){
+        Direction h = getHorizontalePos(t);
+        Direction v = getVerticalPos(t);
         if(v==Direction.NORTH){
             if(h==Direction.EAST){
                 return 3;
@@ -121,9 +121,9 @@ public class TowerGraphics implements Graphic,Frame {
             int t3= (int) (n*4.0f/t.getVitesseAtk());
 
             Coordinates e = this.game.getEnemyConfig().getNextCoor((t.getTarget()));
-            float y = getVerticalNombre(t.getPos(), t.getTarget().getPos());
-            float x = getHorizontalNombre(t.getPos(), t.getTarget().getPos());
-            double angle =getRotateCoef(t.getPos(), t.getTarget().getPos())*90+Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos())));
+            float y = getVerticalNombre(t);
+            float x = getHorizontalNombre(t);
+            double angle =getRotateCoef(t)*90+Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos())));
 
             int nb=6;
             if (time%t3<t0) {
