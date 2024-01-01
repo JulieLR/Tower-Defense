@@ -60,6 +60,8 @@ public class Game extends JPanel implements Runnable {
 
     private BufferedImage towerImage;
     private JPanel towerButton;
+    private JPanel BottomBar;
+    private App app;
 
     private Base base;
 
@@ -72,13 +74,14 @@ public class Game extends JPanel implements Runnable {
     private Mouse_Listener mouseListener; 
     private Keyboard_Listener keyboardlistener;
 
-    public Game(int mapNumber){
+    public Game(int mapNumber, App app){
 
         this.mapImage = getImage("src/ressources/map/sprite.png");
         this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
         this.batImage = getImage("src/ressources/enemies/batSprite.png");
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
 
+        this.app=app;
         this.mapNumber=mapNumber;
 
         this.tiles= new MapConfig(this);
@@ -91,6 +94,8 @@ public class Game extends JPanel implements Runnable {
 
         this.towerConfig= new TowerConfig(this);
         this.towerGraphics= new TowerGraphics(this, towerConfig);
+
+        this.BottomBar= new BottomBar(this, towerConfig);
 
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
@@ -168,6 +173,10 @@ public class Game extends JPanel implements Runnable {
     }
     public EnemiesConfig getEnemyConfig () {
         return this.enemiesConfig;
+    }
+
+    public App getApp() {
+        return app;
     }
 
     public void paintComponent(Graphics g)  {

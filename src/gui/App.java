@@ -20,7 +20,7 @@ public class App extends JFrame{
         setTitle("TOWER DEFENSE");
         setResizable(false);
 
-        this.game = new Game(mapNumber);
+        this.game = new Game(mapNumber, this);
         add(game);
 
         this.pack();
