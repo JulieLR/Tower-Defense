@@ -4,13 +4,17 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import config.EnemiesConfig;
+import config.IconsConfig;
 import config.MapConfig;
 import config.Tile;
 import config.TowerConfig;
 import config.Tile.Type;
 import model.Base;
+import model.Coordinates;
 import inputs.Keyboard_Listener;
 import inputs.Mouse_Listener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -33,7 +37,7 @@ public class Game extends JPanel implements Runnable {
     final int tileSize= initialTileSize*scale; //64x64
 
     //Barre pour les tour
-    final int barLine = 2;
+    final int barLine = 3;
 
     //Ecran
     final int col = 15;
@@ -57,6 +61,9 @@ public class Game extends JPanel implements Runnable {
 
     private TowerConfig towerConfig;
     private TowerGraphics towerGraphics;
+
+    private IconsConfig iconsConfig;
+    private IconsGraphics iconsGraphics;
 
     private BufferedImage towerImage;
     private JPanel towerButton;
@@ -95,11 +102,12 @@ public class Game extends JPanel implements Runnable {
         this.towerConfig= new TowerConfig(this);
         this.towerGraphics= new TowerGraphics(this, towerConfig);
 
-        this.BottomBar= new BottomBar(this, towerConfig);
+        this.iconsConfig= new IconsConfig(this);
+        this.iconsGraphics = new IconsGraphics(this,this.iconsConfig);
 
+        this.BottomBar= new BottomBar(this, towerConfig);
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
-
         start();
     }
 
@@ -179,15 +187,23 @@ public class Game extends JPanel implements Runnable {
         return app;
     }
 
+    public TowerConfig getTowerConfig() {
+        return this.towerConfig;
+    }
+
+    public TowerGraphics getTowerGraphics() {
+        return towerGraphics;
+    }
+
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
 
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
         mapGraphics.drawBottomBarAndScore(g);
-        towerGraphics.drawImages(g);
         enemies.drawImages(g);
+        towerGraphics.drawImages(g);
         mapGraphics.drawBottomBarAndScore(g);
-
+        iconsGraphics.drawIcons(g);
         g.dispose(); //
     }
 

@@ -116,7 +116,7 @@ public class MapConfig {
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'T'){//Tower place
-                        this.map[ligne][col] = new Tile(17,18, Type.TOWER,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
+                        this.map[ligne][col] = new Tile(17,18, Type.TOWER,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne*this.game.getTileSize(), col*this.game.getTileSize()));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'S'){//ennemies start

@@ -19,10 +19,16 @@ public class TowerGraphics implements Graphic {
     private ArrayList<BufferedImage> towerAsset = new ArrayList<>();
     private ArrayList<Tower> tower;
 
+    private Tower test;
+
+    public void setTest(Tower test) {
+        this.test = test;
+    }
+
     public TowerGraphics (Game game, TowerConfig towerConfig) {
         this.game= game;
         this.towerConfig= towerConfig;
-        this.tower= towerConfig.getTowers();
+        this.tower= towerConfig.getMouseTowers();
         this.addAsset();
     }
 
@@ -201,16 +207,14 @@ public class TowerGraphics implements Graphic {
     @Override
     public void drawImages(Graphics g) {
         long time= System.currentTimeMillis();
-        for (int i=0; i<this.towerConfig.getNbTower(); i++) {
+        for (Tower t: tower) {
             g.drawImage(
-                towerAsset.get(this.towerConfig.getTowers().get(i).idColorTower()), 
-                (int)this.towerConfig.getPosTower()[i].getX(), 
-                (int)this.towerConfig.getPosTower()[i].getY()- this.game.getTileSize(), 
+                towerAsset.get(t.idColorTower()), 
+                (int)t.getPos().getX(), 
+                (int)t.getPos().getY()- this.game.getTileSize(), 
                 this.game.getTileSize(), 
                 this.game.getTileSize()*2,
-                null);  
-        }
-        for (Tower t: tower) {
+                null); 
             ////attackTowerDirectionDraw(g, time, t, Direction.SOUTH);
             attackTower(g, time, t);
             //attackTowerDraw(g,time,t,Direction.EAST);
@@ -218,12 +222,24 @@ public class TowerGraphics implements Graphic {
             //attackTowerCornerDraw(g, time, t, Math.PI);
             drawZone(g,t);
         }
+        if(test!=null){
+            drawOneTower(test, g);
+        }
         // attaqueDraw(g, time, this.towerConfig.getTowers().get(1));
     }
     public void drawZone(Graphics g, Tower t){
         g.drawRect((int)t.getAttackZone().getX(), (int)t.getAttackZone().getY(), (int)t.getAttackZone().getWidth(), (int)t.getAttackZone().getHeight());
     }
 
+    public ArrayList<BufferedImage> getTowerIcons(){
+        ArrayList<BufferedImage> icons = new ArrayList<>();
+        for(int i=0; i<6;i++){
+            icons.add(this.towerAsset.get(i));
+        }
+        return icons;
+    }
 
-
+    public void drawOneTower(Tower t, Graphics g){
+        g.drawImage(this.towerAsset.get(t.idColorTower()), (int)t.getPos().getX(), (int)t.getPos().getY(),this.game.getTileSize(), this.game.getTileSize()*2, null);
+    }
 }

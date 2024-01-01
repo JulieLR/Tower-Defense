@@ -23,16 +23,18 @@ public class BottomBar extends JPanel{
     public BottomBar (Game game, TowerConfig towerConfig) {
         this.game=game;
         this.towerConfig=towerConfig;
+        this.setBounds(0, 10*this.game.getTileSize(), this.game.getWidth(), this.game.getHeight());
         this.tower= towerConfig.getTowers();
         this.addAsset();
-        this.addButton();
     }
 
     public void addAsset() {
         for (int ligne=0; ligne<1; ligne++) {
             for (int col= 0; col<6; col++) {
                 if(ligne==0){
-                    JButton button = new JButton();
+                    JButton button = new JButton("TEST");
+                    button.setBounds(100, 500+this.game.getTileSize()*col, this.game.getTileSize(), this.game.getTileSize()*2);
+                    towerButtonAsset.add(button);
                 }
             }
             if(ligne==0){
@@ -42,10 +44,8 @@ public class BottomBar extends JPanel{
     }
 
     public void addButton() {
-        for (int i=0; i<6; i++) {
-            JButton button= this.towerButtonAsset.get(i);
-            button.setBounds(400, 200, this.game.getTileSize(), this.game.getTileSize()*2);
-            this.game.getApp().add(button);
+        for (int i=0; i<towerButtonAsset.size(); i++) {
+            this.add(this.towerButtonAsset.get(i));
         }
         
     }

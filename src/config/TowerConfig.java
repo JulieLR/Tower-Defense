@@ -17,6 +17,8 @@ import model.Tower.TowerColor;
 public class TowerConfig implements Serializable{
     private Game game;
     private ArrayList<Tower> towers= new ArrayList<> ();
+    private ArrayList<Tower> mouseTowers = new ArrayList<>();
+
     private ArrayList<Enemy> enemies= new ArrayList<> ();
     private BufferedImage towerImage;
     // public transient BufferedImage towerImageTransient; // transient pour igniorer le serializes
@@ -30,7 +32,14 @@ public class TowerConfig implements Serializable{
     }
 
     public void update(){
-        for(Tower t : towers){
+        /* for(Tower t : towers){
+            getTarget(t);
+            if(t.getTarget()!=null){
+                attaque(t.getTarget(),t);
+            }
+        } */
+
+        for(Tower t : mouseTowers){
             getTarget(t);
             if(t.getTarget()!=null){
                 attaque(t.getTarget(),t);
@@ -40,6 +49,22 @@ public class TowerConfig implements Serializable{
 
     public ArrayList<Tower> getTowers () {
         return this.towers;
+    }
+
+    public ArrayList<Tower> getMouseTowers() {
+        return mouseTowers;
+    }
+
+    public Tower towerNum (int n){
+        switch (n) {
+            case 0: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 1: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 150, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
+            case 2: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
+            case 3: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 25, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 4: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
+            case 5: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
+        }
+        return null;
     }
 
     public void addTower(Coordinates[] c){
