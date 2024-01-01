@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ import model.Enemy;
 import model.Tower;
 import model.Tower.TowerColor;
 
-public class TowerGraphics implements Graphic {
+public class TowerGraphics implements Graphic,Frame {
     private Game game;
     private TowerConfig towerConfig;
     private BufferedImage towerImage;
@@ -80,6 +81,13 @@ public class TowerGraphics implements Graphic {
         }
     }
 
+    private double angleTowerEnemy (Tower t, Enemy e) {
+        return Math.atan( 
+            Math.abs(t.getPos().getX()- e.getPos().getX())/
+            Math.abs(t.getPos().getY()- e.getPos().getY())
+        );
+    }
+
     private void attackTower (Graphics g, long time, Tower t) {
         
         if(t.getTarget()!=null){
@@ -94,18 +102,19 @@ public class TowerGraphics implements Graphic {
         float y = getVerticalNombre(t.getPos(), t.getTarget().getPos());
         float x = getHorizontalNombre(t.getPos(), t.getTarget().getPos());
 
+        
         int nb=6;
         if (time%t3<t0) {
-            g.drawImage(
-                this.towerAsset.get(t.idColorTower()+nb), 
+            g.drawImage( rotate (
+                this.towerAsset.get(t.idColorTower()+nb), this.angleTowerEnemy(t, t.getTarget())),
                 (int)(t.getPos().getX()+x), 
                 (int)(t.getPos().getY()+y), 
                 this.game.getTileSize(),
                 this.game.getTileSize(), 
                 null);
         } else if (time%t3<t1) {
-            g.drawImage(
-                this.towerAsset.get(t.idColorTower()+nb*2), 
+            g.drawImage( rotate (
+                this.towerAsset.get(t.idColorTower()+nb*2), this.angleTowerEnemy(t, t.getTarget())),
                 (int)(t.getPos().getX()+x*2), 
                 (int)(t.getPos().getY()+y*2), 
                 this.game.getTileSize(),
@@ -113,25 +122,26 @@ public class TowerGraphics implements Graphic {
                 null);
         } else if (time%t3<t2) {
             if (t.isMagic()) {
-                g.drawImage(
-                    this.towerAsset.get(t.idColorTower()+nb*3), 
+                g.drawImage( rotate(
+                    this.towerAsset.get(t.idColorTower()+nb*3), this.angleTowerEnemy(t, t.getTarget())),
                     (int)(t.getPos().getX()+x*3), 
                     (int)(t.getPos().getY()+y*3), 
                     this.game.getTileSize(),
                     this.game.getTileSize(), 
                     null);
             } else if (t.isPhysic()) {
-                g.drawImage(
-                    this.towerAsset.get(t.idColorTower()+nb*2), 
+                g.drawImage( rotate (
+                    this.towerAsset.get(t.idColorTower()+nb*2), this.angleTowerEnemy(t, t.getTarget())),
                     (int)(t.getPos().getX()+x*3), 
                     (int)(t.getPos().getY()+y*3),  
                     this.game.getTileSize(),
                     this.game.getTileSize(), 
                     null);
                 //g.rotate(Math.toRadians(45), (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0]+(this.game.getTileSize()/2), (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1]+(this.game.getTileSize()/2));
-            }
+             }
 
-        } }
+            }
+        }
     }
 
     private void attackTowerDraw (Graphics g, long time, Tower t, double corner) {
@@ -179,6 +189,19 @@ public class TowerGraphics implements Graphic {
             }
 
         } 
+    } 
+    public BufferedImage rotate(BufferedImage img, double angle) {
+        int w = img.getWidth();    
+        int h = img.getHeight();
+    
+        BufferedImage rotated = new BufferedImage(w, h, img.getType());  
+        Graphics2D graphic = rotated.createGraphics();
+
+        graphic.rotate(Math.toRadians(angle), w/2, h/2);
+        graphic.drawImage(img, null, 0, 0);
+        graphic.dispose();
+        
+        return rotated;
     }
 
 
