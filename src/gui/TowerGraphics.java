@@ -32,9 +32,10 @@ public class TowerGraphics implements Graphic,Frame {
         double[] tab= new double[2]; 
         tab[0]= Math.cos(-corner); // sens horaire, donc on doit mettre le signe - avant la valeur de l'angle
         tab[1]= Math.sin(-corner); 
-        return tab;
-         
+        return tab;    
     }
+
+    
 
     public Direction getVerticalPos(Coordinates t, Coordinates e){
         if(e.getY()<t.getY()){
@@ -106,8 +107,8 @@ public class TowerGraphics implements Graphic,Frame {
         }
     }
 
-    public double angle(Tower t, Enemy e){
-        double angle = Math.abs(Math.abs(t.getPos().getX())-Math.abs(e.getPos().getX())/Math.abs(t.getPos().getY())-Math.abs(e.getPos().getY()));
+    public double angle(Coordinates t, Coordinates e){
+        double angle = Math.abs(Math.abs(t.getX())-Math.abs(e.getX())/Math.abs(t.getY())-Math.abs(e.getY()));
         return angle;
     }
 
@@ -124,7 +125,7 @@ public class TowerGraphics implements Graphic,Frame {
         Coordinates e = this.game.getEnemyConfig().getNextCoor((t.getTarget()));
         float y = getVerticalNombre(t.getPos(), t.getTarget().getPos());
         float x = getHorizontalNombre(t.getPos(), t.getTarget().getPos());
-        double angle =getRotateCoef(t.getPos(), t.getTarget().getPos())*90+Math.toDegrees(Math.atan(this.angle(t, t.getTarget())));
+        double angle =getRotateCoef(t.getPos(), t.getTarget().getPos())*90+Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos())));
 
         
         int nb=6;
@@ -174,7 +175,7 @@ public class TowerGraphics implements Graphic,Frame {
              }
 
             }
-            System.out.println(Math.toDegrees(Math.atan(this.angle(t, t.getTarget()))));
+            System.out.println(Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos()))));
         }}
     }
 
