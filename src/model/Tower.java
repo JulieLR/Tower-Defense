@@ -140,7 +140,7 @@ public class Tower extends Entities {
     }
 
     public boolean isInZone(Enemy e){
-        if(this.getAttackZone().contains(e.getZone())){
+        if(this.getAttackZone().contains(e.getHitBox())){
             return true; 
         }
         return false;
