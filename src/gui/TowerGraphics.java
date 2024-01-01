@@ -82,17 +82,13 @@ public class TowerGraphics implements Graphic,Frame {
         }
     }
 
-
     // la methode atan renvoie un angle entre -pi/2 et pi/2
     private double angleTowerEnemy (Tower t, Enemy e) {
         double angle= Math.atan(t.getPos().getX()- e.getPos().getX()/ t.getPos().getY()- e.getPos().getY());
         if (t.getPos().getX()-e.getPos().getX()<0) {
-            System.out.println("angle :"+angle);
             return angle;
         }
-        System.out.println("angle :"+angle);
         return -angle;
-        
     }
 
     public int getRotateCoef(Tower t){
