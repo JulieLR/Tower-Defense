@@ -59,7 +59,7 @@ public class EnemiesGraphics implements Graphic{
                         }
                     }
                 }
-                g.drawRect((int)e.getZone().getX(), (int)e.getZone().getY(), 64, 64);
+                g.drawRect((int)e.getHitBox().getX(), (int)e.getHitBox().getY(), (int)e.getHitBox().getWidth(), (int)e.getHitBox().getHeight());
                 
             }
             else if(e.isSpawned()){

@@ -17,6 +17,7 @@ public class Enemy extends Entities{
     private int number; 
 
     private Rectangle zone;
+    private Rectangle hitBox;
     private boolean atEnd;
     private boolean isSpawned;
     private boolean isAlived;
@@ -34,6 +35,7 @@ public class Enemy extends Entities{
         this.game=game;
         this.deadAnimation=false;
         this.zone= new Rectangle( (int) this.getPos().getX(), (int) this.getPos().getY()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize());
+        this.hitBox= new Rectangle( (int) this.getPos().getX()+this.game.getTileSize()/3, (int) this.getPos().getY()-(this.game.getTileSize()/this.game.getScale())+this.game.getTileSize()/3,this.game.getTileSize()/3,this.game.getTileSize()/3);
     }
 
     public int getPointDeVie() {
@@ -65,7 +67,14 @@ public class Enemy extends Entities{
     }
 
     public void setZone() {
-        this.zone = new Rectangle( (int) this.getPos().getX(), (int) this.getPos().getY()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize());
+        this.zone = new Rectangle( (int) this.getPos().getX()+this.game.getTileSize()/2, (int) this.getPos().getY()-(this.game.getTileSize()/this.game.getScale())+this.game.getTileSize()/2,this.game.getTileSize(),this.game.getTileSize());
+    }
+
+    public Rectangle getHitBox() {
+        return this.hitBox;
+    }
+    public void setHitBox() {
+        this.hitBox= new Rectangle( (int) this.getPos().getX()+this.game.getTileSize()/3, (int) this.getPos().getY()-(this.game.getTileSize()/this.game.getScale())+this.game.getTileSize()/3,this.game.getTileSize()/3,this.game.getTileSize()/3);
     }
 
     public Coordinates getPos(){
@@ -140,6 +149,7 @@ public class Enemy extends Entities{
                 break;
         }
         this.setZone(); 
+        this.setHitBox();
     }
 
     public void setPos(int x, int y){
