@@ -116,11 +116,6 @@ public class TowerGraphics implements Graphic,Frame {
         }
     }
 
-    public double angle(Tower t, Enemy e){
-        double angle = Math.abs(Math.abs(t.getPos().getX())-Math.abs(e.getPos().getX())/Math.abs(t.getPos().getY())-Math.abs(e.getPos().getY()));
-        return angle;
-    }
-
     public double angle(Coordinates t, Coordinates e){
         double angle = Math.abs(Math.abs(t.getX())-Math.abs(e.getX())/Math.abs(t.getY())-Math.abs(e.getY()));
         return angle;
@@ -187,8 +182,8 @@ public class TowerGraphics implements Graphic,Frame {
                 }
                 //System.out.println(Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos()))));
             }
-            System.out.println(Math.toDegrees(Math.atan(this.angle(t, t.getTarget()))));
-        }
+            System.out.println(Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos()))));
+        }}
     }
 
     private void attackTowerCornerDraw (Graphics g, long time, Tower t, double corner) {
