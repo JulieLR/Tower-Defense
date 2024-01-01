@@ -12,12 +12,14 @@ public interface Frame {
         j.setOpaque(false);
         j.setContentAreaFilled(false);
         j.setBorderPainted(false);
+        j.setFocusPainted(false);
     }
 
     public default JButton makeButton(int x, int y, int width, int height, int index, ArrayList<BufferedImage> assets){
         JButton button = new JButton();
         button.setBounds(x, y, width, height);
         button.setBackground(null);
+        button.setBorder(null);
         button.setIcon(new ImageIcon(assets.get(index)));
         makeTransparentBackground(button);
         return button;

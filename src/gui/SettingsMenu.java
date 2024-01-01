@@ -75,6 +75,9 @@ public class SettingsMenu extends JFrame implements Frame,MouseListener{
     public void mouseReleased(MouseEvent e) {
         if(e.getSource()== modeButton){
             modeButton.setIcon(new ImageIcon(assets.get(6)));
+            Fond fondMode = menu.new Fond(this.menu.getFondImage(), this.menu.getSceneFond(), (this.getWidth()-this.menu.getSceneFond().getWidth())/2, (this.getHeight()-this.getInsets().top-this.menu.getSceneFond().getHeight())/2);
+            new ModeMenu(menu, this, fondMode);
+            this.setVisible(false);
         }
         else if((e.getSource()== sceneButton)){
             sceneButton.setIcon(new ImageIcon(assets.get(8)));

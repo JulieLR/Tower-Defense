@@ -23,6 +23,7 @@ public class Menu extends JFrame implements Frame,MouseListener{
     private BufferedImage sceneFond;
 
     private int mapNumber=1;
+    private int modeNumber=1;
 
     private ArrayList<BufferedImage> assets = new ArrayList<>();
 
@@ -110,6 +111,10 @@ public class Menu extends JFrame implements Frame,MouseListener{
         this.mapNumber = mapNumber;
     }
 
+    public void setModeNumber(int modeNumber) {
+        this.modeNumber = modeNumber;
+    }
+
     public void playAction(){
         playButton.setIcon(new ImageIcon(assets.get(1)));
         new App(mapNumber);
@@ -132,7 +137,7 @@ public class Menu extends JFrame implements Frame,MouseListener{
     }
 
     public void addAsset() {
-        for(int ligne=0; ligne<7;ligne++){
+        for(int ligne=0; ligne<11;ligne++){
             for(int col=0;col<2;col++){
                 assets.add(buttonImage.getSubimage(col*140,ligne*56, 140, 56));
             }
