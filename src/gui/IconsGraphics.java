@@ -78,7 +78,7 @@ public class IconsGraphics implements Graphic{
         int hauteur = this.game.getInitialTileSize();
         
         for(int i=0; i<icons.size();i++){
-            icons.get(i).setZone(new Rectangle(this.game.getTileSize()+ecart*i-(this.game.getTileSize()+this.game.getTileSize()/2)/4, 640+hauteur, this.game.getTileSize()+this.game.getTileSize()/2, this.game.getTileSize()+this.game.getTileSize()/2));
+            icons.get(i).setZone(new Rectangle(this.game.getTileSize()+ecart*i-(this.game.getTileSize()+this.game.getTileSize()/2)/4, 655+hauteur, this.game.getTileSize()+this.game.getTileSize()/2, this.game.getTileSize()+this.game.getTileSize()/2));
             if(icons.get(i)==chosenIcon){
                 g.drawImage(actualBackground, (int)icons.get(i).getZone().getX(), (int)icons.get(i).getZone().getY(), (int)icons.get(i).getZone().getWidth(), (int)icons.get(i).getZone().getHeight(), null);
             }
