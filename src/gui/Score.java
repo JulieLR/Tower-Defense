@@ -32,7 +32,6 @@ public class Score implements Graphic{
         for (int i=4; i>=0; i--) {
             int chiffre=score_tmp%10;
             g.drawImage(this.numberAsset.get(chiffre), 20+i*40, 15, 45, 60, null);
-            System.out.println(score_tmp);
             score_tmp/=10;
         } 
         
