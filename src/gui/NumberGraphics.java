@@ -77,12 +77,12 @@ public class NumberGraphics implements Graphic{
     private void drawTowerPrice (Graphics g) {
         for (int i=0; i<6; i++) {
             if (i==0 || i==3 || i==4) {
-                drawNumber(g, this.tower.towerEnum(i).getPrice(), new Coordinates(80+160*i, 780), 3, 25);
-                g.drawImage(this.numberAsset.get(11), 105+160*i, 785, 27, 27, null);
+                drawNumber(g, this.tower.towerEnum(i).getPrice(), new Coordinates(70+160*i, 780), 3, 25);
+                g.drawImage(this.numberAsset.get(11), 95+160*i, 785, 27, 27, null);
             }
             else {
-                drawNumber(g, this.tower.towerEnum(i).getPrice(), new Coordinates(90+160*i, 780), 3, 25);
-                g.drawImage(this.numberAsset.get(11), 115+160*i, 785, 27, 27, null);
+                drawNumber(g, this.tower.towerEnum(i).getPrice(), new Coordinates(80+160*i, 780), 3, 25);
+                g.drawImage(this.numberAsset.get(11), 105+160*i, 785, 27, 27, null);
             }
         }
     }
