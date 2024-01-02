@@ -62,6 +62,7 @@ public class Game extends JPanel implements Runnable {
     private TowerConfig towerConfig;
     private TowerGraphics towerGraphics;
 
+    private BufferedImage iconBackground;
     private IconsConfig iconsConfig;
     private IconsGraphics iconsGraphics;
 
@@ -87,6 +88,7 @@ public class Game extends JPanel implements Runnable {
         this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
         this.batImage = getImage("src/ressources/enemies/batSprite.png");
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
+        this.iconBackground = getImage("src/ressources/towers/iconBackground.png");
 
         this.app=app;
         this.mapNumber=mapNumber;
@@ -195,6 +197,14 @@ public class Game extends JPanel implements Runnable {
         return towerGraphics;
     }
 
+    public IconsGraphics getIconsGraphics() {
+        return iconsGraphics;
+    }
+
+    public BufferedImage getIconBackground() {
+        return iconBackground;
+    }
+
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
 
@@ -203,7 +213,7 @@ public class Game extends JPanel implements Runnable {
         enemies.drawImages(g);
         towerGraphics.drawImages(g);
         mapGraphics.drawBottomBarAndScore(g);
-        iconsGraphics.drawIcons(g);
+        iconsGraphics.drawImages(g);
         g.dispose(); //
     }
 
