@@ -29,6 +29,7 @@ public class SceneMenu extends JFrame implements Frame,MouseListener{
     private JButton confirmButton, backButton, map1Button, map2Button;
 
     private int mapNumber=1;
+    private boolean chosen=false;
     
     
     public SceneMenu(Menu menu, SettingsMenu settings, Fond fond){
@@ -92,11 +93,13 @@ public class SceneMenu extends JFrame implements Frame,MouseListener{
             map1Button.setIcon(new ImageIcon(mapAssets.get(0)));
             map2Button.setIcon(new ImageIcon(mapAssets.get(3)));
             mapNumber=1;
+            this.chosen=true;
         }
         else if((e.getSource()== map2Button)){
             map2Button.setIcon(new ImageIcon(mapAssets.get(2)));
             map1Button.setIcon(new ImageIcon(mapAssets.get(1)));
             mapNumber=2;
+            this.chosen=true;
         }
         System.out.println(mapNumber);
     }
@@ -116,6 +119,10 @@ public class SceneMenu extends JFrame implements Frame,MouseListener{
         if(e.getSource()== confirmButton){
             confirmButton.setIcon(new ImageIcon(assets.get(12)));
             this.menu.setMapNumber(mapNumber);
+            if(this.chosen){
+                this.settings.setVisible(true);
+                dispose();
+            }
         }
         else if((e.getSource()== backButton)){
             backButton.setIcon(new ImageIcon(assets.get(10)));

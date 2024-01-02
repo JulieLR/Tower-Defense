@@ -27,6 +27,7 @@ public class ModeMenu extends JFrame implements Frame,MouseListener{
     private JButton confirmButton, backButton, easyButton, normalButton, hardButton, marathonButton, chosen;
 
     private int modeNumber=1;
+    private boolean changed=false;
     
     
     public ModeMenu(Menu menu, SettingsMenu settings, Fond fond){
@@ -106,24 +107,28 @@ public class ModeMenu extends JFrame implements Frame,MouseListener{
             chosen.setIcon(new ImageIcon(assets.get(getNbAsset(chosen))));
             easyButton.setIcon(new ImageIcon(assets.get(14)));
             chosen=easyButton;
+            changed=true;
             modeNumber=1;
         }
         else if(e.getSource()== normalButton){
             chosen.setIcon(new ImageIcon(assets.get(getNbAsset(chosen))));
             normalButton.setIcon(new ImageIcon(assets.get(16)));
             chosen=normalButton;
+            changed=true;
             modeNumber=2;
         }
         else if(e.getSource()== hardButton){
             chosen.setIcon(new ImageIcon(assets.get(getNbAsset(chosen))));
             hardButton.setIcon(new ImageIcon(assets.get(18)));
             chosen=hardButton;
+            changed=true;
             modeNumber=3;
         }
         else if(e.getSource()== marathonButton){
             chosen.setIcon(new ImageIcon(assets.get(getNbAsset(chosen))));
             marathonButton.setIcon(new ImageIcon(assets.get(20)));
             chosen=marathonButton;
+            changed=true;
             modeNumber=4;
         }
         System.out.println(modeNumber);
@@ -144,6 +149,10 @@ public class ModeMenu extends JFrame implements Frame,MouseListener{
         if(e.getSource()== confirmButton){
             confirmButton.setIcon(new ImageIcon(assets.get(12)));
             this.menu.setModeNumber(modeNumber);
+            if(changed){
+                this.settings.setVisible(true);
+                dispose();
+            }
         }
         else if((e.getSource()== backButton)){
             backButton.setIcon(new ImageIcon(assets.get(10)));

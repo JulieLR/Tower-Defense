@@ -55,6 +55,7 @@ public class Game extends JPanel implements Runnable {
 
     private BufferedImage enemyImage;
     private BufferedImage batImage;
+    private BufferedImage slimeImage;
 
     private EnemiesConfig enemiesConfig;
     private EnemiesGraphics enemies;
@@ -90,6 +91,7 @@ public class Game extends JPanel implements Runnable {
         this.mapImage = getImage("src/ressources/map/sprite.png");
         this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
         this.batImage = getImage("src/ressources/enemies/batSprite.png");
+        this.slimeImage= getImage("src/ressources/enemies/slimeSprite.png");
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
         this.iconBackground = getImage("src/ressources/towers/iconBackground.png");
         this.numberImage= getImage("src/ressources/number/number.png");
@@ -205,6 +207,10 @@ public class Game extends JPanel implements Runnable {
 
     public App getApp() {
         return app;
+    }
+
+    public BufferedImage getSlimeImage() {
+        return slimeImage;
     }
 
     public TowerConfig getTowerConfig() {
