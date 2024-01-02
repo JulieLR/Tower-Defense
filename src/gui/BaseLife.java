@@ -12,15 +12,11 @@ public class BaseLife implements Graphic{
     private Game game;
     private ArrayList<BufferedImage> numberAsset = new ArrayList<>();
     private Base base;
-    //private int life;
-    private EnemiesConfig enemiesConfig;
 
     public BaseLife (Game game) {
         this.game= game;
-        this.enemiesConfig=this.game.getEnemyConfig();
         this.addAsset();
         this.base=this.game.getBase();
-        //this.life=base.getPointDeVie();
     }
 
     @Override
@@ -28,6 +24,7 @@ public class BaseLife implements Graphic{
         for (int ligne=0; ligne<10; ligne++) {
             numberAsset.add(this.game.getNumberImage().getSubimage(ligne*9, 0, 9, 12));
         }
+        numberAsset.add(this.game.getAllSpriteImage().getSubimage(16*9, 16*7, 16, 16));
     }
 
     @Override
@@ -38,6 +35,7 @@ public class BaseLife implements Graphic{
             g.drawImage(this.numberAsset.get(chiffre), 20+i*40, 15, 45, 60, null);
             life_tmp/=10;
         } 
+        g.drawImage(this.numberAsset.get(10), 190, 20, 45, 45, null);
 
     }
 

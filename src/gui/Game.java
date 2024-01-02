@@ -79,6 +79,7 @@ public class Game extends JPanel implements Runnable {
     
     private BaseLife baseLife;
     private BufferedImage numberImage;
+    private BufferedImage allSpriteImage;
     
     // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
     private Mouse_Listener mouseListener; 
@@ -91,7 +92,8 @@ public class Game extends JPanel implements Runnable {
         this.batImage = getImage("src/ressources/enemies/batSprite.png");
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
         this.iconBackground = getImage("src/ressources/towers/iconBackground.png");
-        this.numberImage= getImage("src/ressources/score/number.png");
+        this.numberImage= getImage("src/ressources/number/number.png");
+        this.allSpriteImage= getImage("src/ressources/sprite.png");
 
         this.app=app;
         this.mapNumber=mapNumber;
@@ -180,6 +182,10 @@ public class Game extends JPanel implements Runnable {
 
     public BufferedImage getNumberImage () {
         return this.numberImage;
+    }
+
+    public BufferedImage getAllSpriteImage () {
+        return this.allSpriteImage;
     }
 
     public MapConfig getMapConfig() {
