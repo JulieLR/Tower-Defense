@@ -1,8 +1,11 @@
 package gui;
 
+import java.awt.LayoutManager;
 import java.io.IOException;
 
 import javax.swing.JFrame;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
 
 import inputs.Keyboard_Listener;
 import inputs.Mouse_Listener;
@@ -16,13 +19,19 @@ public class App extends JFrame{
 
     public App(int mapNumber){
         
+        setLayout(new BorderLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("TOWER DEFENSE");
-        setResizable(false);
+        //setResizable(false);
 
-        this.game = new Game(mapNumber);
-        add(game);
+        this.game = new Game(mapNumber, this);
+        //add(game);
 
+        //this.pack();
+        JButton button = new JButton("TEST");
+        button.setBounds(200,700, 100, 50);
+        game.add(button,BorderLayout.SOUTH);
+        add(game, BorderLayout.NORTH);
         this.pack();
         setLocationRelativeTo(null);
         setVisible(true);
