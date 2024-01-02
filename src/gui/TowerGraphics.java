@@ -207,6 +207,7 @@ public class TowerGraphics implements Graphic {
     @Override
     public void drawImages(Graphics g) {
         long time= System.currentTimeMillis();
+        this.tower= towerConfig.getMouseTowers();
         for (Tower t: tower) {
             g.drawImage(
                 towerAsset.get(t.idColorTower()), 

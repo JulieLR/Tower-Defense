@@ -55,6 +55,10 @@ public class TowerConfig implements Serializable{
         return mouseTowers;
     }
 
+    public void setMouseTowers(ArrayList<Tower> mouseTowers) {
+        this.mouseTowers = mouseTowers;
+    }
+
     public Tower towerNum (int n){
         switch (n) {
             case 0: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
@@ -65,6 +69,18 @@ public class TowerConfig implements Serializable{
             case 5: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
         }
         return null;
+    }
+
+    public int getTowerPrice (int n){
+        switch (n) {
+            case 0: return 75;
+            case 1: return 150;
+            case 2: return 200;
+            case 3: return 25;
+            case 4: return 50;
+            case 5: return 150;
+        }
+        return 0;
     }
 
     public void addTower(Coordinates[] c){

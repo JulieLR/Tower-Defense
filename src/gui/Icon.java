@@ -9,10 +9,10 @@ import java.awt.Rectangle;
 public class Icon{
     
     private BufferedImage image;
-    private Tower tower;
+    private int tower;
     private Rectangle zone;
 
-    public Icon(BufferedImage img, Tower tower){
+    public Icon(BufferedImage img, int tower){
         this.image= img;
         this.tower=tower;
     }
@@ -25,11 +25,11 @@ public class Icon{
         this.image = image;
     }
 
-    public Tower getTower() {
+    public int getTower() {
         return tower;
     }
 
-    public void setTower(Tower tower) {
+    public void setTower(int tower) {
         this.tower = tower;
     }
 
