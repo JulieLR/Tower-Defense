@@ -56,6 +56,7 @@ public class Score implements Graphic{
             if (e.isSpawned()) {
                 if (!e.isAlived()) {
                     this.addScore(13);
+                    e.setSpawned(false);
                 }
             }
         }
