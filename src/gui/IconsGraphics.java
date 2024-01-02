@@ -87,7 +87,7 @@ public class IconsGraphics implements Graphic{
             }
             g.drawImage(icons.get(i).getImage(), this.game.getTileSize()+ecart*i, 640+hauteur, this.game.getTileSize()-this.game.getTileSize()/4, this.game.getTileSize()+this.game.getTileSize()/2 ,null);
             g.setColor(Color.BLACK);
-            g.drawString("PRICE", (int)icons.get(i).getZone().getX(), (int)icons.get(i).getZone().getY()+(int)icons.get(i).getZone().getHeight()+32);
+            //g.drawString("PRICE", (int)icons.get(i).getZone().getX(), (int)icons.get(i).getZone().getY()+(int)icons.get(i).getZone().getHeight()+32);
         }
         if(this.mouse!=null){
             g.drawImage(icons.get(followingIconNumber).getImage(), (int)mouse.getX()-this.game.getInitialTileSize(), (int)mouse.getY()-this.game.getInitialTileSize(), this.game.getTileSize()/2, this.game.getTileSize() ,null);

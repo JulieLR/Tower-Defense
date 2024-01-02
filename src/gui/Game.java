@@ -77,7 +77,7 @@ public class Game extends JPanel implements Runnable {
     private final double FPS_SET= 120.0;
     private final double UPS_SET= 60.0;
     
-    private NumberGraphics baseLife;
+    private NumberGraphics numberGraphics;
     private BufferedImage numberImage;
     private BufferedImage allSpriteImage;
     
@@ -108,7 +108,7 @@ public class Game extends JPanel implements Runnable {
 
         this.towerConfig= new TowerConfig(this);
         this.towerGraphics= new TowerGraphics(this, towerConfig);
-        this.baseLife= new NumberGraphics(this);
+        this.numberGraphics= new NumberGraphics(this);
 
         this.iconsConfig= new IconsConfig(this);
         this.iconsGraphics = new IconsGraphics(this,this.iconsConfig);
@@ -176,8 +176,8 @@ public class Game extends JPanel implements Runnable {
         return this.towerImage;
     }
 
-    public NumberGraphics getBaseLife () {
-        return this.baseLife;
+    public NumberGraphics getNumberGraphics () {
+        return this.numberGraphics;
     }
 
     public BufferedImage getNumberImage () {
@@ -232,7 +232,7 @@ public class Game extends JPanel implements Runnable {
         towerGraphics.drawImages(g);
         mapGraphics.drawBottomBarAndScore(g);
         iconsGraphics.drawImages(g);
-        baseLife.drawImages(g);
+        numberGraphics.drawImages(g);
 
         g.dispose(); //
     }
