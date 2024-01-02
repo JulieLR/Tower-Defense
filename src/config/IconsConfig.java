@@ -2,6 +2,7 @@ package config;
 
 import gui.Game;
 import gui.Icon;
+import gui.IconsGraphics;
 import model.Base;
 import model.Coordinates;
 import model.Tower;
@@ -14,18 +15,22 @@ import config.Tile.Type;
 import java.awt.image.BufferedImage;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
 
-public class IconsConfig implements MouseListener{
+public class IconsConfig implements MouseListener, MouseMotionListener{
  
     private Game game;
     private MapConfig mapConfig;
     private TowerConfig towerConfig;
     private TowerGraphics towerGraphics;
+    private IconsGraphics iconsGraphics;
+
     private ArrayList<BufferedImage> towerImages;
     private ArrayList<Icon> icons = new ArrayList<>();
     private Tower towerChosen;
     private boolean isClicked=false;
+    private int iconNb;
     private Base base;
 
     public IconsConfig(Game game){
@@ -38,6 +43,7 @@ public class IconsConfig implements MouseListener{
         this.base = this.game.getBase();
         addIcons();
         this.game.addMouseListener(this);
+        this.game.addMouseMotionListener(this);
     }
 
     
@@ -47,6 +53,10 @@ public class IconsConfig implements MouseListener{
 
     public void setTowerChosen(Tower towerChosen) {
         this.towerChosen = towerChosen;
+    }
+
+    public void setIconsGraphics(IconsGraphics iconsGraphics) {
+        this.iconsGraphics = iconsGraphics;
     }
 
     public void addIcons(){
@@ -108,23 +118,29 @@ public class IconsConfig implements MouseListener{
     @Override
     public void mouseClicked(MouseEvent e) {
         if(isClicked){
+            this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(0));
             System.out.println("ISCLICKED PART");
             this.isClicked=false;
             Coordinates tPos= new Coordinates((int)e.getPoint().getX(), (int)e.getPoint().getY());
             Tile tile =mapConfig.getTile(tPos);
             addTower(tile);
+            this.iconsGraphics.setFollowing(false);
             //towerChosen.setPos(new Coordinates((int)e.getPoint().getX(), (int)e.getPoint().getY()));
             //this.towerGraphics.setTest(towerChosen);
         }
         else{
             for(Icon icon : this.icons){
                 if(icon.getZone().contains(e.getPoint())){
+                    this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(1));
                     System.out.println("IN ZONE CLICKED");
                     if(isEnoughMoney(icon)){
                         this.towerChosen=towerConfig.towerNum(icon.getTower());
+                        this.iconsGraphics.setChosenIcon(icon);
+                        this.iconNb=icon.getTower();
                         this.isClicked=true;
                         //image qui suit souris
                         System.out.println("AVANT "+this.base.getArgent());
+                        this.iconsGraphics.setFollowing(true);
                     }
                     else{
                         System.out.println("NO MONEY");
@@ -152,6 +168,23 @@ public class IconsConfig implements MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
+
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        if(this.iconsGraphics.isFollowing()){
+            Coordinates tPos= new Coordinates((int)e.getPoint().getX(), (int)e.getPoint().getY());
+            this.iconsGraphics.setDrawMouseIcons(iconNb, tPos);
+        }
+        else{
+            this.iconsGraphics.setDrawMouseIcons(0,null);
+        }
     }
 
 }
