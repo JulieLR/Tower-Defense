@@ -215,10 +215,7 @@ public class Game extends JPanel implements Runnable {
         enemies.drawImages(g);
         towerGraphics.drawImages(g);
         mapGraphics.drawBottomBarAndScore(g);
-<<<<<<< HEAD
         iconsGraphics.drawIcons(g);
-=======
->>>>>>> c81f5fc92741614c4f6d5f0eafa6fd40e3ba4626
         baseLife.drawImages(g);
 
         g.dispose(); //
