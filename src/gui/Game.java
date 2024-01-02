@@ -67,7 +67,7 @@ public class Game extends JPanel implements Runnable {
     private final double FPS_SET= 120.0;
     private final double UPS_SET= 60.0;
     
-    private Score score;
+    private BaseLife baseLife;
     private BufferedImage numberImage;
     
     // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
@@ -80,7 +80,7 @@ public class Game extends JPanel implements Runnable {
         this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
         this.batImage = getImage("src/ressources/enemies/batSprite.png");
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
-        this.numberImage= getImage("src/ressources/score/number.png");
+        this.numberImage= getImage("src/ressources/number/number.png");
 
         this.mapNumber=mapNumber;
 
@@ -94,7 +94,7 @@ public class Game extends JPanel implements Runnable {
 
         this.towerConfig= new TowerConfig(this);
         this.towerGraphics= new TowerGraphics(this, towerConfig);
-        this.score= new Score(this);
+        this.baseLife= new BaseLife(this);
 
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
@@ -159,8 +159,8 @@ public class Game extends JPanel implements Runnable {
         return this.towerImage;
     }
 
-    public Score getScore () {
-        return this.score;
+    public BaseLife getBaseLife () {
+        return this.baseLife;
     }
 
     public BufferedImage getNumberImage () {
@@ -190,7 +190,7 @@ public class Game extends JPanel implements Runnable {
         towerGraphics.drawImages(g);
         enemies.drawImages(g);
         mapGraphics.drawBottomBarAndScore(g);
-        score.drawImages(g);
+        baseLife.drawImages(g);
 
         g.dispose(); //
     }
@@ -203,7 +203,7 @@ public class Game extends JPanel implements Runnable {
         //System.out.println("Game Updated");
         this.towerConfig.update();
         this.enemies.update();
-        this.score.updateScore();
+        //this.baseLife.updateLife();
         if(this.base.isDestroyed()){
             System.exit(0);
             System.out.println("DESTROYED");
