@@ -42,11 +42,8 @@ public class Tile {
     }
 
     public Tile(int img, int sndImg, Type type, int v,Coordinates coor){
-        this.img=img;
+        this(img,type,v,coor);
         this.sndImg=sndImg;
-        this.type=type;
-        this.value=v;
-        this.tileCoor=coor;
     }
 
     public Type getType() {
