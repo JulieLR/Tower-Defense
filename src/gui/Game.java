@@ -55,6 +55,7 @@ public class Game extends JPanel implements Runnable {
 
     private BufferedImage enemyImage;
     private BufferedImage batImage;
+    private BufferedImage slimeImage;
 
     private EnemiesConfig enemiesConfig;
     private EnemiesGraphics enemies;
@@ -77,6 +78,9 @@ public class Game extends JPanel implements Runnable {
     private final double FPS_SET= 120.0;
     private final double UPS_SET= 60.0;
     
+    private NumberGraphics numberGraphics;
+    private BufferedImage numberImage;
+    private BufferedImage allSpriteImage;
     
     // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
     private Mouse_Listener mouseListener; 
@@ -87,8 +91,11 @@ public class Game extends JPanel implements Runnable {
         this.mapImage = getImage("src/ressources/map/sprite.png");
         this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
         this.batImage = getImage("src/ressources/enemies/batSprite.png");
+        this.slimeImage= getImage("src/ressources/enemies/slimeSprite.png");
         this.towerImage= getImage("src/ressources/towers/towerSprite.png");
         this.iconBackground = getImage("src/ressources/towers/iconBackground.png");
+        this.numberImage= getImage("src/ressources/number/number.png");
+        this.allSpriteImage= getImage("src/ressources/sprite.png");
 
         this.app=app;
         this.mapNumber=mapNumber;
@@ -103,6 +110,7 @@ public class Game extends JPanel implements Runnable {
 
         this.towerConfig= new TowerConfig(this);
         this.towerGraphics= new TowerGraphics(this, towerConfig);
+        this.numberGraphics= new NumberGraphics(this);
 
         this.iconsConfig= new IconsConfig(this);
         this.iconsGraphics = new IconsGraphics(this,this.iconsConfig);
@@ -170,6 +178,18 @@ public class Game extends JPanel implements Runnable {
         return this.towerImage;
     }
 
+    public NumberGraphics getNumberGraphics () {
+        return this.numberGraphics;
+    }
+
+    public BufferedImage getNumberImage () {
+        return this.numberImage;
+    }
+
+    public BufferedImage getAllSpriteImage () {
+        return this.allSpriteImage;
+    }
+
     public MapConfig getMapConfig() {
         return tiles;
     }
@@ -187,6 +207,10 @@ public class Game extends JPanel implements Runnable {
 
     public App getApp() {
         return app;
+    }
+
+    public BufferedImage getSlimeImage() {
+        return slimeImage;
     }
 
     public TowerConfig getTowerConfig() {
@@ -214,6 +238,8 @@ public class Game extends JPanel implements Runnable {
         towerGraphics.drawImages(g);
         mapGraphics.drawBottomBarAndScore(g);
         iconsGraphics.drawImages(g);
+        numberGraphics.drawImages(g);
+
         g.dispose(); //
     }
 
@@ -225,6 +251,7 @@ public class Game extends JPanel implements Runnable {
         //System.out.println("Game Updated");
         this.towerConfig.update();
         this.enemies.update();
+        //this.baseLife.updateLife();
         if(this.base.isDestroyed()){
             System.exit(0);
             System.out.println("DESTROYED");

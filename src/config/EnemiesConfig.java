@@ -106,7 +106,7 @@ public class EnemiesConfig {
         /*Si la prochaine coordonée est un chemin alors on avance
          * Sinon on vérifie si le personnage est arrivé au chateau, sinon on change sa direction
         */
-        if(isPath(next)){
+        if(getTileType((int)next.getX(),(int)next.getY())==Type.PATH){
             e.move(e.getDir());
         }
         else if(isAtEnd(next)){
@@ -129,7 +129,7 @@ public class EnemiesConfig {
     }
 
     public boolean isPath(Coordinates c){
-        return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH);
+        return(getTileType((int)c.getX(),(int)c.getY())==Type.PATH || getTileType((int)c.getX(),(int)c.getY())==Type.CASTLE);
     }
 
     //Change la direction de l'enemie
