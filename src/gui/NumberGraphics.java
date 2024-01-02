@@ -8,12 +8,12 @@ import config.EnemiesConfig;
 import model.Base;
 import model.Enemy;
 
-public class BaseLife implements Graphic{
+public class NumberGraphics implements Graphic{
     private Game game;
     private ArrayList<BufferedImage> numberAsset = new ArrayList<>();
     private Base base;
 
-    public BaseLife (Game game) {
+    public NumberGraphics (Game game) {
         this.game= game;
         this.addAsset();
         this.base=this.game.getBase();
@@ -39,21 +39,4 @@ public class BaseLife implements Graphic{
 
     }
 
-    /*public int getLife() {
-        return this.life;
-    }
-    public void setLife(int n) {
-        this.life=n;
-    } */
-    
-    /* public void updateLife () {
-        this.base.getPointDeVie();
-        System.out.println(this.base.getPointDeVie());
-        for (Enemy e: this.game.getEnemyConfig().getEnemies()) {
-            if (this.enemiesConfig.isAtEnd(this.enemiesConfig.getNextCoor(e)) && e.isAlived()) {
-                this.setLife(this.base.getPointDeVie());
-                System.out.println(this.getLife());
-            }
-        } 
-    } */
 }
