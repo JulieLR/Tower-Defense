@@ -2,6 +2,7 @@ package config;
 
 import java.util.ArrayList;
 
+import java.util.Random;
 import config.Tile.Type;
 import gui.Game;
 import model.Base;
@@ -24,18 +25,20 @@ public class EnemiesConfig {
     private Coordinates start;
     private Coordinates end;
     private Enemy e;
+    private int mode;
 
-    public EnemiesConfig(Game game,int n){
+    public EnemiesConfig(Game game,int n, int mode){
 
         this.game=game;
         this.base = this.game.getBase();
         this.nbEnemies=n;
-        this.nbSpawned=1;
+        this.nbSpawned=0;
+        this.mode=mode;
         this.start = this.game.getMapConfig().getStartCoor();
         this.end = this.game.getMapConfig().getEndCoor();
         this.e= new Enemy(200,start,20, 4f,1,1,this.game);
 
-        makeEnemies(nbEnemies);
+        startLevel(mode);
         //enemies.get(0).setSpawned(true);
         //this.enemies.add(e);
     }
@@ -43,6 +46,22 @@ public class EnemiesConfig {
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
+
+    public int getNbEnemies() {
+        return nbEnemies;
+    }
+
+    public int getNbSpawned() {
+        return nbSpawned;
+    }
+
+    public void startLevel(int level){
+        switch(level){
+            case 1 : makeEnemies(nbEnemies);
+            case 4 : marathonStart();
+        }
+    }
+
 
     public Direction startDirection(){
         if(this.game.getMapNumber()==1){
@@ -64,6 +83,32 @@ public class EnemiesConfig {
         }
 
     }
+
+    public void marathonStart(){
+        makeEnemies(10);
+        this.nbEnemies=10;
+    }
+
+    public void addNewEnemies(){
+        Random r = new Random();
+        for(int i=0;i<10;i++){
+            int x = r.nextInt(10);
+            if(x<5){
+                this.enemies.add(new Knight(0, start,this.game));
+            }
+            else if(x<7){
+                this.enemies.add(new Tank(start, this.game));
+            }
+            else if(x<9){
+                this.enemies.add(new Slime(start,this.game)); 
+            }
+            else{
+                this.enemies.add(new Bat(start,this.game)); 
+            }
+            nbEnemies++;
+        }
+    }
+
     //Création d'enemies(ajout dans l'arraylist)
     private void makeEnemies(int n) {
         int a = (int)(n*0.5f);//50% de knight
