@@ -72,12 +72,14 @@ public class Game extends JPanel implements Runnable {
     private final double UPS_SET= 60.0;
     
     private NumberGraphics numberGraphics;
+
+    private boolean marathon=false;
     
     // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
     private Mouse_Listener mouseListener; 
     private Keyboard_Listener keyboardlistener;
 
-    public Game(int mapNumber, App app){
+    public Game(int level,int mapNumber, App app){
 
         this.app=app;
         this.mapNumber=mapNumber;
@@ -87,7 +89,11 @@ public class Game extends JPanel implements Runnable {
 
         this.base = new Base(this,1000);
 
-        this.enemiesConfig = new EnemiesConfig(this,10);
+        if(level==4){
+            this.marathon=true;
+        }
+
+        this.enemiesConfig = new EnemiesConfig(this,10,level);
         this.enemies= new EnemiesGraphics(this,this.enemiesConfig);
 
         this.towerConfig= new TowerConfig(this);
@@ -184,7 +190,6 @@ public class Game extends JPanel implements Runnable {
         super.paintComponent(g);
 
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
-        mapGraphics.drawBottomBarAndScore(g);
         enemies.drawImages(g);
         towerGraphics.drawImages(g);
         mapGraphics.drawBottomBarAndScore(g);
@@ -221,7 +226,7 @@ public class Game extends JPanel implements Runnable {
         int frames=0;
         int updates= 0;
 
-        double spawnInterval = 3000000000d;//3s
+        double spawnInterval = 2000000000d;//2s
         double delta =0;
         long currentTime;
         long lastTime = System.nanoTime();
@@ -253,6 +258,9 @@ public class Game extends JPanel implements Runnable {
             lastTime=currentTime;
             if(delta >=1){
                 enemiesConfig.spawn();
+                if(this.enemiesConfig.getNbSpawned()==this.enemiesConfig.getNbEnemies() && marathon){
+                    this.enemiesConfig.addNewEnemies();
+                }
                 delta--;
             }
         }

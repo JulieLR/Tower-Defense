@@ -17,14 +17,14 @@ public class App extends JFrame{
     private Mouse_Listener mouseListener; 
     private Keyboard_Listener keyboardlistener;
 
-    public App(int mapNumber){
+    public App(int level,int mapNumber){
         
         setLayout(new BorderLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("TOWER DEFENSE");
         //setResizable(false);
 
-        this.game = new Game(mapNumber, this);
+        this.game = new Game(level,mapNumber, this);
         //add(game);
 
         //this.pack();
