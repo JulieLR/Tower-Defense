@@ -117,7 +117,7 @@ public class Menu extends JFrame implements Frame,MouseListener{
 
     public void playAction(){
         playButton.setIcon(new ImageIcon(assets.get(1)));
-        new App(mapNumber);
+        new App(modeNumber,mapNumber);
         dispose();
 
     }
