@@ -94,9 +94,10 @@ public class IconsGraphics implements Graphic{
             //g.drawString("PRICE", (int)icons.get(i).getZone().getX(), (int)icons.get(i).getZone().getY()+(int)icons.get(i).getZone().getHeight()+32);
         }
         if(this.mouse!=null){
-            g.drawImage(icons.get(followingIconNumber).getImage(), (int)mouse.getX()-this.game.getInitialTileSize()*3/2, (int)mouse.getY()-this.game.getInitialTileSize()*4, this.game.getTileSize(), this.game.getTileSize()*2 ,null);
+            g.drawImage(icons.get(followingIconNumber).getImage(), (int)mouse.getX()-this.game.getInitialTileSize()*3/2, (int)mouse.getY()-this.game.getInitialTileSize()*6, this.game.getTileSize(), this.game.getTileSize()*2 ,null);
             g.setColor(new Color(200, 200, 200, 100));
-            g.fillRect((int) (mouse.getX()-this.chosenIcon.getZone().getWidth()), (int) (mouse.getY()-this.chosenIcon.getZone().getHeight()+this.game.getInitialTileSize()), (int) this.chosenIcon.getZone().getWidth()*2 , (int) this.chosenIcon.getZone().getHeight()*2);
+            //this.iconsConfig.getTowerChosen().getAttackZone().getWidth()
+            g.fillRect((int) (mouse.getX()-this.iconsConfig.getTowerChosen().getAttackZone().getWidth()/2), (int) (mouse.getY()-this.iconsConfig.getTowerChosen().getAttackZone().getHeight()/2), (int) this.iconsConfig.getTowerChosen().getAttackZone().getWidth() , (int) this.iconsConfig.getTowerChosen().getAttackZone().getHeight());
         }
     }
 }
