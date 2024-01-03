@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -13,7 +14,7 @@ import model.Enemy;
 import model.Tower;
 import model.Tower.TowerColor;
 
-public class TowerGraphics implements Graphic {
+public class TowerGraphics implements Graphic,Frame {
     private Game game;
     private TowerConfig towerConfig;
     private BufferedImage towerImage;
@@ -40,101 +41,151 @@ public class TowerGraphics implements Graphic {
         double[] tab= new double[2]; 
         tab[0]= Math.cos(-corner); // sens horaire, donc on doit mettre le signe - avant la valeur de l'angle
         tab[1]= Math.sin(-corner); 
-        return tab;
-         
+        return tab;    
     }
 
-    public Direction getVerticalPos(Coordinates t, Coordinates e){
-        if(e.getY()<t.getY()){
+
+
+    public Direction getVerticalPos(Tower t){
+        if(t.getTarget().getPos().getY()<t.getPos().getY()){
             return Direction.NORTH;
         }else{
             return Direction.SOUTH;
         }
     }
 
-    public Direction getHorizontalePos(Coordinates t, Coordinates e){
-        if(e.getX()<t.getX()){
+    public Direction getHorizontalePos(Tower t){
+        if(t.getTarget().getPos().getX()<t.getPos().getX()){
             return Direction.WEST;
         }else{
             return Direction.EAST;
         }
     }
 
-    public float getVerticalNombre(Coordinates t, Coordinates e){
-        Direction h= getHorizontalePos(t, e);
-        if(h==Direction.NORTH){
-            return -((t.getY()-e.getY())/3);
+    public float getVerticalNombre(Tower t){
+        Direction v= getVerticalPos(t);
+        if(v==Direction.NORTH){
+            return -((t.getPos().getY()-t.getTarget().getPos().getY())/3);
         }
         else{
-            return (e.getY()-t.getY())/3;
+            return (t.getTarget().getPos().getY()-t.getPos().getY())/3;
         }
     }
 
-    public float getHorizontalNombre(Coordinates t, Coordinates e){
-        Direction h= getHorizontalePos(t, e);
+    public float getHorizontalNombre(Tower t){
+        Direction h= getHorizontalePos(t);
         if(h==Direction.EAST){
-            return (e.getX()-t.getX())/3;
+            return (t.getTarget().getPos().getX()-t.getPos().getX())/3;
         }
         else{
-            return -(t.getX()-e.getX())/3;
+            return -(t.getPos().getX()-t.getTarget().getPos().getX())/3;
         }
+    }
+
+
+    // la methode atan renvoie un angle entre -pi/2 et pi/2
+    private double angleTowerEnemy (Tower t, Enemy e) {
+        double angle= Math.atan(t.getPos().getX()- e.getPos().getX()/ t.getPos().getY()- e.getPos().getY());
+        if (t.getPos().getX()-e.getPos().getX()<0) {
+            System.out.println("angle :"+angle);
+            return angle;
+        }
+        System.out.println("angle :"+angle);
+        return -angle;
+        
+    }
+
+    public int getRotateCoef(Tower t){
+        Direction h = getHorizontalePos(t);
+        Direction v = getVerticalPos(t);
+        if(v==Direction.NORTH){
+            if(h==Direction.EAST){
+                return 3;
+            }
+            else{
+                return 2;
+            }
+        }
+        else{
+            if(h==Direction.EAST){
+                return 0;
+            }
+            else{
+                return 1;
+            }
+        }
+    }
+
+    public double angle(Coordinates t, Coordinates e){
+        double angle = Math.abs(Math.abs(t.getX())-Math.abs(e.getX())/Math.abs(t.getY())-Math.abs(e.getY()));
+        return angle;
     }
 
     private void attackTower (Graphics g, long time, Tower t) {
-        
         if(t.getTarget()!=null){
+            float n= 100f;
+            int t0= (int) (n/t.getVitesseAtk());
+            int t1= (int) (n*2.0f/t.getVitesseAtk());
+            int t2= (int) (n*3.0f/t.getVitesseAtk());
+            int t3= (int) (n*4.0f/t.getVitesseAtk());
 
-        float n= 100f;
-        int t0= (int) (n/t.getVitesseAtk());
-        int t1= (int) (n*2.0f/t.getVitesseAtk());
-        int t2= (int) (n*3.0f/t.getVitesseAtk());
-        int t3= (int) (n*4.0f/t.getVitesseAtk());
+            Coordinates e = this.game.getEnemyConfig().getNextCoor((t.getTarget()));
+            float y = getVerticalNombre(t);
+            float x = getHorizontalNombre(t);
+            double angle =getRotateCoef(t)*90+Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos())));
 
-        Coordinates e = this.game.getEnemyConfig().getNextCoor((t.getTarget()));
-        float y = getVerticalNombre(t.getPos(), t.getTarget().getPos());
-        float x = getHorizontalNombre(t.getPos(), t.getTarget().getPos());
-
-        int nb=6;
-        if (time%t3<t0) {
-            g.drawImage(
-                this.towerAsset.get(t.idColorTower()+nb), 
-                (int)(t.getPos().getX()+x), 
-                (int)(t.getPos().getY()+y), 
-                this.game.getTileSize(),
-                this.game.getTileSize(), 
-                null);
-        } else if (time%t3<t1) {
-            g.drawImage(
-                this.towerAsset.get(t.idColorTower()+nb*2), 
-                (int)(t.getPos().getX()+x*2), 
-                (int)(t.getPos().getY()+y*2), 
-                this.game.getTileSize(),
-                this.game.getTileSize(), 
-                null);
-        } else if (time%t3<t2) {
-            if (t.isMagic()) {
-                g.drawImage(
-                    this.towerAsset.get(t.idColorTower()+nb*3), 
-                    (int)(t.getPos().getX()+x*3), 
-                    (int)(t.getPos().getY()+y*3), 
+            int nb=6;
+            if (time%t3<t0) {
+                g.drawImage( rotate (
+                    this.towerAsset.get(t.idColorTower()+nb), angle),
+                    (int)(t.getPos().getX()+x), 
+                    (int)(t.getPos().getY()+y), 
                     this.game.getTileSize(),
                     this.game.getTileSize(), 
                     null);
-            } else if (t.isPhysic()) {
-                g.drawImage(
-                    this.towerAsset.get(t.idColorTower()+nb*2), 
-                    (int)(t.getPos().getX()+x*3), 
-                    (int)(t.getPos().getY()+y*3),  
-                    this.game.getTileSize(),
-                    this.game.getTileSize(), 
-                    null);
-                //g.rotate(Math.toRadians(45), (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0]+(this.game.getTileSize()/2), (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1]+(this.game.getTileSize()/2));
+            } else if (time%t3<t1) {
+                if (t.isMagic()) {
+                    g.drawImage( rotate(
+                        this.towerAsset.get(t.idColorTower()+nb*2), angle),
+                        (int)(t.getPos().getX()+x*2), 
+                        (int)(t.getPos().getY()+y*2), 
+                        this.game.getTileSize(),
+                        this.game.getTileSize(), 
+                        null);
+                } else if (t.isPhysic()) {
+                    g.drawImage( rotate (
+                        this.towerAsset.get(t.idColorTower()+nb),angle),
+                        (int)(t.getPos().getX()+x*2), 
+                        (int)(t.getPos().getY()+y*2),  
+                        this.game.getTileSize(),
+                        this.game.getTileSize(), 
+                        null);
+            } else if (time%t3<t2) {
+                if (t.isMagic()) {
+                    g.drawImage( rotate(
+                        this.towerAsset.get(t.idColorTower()+nb*3), angle),
+                        (int)(t.getPos().getX()+x*3), 
+                        (int)(t.getPos().getY()+y*3), 
+                        this.game.getTileSize(),
+                        this.game.getTileSize(), 
+                        null);
+                } else if (t.isPhysic()) {
+                    g.drawImage( rotate (
+                        this.towerAsset.get(t.idColorTower()+nb),angle),
+                        (int)(t.getPos().getX()+x*3), 
+                        (int)(t.getPos().getY()+y*3),  
+                        this.game.getTileSize(),
+                        this.game.getTileSize(), 
+                        null);
+                    //g.rotate(Math.toRadians(45), (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0]+(this.game.getTileSize()/2), (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1]+(this.game.getTileSize()/2));
+                    }
+                }
+                //System.out.println(Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos()))));
             }
-
-        } }
+        }
     }
 
-    private void attackTowerDraw (Graphics g, long time, Tower t, double corner) {
+    private void attackTowerCornerDraw (Graphics g, long time, Tower t, double corner) {
         float n= 150f;
         int t0= (int) (n/t.getVitesseAtk());
         int t1= (int) (n*2.0f/t.getVitesseAtk());
@@ -179,6 +230,19 @@ public class TowerGraphics implements Graphic {
             }
 
         } 
+    } 
+    public BufferedImage rotate(BufferedImage img, double angle) {
+        int w = img.getWidth();    
+        int h = img.getHeight();
+    
+        BufferedImage rotated = new BufferedImage(w, h, img.getType());  
+        Graphics2D graphic = rotated.createGraphics();
+
+        graphic.rotate(Math.toRadians(angle), w/2, h/2);
+        graphic.drawImage(img, null, 0, 0);
+        graphic.dispose();
+        
+        return rotated;
     }
 
 
@@ -218,8 +282,10 @@ public class TowerGraphics implements Graphic {
                 (int)t.getPos().getY()- this.game.getTileSize(), 
                 this.game.getTileSize(), 
                 this.game.getTileSize()*2,
-                null); 
-            ////attackTowerDirectionDraw(g, time, t, Direction.SOUTH);
+                null);  
+        }
+        for (Tower t: tower) {
+            //attackTowerDirectionDraw(g, time, t, Direction.SOUTH);
             attackTower(g, time, t);
             //attackTowerDraw(g,time,t,Direction.EAST);
             //attackTowerCornerDraw(g, time, t, Math.PI/4);
