@@ -49,13 +49,8 @@ public class Game extends JPanel implements Runnable {
     //Le numero de la map choisi par le joueur par défaut on l'initialise à 1
     private int mapNumber=1;
 
-    private BufferedImage mapImage;
     private MapConfig tiles;
     private MapGraphics mapGraphics;
-
-    private BufferedImage enemyImage;
-    private BufferedImage batImage;
-    private BufferedImage slimeImage;
 
     private EnemiesConfig enemiesConfig;
     private EnemiesGraphics enemies;
@@ -63,11 +58,9 @@ public class Game extends JPanel implements Runnable {
     private TowerConfig towerConfig;
     private TowerGraphics towerGraphics;
 
-    private BufferedImage iconBackground;
     private IconsConfig iconsConfig;
     private IconsGraphics iconsGraphics;
 
-    private BufferedImage towerImage;
     private JPanel towerButton;
     private JPanel BottomBar;
     private App app;
@@ -79,23 +72,12 @@ public class Game extends JPanel implements Runnable {
     private final double UPS_SET= 60.0;
     
     private NumberGraphics numberGraphics;
-    private BufferedImage numberImage;
-    private BufferedImage allSpriteImage;
     
     // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
     private Mouse_Listener mouseListener; 
     private Keyboard_Listener keyboardlistener;
 
     public Game(int mapNumber, App app){
-
-        this.mapImage = getImage("src/ressources/map/sprite.png");
-        this.enemyImage= getImage("src/ressources/enemies/enemiesSprite.png");
-        this.batImage = getImage("src/ressources/enemies/batSprite.png");
-        this.slimeImage= getImage("src/ressources/enemies/slimeSprite.png");
-        this.towerImage= getImage("src/ressources/towers/towerSprite.png");
-        this.iconBackground = getImage("src/ressources/towers/iconBackground.png");
-        this.numberImage= getImage("src/ressources/number/number.png");
-        this.allSpriteImage= getImage("src/ressources/sprite.png");
 
         this.app=app;
         this.mapNumber=mapNumber;
@@ -146,9 +128,6 @@ public class Game extends JPanel implements Runnable {
         return mapNumber;
     }
 
-    public BufferedImage getMapImage() {
-        return mapImage;
-    }
 
     public int getInitialTileSize() {
         return initialTileSize;
@@ -169,25 +148,8 @@ public class Game extends JPanel implements Runnable {
     public int getScale(){
         return this.scale;
     }
-
-    public BufferedImage getEnemyImage() {
-        return enemyImage;
-    }
-
-    public BufferedImage getTowerImage () {
-        return this.towerImage;
-    }
-
     public NumberGraphics getNumberGraphics () {
         return this.numberGraphics;
-    }
-
-    public BufferedImage getNumberImage () {
-        return this.numberImage;
-    }
-
-    public BufferedImage getAllSpriteImage () {
-        return this.allSpriteImage;
     }
 
     public MapConfig getMapConfig() {
@@ -197,20 +159,12 @@ public class Game extends JPanel implements Runnable {
     public Base getBase() {
         return base;
     }
-
-    public BufferedImage getBatImage() {
-        return batImage;
-    }
     public EnemiesConfig getEnemyConfig () {
         return this.enemiesConfig;
     }
 
     public App getApp() {
         return app;
-    }
-
-    public BufferedImage getSlimeImage() {
-        return slimeImage;
     }
 
     public TowerConfig getTowerConfig() {
@@ -225,9 +179,6 @@ public class Game extends JPanel implements Runnable {
         return iconsGraphics;
     }
 
-    public BufferedImage getIconBackground() {
-        return iconBackground;
-    }
 
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);

@@ -33,7 +33,7 @@ public class IconsGraphics implements Graphic{
         this.iconsConfig=iconsConfig;
         this.iconsConfig.setIconsGraphics(this);
         this.icons = iconsConfig.getIcons();
-        this.iconsBackground= this.game.getIconBackground();
+        this.iconsBackground = getImage("src/ressources/towers/iconBackground.png");
         addAsset();
     }
 
