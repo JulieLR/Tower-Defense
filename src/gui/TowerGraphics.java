@@ -16,6 +16,7 @@ import model.Tower.TowerColor;
 public class TowerGraphics implements Graphic {
     private Game game;
     private TowerConfig towerConfig;
+    private BufferedImage towerImage;
     private ArrayList<BufferedImage> towerAsset = new ArrayList<>();
     private ArrayList<Tower> tower;
 
@@ -26,6 +27,7 @@ public class TowerGraphics implements Graphic {
     }
 
     public TowerGraphics (Game game, TowerConfig towerConfig) {
+        this.towerImage= getImage("src/ressources/towers/towerSprite.png");
         this.game= game;
         this.towerConfig= towerConfig;
         this.tower= towerConfig.getMouseTowers();
@@ -185,13 +187,13 @@ public class TowerGraphics implements Graphic {
         for (int ligne=0; ligne<6; ligne++) {
             for (int col= 0; col<6; col++) {
                 if(ligne==0){
-                    towerAsset.add(this.game.getTowerImage().getSubimage(
+                    towerAsset.add(this.towerImage.getSubimage(
                         col*this.game.getInitialTileSize(), 
                         ligne*this.game.getInitialTileSize(), 
                         this.game.getInitialTileSize(), 
                         this.game.getInitialTileSize()*2));
                 }else{
-                    towerAsset.add(this.game.getTowerImage().getSubimage(
+                    towerAsset.add(this.towerImage.getSubimage(
                         col*this.game.getInitialTileSize(), 
                         ligne*this.game.getInitialTileSize(), 
                         this.game.getInitialTileSize(), 
