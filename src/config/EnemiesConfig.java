@@ -11,6 +11,7 @@ import model.Direction;
 import model.Enemy;
 import model.Knight;
 import model.Slime;
+import model.Tank;
 
 public class EnemiesConfig {
 
@@ -65,9 +66,10 @@ public class EnemiesConfig {
     }
     //Création d'enemies(ajout dans l'arraylist)
     private void makeEnemies(int n) {
-        int a = (int)(n*0.5f);//50% d'ennemies faible
-        int b = (int)(n*0.3f);//30% d'ennemies moyen
-        int c = (int)(n*0.2f);//20% d'ennemies fort
+        int a = (int)(n*0.5f);//50% de knight
+        int b = (int)(n*0.2f);//30% de tank
+        int c = (int)(n*0.2f);//20% de slime
+        int d = (int)(n*0.1f);//20% de bat
 
         //ajout enemies faible
         for(int i=0;i<a;i++){
@@ -75,10 +77,16 @@ public class EnemiesConfig {
         }
         //ajout enemies moyen
         for(int j=0;j<b;j++){
-            this.enemies.add(new Slime(start,this.game));        }
+            this.enemies.add(new Tank(start, this.game));
+        }
         //ajout enemies fort
         for(int k=0;k<c;k++){
-            this.enemies.add(new Bat(start,this.game));        }
+            this.enemies.add(new Slime(start,this.game));        
+        }
+
+        for(int k=0;k<d;k++){
+            this.enemies.add(new Bat(start,this.game));        
+        }
     }
 
     public Enemy getE() {

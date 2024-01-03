@@ -10,6 +10,7 @@ import config.Tile.Type;
 import model.Enemy;
 import model.Knight;
 import model.Slime;
+import model.Tank;
 import model.Bat;
 import model.Coordinates;
 import model.Direction;
@@ -54,7 +55,7 @@ public class EnemiesGraphics implements Graphic{
                     //drawKnightStun(g, time,e);
                 }
                 else{
-                    if(e instanceof Knight){
+                    if(e instanceof Knight || e instanceof Tank){
                         drawKnightWalking(g, time,e);
                     }
                     else{
