@@ -18,12 +18,17 @@ public class EnemiesGraphics implements Graphic{
     
     private Game game;
     private EnemiesConfig enemiesConfig;
+    private BufferedImage enemiesSprite, batSprite, slimeSprite;
     private ArrayList<BufferedImage> enemiesAsset = new ArrayList<>();
     private ArrayList<BufferedImage> batAsset = new ArrayList<>();
     private ArrayList<BufferedImage> slimeAsset = new ArrayList<>();
     private ArrayList<Enemy> enemies;
 
     public EnemiesGraphics(Game game,EnemiesConfig e){
+
+        this.enemiesSprite= getImage("src/ressources/enemies/enemiesSprite.png");
+        this.batSprite= getImage("src/ressources/enemies/batSprite.png");
+        this.slimeSprite= getImage("src/ressources/enemies/slimesSprite.png");
 
         this.game = game;
         this.enemiesConfig= e;
@@ -44,7 +49,7 @@ public class EnemiesGraphics implements Graphic{
                         drawBatAttack(g, time, e);
                     }
                     else if(e instanceof Slime){
-                            drawSlimeAttack(g, time, e);
+                            drawSlimeAttack(g, time, (Slime)e);
                         }
                     //drawKnightStun(g, time,e);
                 }
@@ -54,8 +59,7 @@ public class EnemiesGraphics implements Graphic{
                     }
                     else{
                         if(e instanceof Slime){
-                            drawSlimeWaalk(g, time, e);
-                            //drawSlimeAttack(g, time, e);
+                            drawSlimeWalk(g, time,(Slime) e);
                         }
                         else{
                             if(e instanceof Bat){
@@ -78,11 +82,11 @@ public class EnemiesGraphics implements Graphic{
     public int getEcartDirection(Direction dir, boolean slime){
         int d=0;
         switch (dir){
-            case NORTH : d= slime? 21: 4;
+            case NORTH : d= slime? 6: 4;
                 break;
-            case SOUTH : d= slime? 14: 0;
+            case SOUTH : d= slime? 4: 0;
                 break;
-            case WEST: d= slime? 7:8;
+            case WEST: d= slime? 2:8;
                 break;
             case EAST: d= slime? 0:12;
                 break;
@@ -90,11 +94,12 @@ public class EnemiesGraphics implements Graphic{
         return d;
     }
 
-    public void drawSlimeWaalk(Graphics g, long time, Enemy e){
+
+    public void drawRainbowSlimeWaalk(Graphics g, long time, Slime e){
         int p = getEcartDirection(e.getDir(), true);
 
         int q = (int)(1200f/0.5f);
-        int n = (int)(1000f/0.5f);
+        int n = (int)(300f/0.5f);
         int h = (int)(800f/0.5f);
         int m = (int)(600f/0.5f);
         int k = (int)(400f/0.5f);
@@ -102,12 +107,12 @@ public class EnemiesGraphics implements Graphic{
         int o = (int)(100f/0.5f);
 
         if(time%n<o){
-            g.drawImage(this.slimeAsset.get(p),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
+            g.drawImage(this.slimeAsset.get(e.getColor()+p),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(time%n<l){
-            g.drawImage(this.slimeAsset.get(p+1),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
+        else{
+            g.drawImage(this.slimeAsset.get(e.getColor()+p+1),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(time%n<k){
+        /* else if(time%n<k){
             g.drawImage(this.slimeAsset.get(p+2),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
         }
         else if(time%n<m){
@@ -121,60 +126,33 @@ public class EnemiesGraphics implements Graphic{
         }
         else{
             g.drawImage(this.slimeAsset.get(p+6),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
-        } 
+        }  */
     }
 
-    public void drawSlimeAttack(Graphics g, long time, Enemy e){
-        int p = 28;
+    public void drawSlimeAttack(Graphics g, long time, Slime e){
+        int n = (int)(200f/e.getSpeed());
+        int m = (int)(100f/e.getSpeed());
 
-        int q = (int)(1200f/0.5f);
-        int n = (int)(1000f/0.5f);
-        int h = (int)(800f/0.5f);
-        int m = (int)(600f/0.5f);
-        int k = (int)(400f/0.5f);
-        int l = (int)(200f/0.5f);
-        int o = (int)(100f/0.5f);
-
-        if(time%n<o){
-            g.drawImage(this.slimeAsset.get(p),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else if(time%n<l){
-            g.drawImage(this.slimeAsset.get(p+1),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else if(time%n<k){
-            g.drawImage(this.slimeAsset.get(p+2),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else if(time%n<m){
-            g.drawImage(this.slimeAsset.get(p+3),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else if(time%n<h){
-            g.drawImage(this.slimeAsset.get(p+4),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else if(time%n<q){
-            g.drawImage(this.slimeAsset.get(p+5),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
+        if(time%n<m){
+            g.drawImage(this.slimeAsset.get(e.getColor()*9+0),(int)( e.getPos().getX()-this.game.getInitialTileSize()*2),(int)(e.getPos().getY()-this.game.getInitialTileSize()*3),this.game.getTileSize()*2,this.game.getTileSize()*2, null);
         }
         else{
-            g.drawImage(this.slimeAsset.get(p+6),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
-        } 
+            g.drawImage(this.slimeAsset.get(e.getColor()*9+8),(int)( e.getPos().getX()-this.game.getInitialTileSize()*2),(int)(e.getPos().getY()-this.game.getInitialTileSize()*3),this.game.getTileSize()*2,this.game.getTileSize()*2, null);
+        }
     }
 
-    public void drawSlimeWalk(Graphics g, long time, Enemy e){
+    public void drawSlimeWalk(Graphics g, long time, Slime e){
 
-        int d=getEcartDirection(e.getDir(),false);
+        int n = (int)(200f/e.getSpeed());
+        int m = (int)(100f/e.getSpeed());
 
-        int n = (int)(450f/e.getSpeed());
-        int m = (int)(300f/e.getSpeed());
-        int k = (int)(150f/e.getSpeed());
-        
-        if(time%n<k){
-            g.drawImage(this.enemiesAsset.get(28+d),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else if(time%n<m){
-            g.drawImage(this.enemiesAsset.get(29+d),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize(), null);
+        int p = getEcartDirection(e.getDir(), true);
+        if(time%n<m){
+            g.drawImage(this.slimeAsset.get(e.getColor()*9+p),(int)( e.getPos().getX()-this.game.getInitialTileSize()*2),(int)(e.getPos().getY()-this.game.getInitialTileSize()*3),this.game.getTileSize()*2,this.game.getTileSize()*2, null);
         }
         else{
-            g.drawImage(this.enemiesAsset.get(30+d),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize(), null);
-        } 
+            g.drawImage(this.slimeAsset.get(e.getColor()*9+p+1),(int) (e.getPos().getX()-this.game.getInitialTileSize()*2),(int)(e.getPos().getY()-this.game.getInitialTileSize()*3),this.game.getTileSize()*2,this.game.getTileSize()*2, null);
+        }
 
 
     }
@@ -285,12 +263,12 @@ public class EnemiesGraphics implements Graphic{
 
     public void drawDead(Graphics g, long time, Enemy e){
 
-        int n = (int)(1000f/0.5f);
-        int h = (int)(800f/0.5f);
-        int m = (int)(600f/0.5f);
-        int k = (int)(400f/0.5f);
-        int l = (int)(200f/0.5f);
-        int o = (int)(100f/0.5f);
+        int n = (int)(1300f/0.5f);
+        int h = (int)(1050f/0.5f);
+        int m = (int)(800f/0.5f);
+        int k = (int)(550f/0.5f);
+        int l = (int)(300f/0.5f);
+        int o = (int)(50f/0.5f);
         int p = 23;
 
         if(time%n<o){
@@ -331,19 +309,19 @@ public class EnemiesGraphics implements Graphic{
     public void addAsset(){
         for(int ligne=0;ligne<11;ligne++){
             for(int col=0;col<4;col++){
-                enemiesAsset.add(this.game.getEnemyImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
+                enemiesAsset.add(this.enemiesSprite.getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
             }
         }
         for(int ligne=0;ligne<6;ligne++){
             for(int col=0;col<8;col++){
-                batAsset.add(this.game.getBatImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize()*2, this.game.getInitialTileSize()));
+                batAsset.add(this.batSprite.getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize()*2, this.game.getInitialTileSize()));
                 col++;
             }
         }
 
-        for(int ligne=0;ligne<5;ligne++){
-            for(int col=0;col<7;col++){
-                slimeAsset.add(this.game.getSlimeImage().getSubimage(col*(this.game.getInitialTileSize()*2), ligne*(this.game.getInitialTileSize()*2), this.game.getInitialTileSize()*2, this.game.getInitialTileSize()*2));
+        for(int ligne=0;ligne<7;ligne++){
+            for(int col=0;col<9;col++){
+                slimeAsset.add(this.slimeSprite.getSubimage(col*72, ligne*72, 72, 72));
             }
         }
 

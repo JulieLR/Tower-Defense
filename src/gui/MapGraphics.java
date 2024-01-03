@@ -14,12 +14,14 @@ public class MapGraphics implements Graphic {
     private Game game;
     private MapConfig mapConfig;
     private Tile[][] map;
+    private BufferedImage mapImage;
     private ArrayList<BufferedImage> tiles = new ArrayList<>();
 
     public MapGraphics(Game game, MapConfig mapConfig){
 
         this.game=game;
         this.mapConfig=mapConfig;
+        this.mapImage = getImage("src/ressources/map/sprite.png");
         addAsset();
         this.map = mapConfig.getMap();
         
@@ -33,10 +35,10 @@ public class MapGraphics implements Graphic {
                     break;
                 }
                 if(ligne>3){
-                    tiles.add(this.game.getMapImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()*2));
+                    tiles.add(this.mapImage.getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()*2));
                 }
                 else{
-                    tiles.add(this.game.getMapImage().getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
+                    tiles.add(this.mapImage.getSubimage(col*this.game.getInitialTileSize(), ligne*this.game.getInitialTileSize(), this.game.getInitialTileSize(), this.game.getInitialTileSize()));
                 }
             }
         }

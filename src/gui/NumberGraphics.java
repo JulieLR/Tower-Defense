@@ -13,11 +13,14 @@ import model.Tower;
 
 public class NumberGraphics implements Graphic{
     private Game game;
+    private BufferedImage numberImage, allSpriteImage;
     private ArrayList<BufferedImage> numberAsset = new ArrayList<>();
     private Tower tower;
 
     public NumberGraphics (Game game) {
         this.game= game;
+        this.numberImage= getImage("src/ressources/number/number.png");
+        this.allSpriteImage= getImage("src/ressources/sprite.png");
         this.addAsset();
         this.tower=this.game.getTowerConfig().getTowers().get(0);
         //this.towerConfig=this.game.getTowerConfig();
@@ -27,12 +30,12 @@ public class NumberGraphics implements Graphic{
     public void addAsset() {
         for (int ligne=0; ligne<10; ligne++) { 
             // asset des chiffres
-            numberAsset.add(this.game.getNumberImage().getSubimage(ligne*9, 0, 9, 12));
+            numberAsset.add(this.numberImage.getSubimage(ligne*9, 0, 9, 12));
         }
         // asset du coeur
-        numberAsset.add(this.game.getAllSpriteImage().getSubimage(16*9, 16*7, 16, 16));
+        numberAsset.add(this.allSpriteImage.getSubimage(16*9, 16*7, 16, 16));
         // asset de l'argent
-        numberAsset.add(this.game.getAllSpriteImage().getSubimage(16*9, 16*8, 16, 16));
+        numberAsset.add(this.allSpriteImage.getSubimage(16*9, 16*8, 16, 16));
     }
 
     @Override
