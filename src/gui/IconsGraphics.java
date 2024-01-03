@@ -5,7 +5,9 @@ import java.awt.Rectangle;
 import java.awt.Color;
 
 import config.IconsConfig;
+import config.TowerConfig;
 import model.Coordinates;
+import model.Tower;
 
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
@@ -17,6 +19,7 @@ public class IconsGraphics implements Graphic{
     private ArrayList<Icon> icons;
     private BufferedImage iconsBackground;
     private ArrayList<BufferedImage> backgroundIcons= new ArrayList<>();
+    private TowerConfig towerConfig;
 
     private BufferedImage actualBackground;
     private Icon chosenIcon;
@@ -35,6 +38,7 @@ public class IconsGraphics implements Graphic{
         this.icons = iconsConfig.getIcons();
         this.iconsBackground = getImage("src/ressources/towers/iconBackground.png");
         addAsset();
+        //this.towerConfig= this
     }
 
     public ArrayList<BufferedImage> getBackgroundIcons() {
@@ -90,7 +94,9 @@ public class IconsGraphics implements Graphic{
             //g.drawString("PRICE", (int)icons.get(i).getZone().getX(), (int)icons.get(i).getZone().getY()+(int)icons.get(i).getZone().getHeight()+32);
         }
         if(this.mouse!=null){
-            g.drawImage(icons.get(followingIconNumber).getImage(), (int)mouse.getX()-this.game.getInitialTileSize(), (int)mouse.getY()-this.game.getInitialTileSize(), this.game.getTileSize()/2, this.game.getTileSize() ,null);
+            g.drawImage(icons.get(followingIconNumber).getImage(), (int)mouse.getX()-this.game.getInitialTileSize()*3/2, (int)mouse.getY()-this.game.getInitialTileSize()*4, this.game.getTileSize(), this.game.getTileSize()*2 ,null);
+            g.setColor(new Color(200, 200, 200, 100));
+            g.fillRect((int) (mouse.getX()-this.chosenIcon.getZone().getWidth()), (int) (mouse.getY()-this.chosenIcon.getZone().getHeight()+this.game.getInitialTileSize()), (int) this.chosenIcon.getZone().getWidth()*2 , (int) this.chosenIcon.getZone().getHeight()*2);
         }
     }
 }
