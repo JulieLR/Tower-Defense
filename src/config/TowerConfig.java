@@ -8,6 +8,7 @@ import java.util.Random;
 
 import config.Tile.Type;
 import gui.Game;
+import model.Base;
 import model.Coordinates;
 import model.Enemy;
 import model.Entities;
@@ -21,6 +22,7 @@ public class TowerConfig implements Serializable{
 
     private ArrayList<Enemy> enemies= new ArrayList<> ();
     private BufferedImage towerImage;
+    private Base base;
     // public transient BufferedImage towerImageTransient; // transient pour igniorer le serializes
     // private static final int serialVersionUID= 1;
     
@@ -28,6 +30,7 @@ public class TowerConfig implements Serializable{
         this.game=game;
         this.enemies=this.game.getEnemyConfig().getEnemies();
         addTower(getPosTower());
+        this.base= this.game.getBase();
         //loadTowerImage();
     }
 
@@ -185,6 +188,7 @@ public class TowerConfig implements Serializable{
             enemy.setAlived(false);
             tower.deleteEnemyTab(enemy);
             tower.setTarget();
+            base.setArgent(base.getArgent()-enemy.getPrime());
         }
         else{
             enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
