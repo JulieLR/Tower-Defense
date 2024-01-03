@@ -136,7 +136,7 @@ public class Tower extends Entities {
         return this.attackZone;
     }
     public void setAttackZone (int width, int height) {
-        this.attackZone= new Rectangle((int) (getPos().getX()-width/2), (int) (getPos().getY()-height/2), width, height);
+        this.attackZone= new Rectangle((int) (getPos().getX()-(width-this.game.getTileSize())/2), (int) (getPos().getY()-(height-this.game.getTileSize())/2), width, height);
     }
 
     public boolean isInZone(Enemy e){
