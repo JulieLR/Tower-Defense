@@ -188,7 +188,7 @@ public class TowerConfig implements Serializable{
             enemy.setAlived(false);
             tower.deleteEnemyTab(enemy);
             tower.setTarget();
-            base.setArgent(base.getArgent()-enemy.getPrime());
+            base.setArgent(base.getArgent()+enemy.getPrime());
         }
         else{
             enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
