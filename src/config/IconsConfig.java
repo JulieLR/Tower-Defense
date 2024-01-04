@@ -39,7 +39,7 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         this.mapConfig=this.game.getMapConfig();
         this.towerConfig=this.game.getTowerConfig();
         this.towerGraphics= this.game.getTowerGraphics();
-        this.towerImages= this.game.getTowerGraphics().getTowerIcons();
+        this.towerImages= towerGraphics.getTowerIcons();
         this.base = this.game.getBase();
         addIcons();
         this.game.addMouseListener(this);
