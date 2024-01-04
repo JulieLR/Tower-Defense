@@ -14,7 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class Menu extends JFrame implements Frame,MouseListener{
+public class Menu extends JFrame implements Frame,Graphic,MouseListener{
 
     private BufferedImage buttonImage;
     private BufferedImage fondMenuImage;
@@ -122,16 +122,6 @@ public class Menu extends JFrame implements Frame,MouseListener{
 
     }
 
-    public BufferedImage getImage(String chemin){
-        try {
-            BufferedImage image = ImageIO.read(new File(chemin));
-            return image;
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public ArrayList<BufferedImage> getAssets() {
         return assets;
     }
@@ -187,6 +177,11 @@ public class Menu extends JFrame implements Frame,MouseListener{
 
     @Override
     public void mouseExited(MouseEvent e) {
+    }
+
+    @Override
+    public void drawImages(Graphics g) {
+
     }
 
 }
