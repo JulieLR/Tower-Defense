@@ -2,6 +2,7 @@ package model;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.lang.Math.*;
+import java.util.ArrayList;
 
 import config.EnemiesConfig;
 import gui.Game;
@@ -17,6 +18,7 @@ public class Tower extends Entities {
     private Enemy target;
     private EnemiesConfig enemyConfig;
     private Enemy[] enemyTab;
+    private ArrayList<Enemy> enemyArray= new ArrayList<>();
     
     public Tower(float attackSpeed, Coordinates position, int degat, int color, int price, int width, int height, Game game){
         super(attackSpeed, position, degat);
@@ -33,6 +35,7 @@ public class Tower extends Entities {
         //this.setEnemyTab();
         //this.createEnemytab();
         //this.enemiesTab();
+        this.enemiesArray();
     }
 
     public Coordinates pos(Coordinates cor, int width, int height, int size){
@@ -154,8 +157,8 @@ public class Tower extends Entities {
         return target;
     }
     public void setTarget() {
-        this.setEnemyTab();
-        if (this.enemyTab.length!=0) {
+        //this.setEnemyTab();
+        //if (this.enemyTab.length!=0) {
             /* int i=0;
             while (this.enemyTab[i]==null&& i<this.enemyTab.length-1) {
                 i++;
@@ -166,7 +169,11 @@ public class Tower extends Entities {
             else {
                 this.target= this.getEnemyTab()[i];
             } */
-            this.target=this.getEnemyTab()[0];
+            //this.target=this.getEnemyTab()[0];
+            this.enemiesArray();
+            System.out.println(this.enemyArray.size());
+        if (this.enemyArray.size()!=0) {
+            this.enemyArray.get(0);
         }
         else {
             this.target=null;
@@ -177,6 +184,7 @@ public class Tower extends Entities {
         return this.enemyTab;
     }
     public void setEnemyTab() {
+        this.afficheEnemyTab();
         for (Enemy e: this.enemyConfig.getEnemies()) {
             if (isInZone(e)) {
                 this.addEnemyInTab(e);
@@ -196,7 +204,6 @@ public class Tower extends Entities {
         tab[this.enemyTab.length]=e;
         this.enemyTab=tab; 
     }
-
     public void deleteEnemyTab (Enemy e) {
         //this.enemyTab[e.getNumber()]=null;
         Enemy[] tab= new Enemy[this.enemyTab.length-1];
@@ -208,8 +215,6 @@ public class Tower extends Entities {
         this.enemyTab=tab; 
 
     } 
-
-
 
     /* public int nbEnemiesInZone () {
         int n=1;
@@ -228,7 +233,6 @@ public class Tower extends Entities {
         }
         return n;
     } */
-
     /* public int numberNotAlivedOrNotInZone () {
         int n=1;
         for (Enemy e: this.enemyConfig.getEnemies()) {
@@ -245,7 +249,6 @@ public class Tower extends Entities {
         }
         return n;
     } */
-
     public void enemiesTab () {
         //int n=0;
         for (Enemy e: this.enemyConfig.getEnemies()) {
@@ -276,6 +279,46 @@ public class Tower extends Entities {
         }
         this.enemyTab= tab;
     } */
+
+    public void afficheEnemyTab () {
+        for (int i=0; i<this.enemyTab.length; i++) {
+            System.out.print(this.enemyTab[i].getNumber()+ "  ");
+        }
+        System.out.println("    ");
+    }
+
+    public ArrayList<Enemy> getEnemyArray() {
+        return this.enemyArray;
+    }
+    /* public void setEnemyArray() {
+        for (Enemy e: this.enemyConfig.getEnemies()) {
+            if (isInZone(e)) {
+                this.addEnemyInArray(e);
+                if (!e.isAlived()) {
+                    this.deleteEnemyArray(e);
+                }
+            }
+        }
+    }*/
+    public void addEnemyInArray (Enemy e) {
+        this.enemyArray.add(e);
+    }
+    public void deleteEnemyArray (Enemy e) {
+        this.enemyArray.remove(0);
+
+    }
+
+    public void enemiesArray () {
+        for (Enemy e: this.enemyConfig.getEnemies()) {
+            if (this.isInZone(e)) {
+                this.addEnemyInArray(e);
+                if(!e.isAlived() || !this.isInZone(e)) {
+                    this.deleteEnemyArray(e);
+                }
+            }
+        }
+    }
+
 
 
 }
