@@ -183,6 +183,8 @@ public class TowerConfig implements Serializable{
  
     // attaque
     private void attaque (Enemy enemy, Tower tower) {
+        tower.enemiesTab();
+        //System.out.println(tower.nbEnemiesInZone());
         if(enemy.getPointDeVie()-tower.getDegat()<0){
             enemy.setPointDeVie(0);
             enemy.setAlived(false);
