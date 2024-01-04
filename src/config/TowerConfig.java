@@ -203,18 +203,6 @@ public class TowerConfig implements Serializable{
             }
         }
     }
-
-    public void atk(Enemy enemy,Tower tower){
-        if(enemy.getPointDeVie()-tower.getDegat()<0){
-            enemy.setPointDeVie(0);
-            enemy.setAlived(false);
-            base.setArgent(base.getArgent()+enemy.getPrime());
-        }
-        else{
-            enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
-        }
-         
-    }
     
     // distance entre une tour et un ennemi
     public double distanceTowerEnemy (Tower t, Enemy e) {
@@ -231,6 +219,18 @@ public class TowerConfig implements Serializable{
         else{
             t.setTarget(null);
         }
+    }
+
+    public void atk(Enemy enemy,Tower tower){
+        if(enemy.getPointDeVie()-tower.getDegat()<0){
+            enemy.setPointDeVie(0);
+            enemy.setAlived(false);
+            base.setArgent(base.getArgent()+enemy.getPrime());
+        }
+        else{
+            enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
+        }
+         
     }
 
     private void getTarget(Tower t){
