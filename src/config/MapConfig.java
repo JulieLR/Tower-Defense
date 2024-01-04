@@ -17,10 +17,12 @@ public class MapConfig {
     private Coordinates endCoor;
     private Coordinates start;
 
-    private String path1="src/config/map1T.txt";
-    private String path1C="src/config/map1C.txt";
+    private String path1="src/config/map3T.txt";
+    private String path1C="src/config/map3C.txt";
     private String path2="src/config/map2T.txt";
     private String path2C="src/config/map2C.txt";
+    private String path3="src/config/map3T.txt";
+    private String path3C="src/config/map3C.txt";
 
 
     Random random = new Random();
@@ -30,12 +32,7 @@ public class MapConfig {
         this.game=game;
         this.map= new Tile[this.game.getCol()][this.game.getLigne()];
         //addAsset();
-        if(this.game.getMapNumber()==1){
-            mapFromFile(path1,path1C);
-        }
-        else if(this.game.getMapNumber()==2){
-            mapFromFile(path2,path2C);
-        }
+        chosenMap();
         //System.out.print(this.getTile(new Coordinates(130, 130)).typeToString());
     } 
 
@@ -63,6 +60,14 @@ public class MapConfig {
     public Coordinates getStart() {
         return start;
     }
+
+    public void chosenMap(){
+        switch(this.game.getMapNumber()){
+            case 1:mapFromFile(path1,path1C);
+            case 2:mapFromFile(path2,path2C);
+            case 3:mapFromFile(path3,path3C);
+        }
+    }
     
     public void mapFromFile(String path, String path2){
         try{
@@ -82,6 +87,14 @@ public class MapConfig {
                     }
                     else if(readline.charAt(i) == 'D'){//Path
                         this.map[ligne][col] = new Tile(1, Type.PATH, Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
+                        ligne++;
+                    }
+                    else if(readline.charAt(i) == 'I'){//Intersection 4
+                        this.map[ligne][col] = new Tile(5, Type.INTERSECTION4, Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
+                        ligne++;
+                    }
+                    else if(readline.charAt(i) == 'i'){//Interssection 3
+                        this.map[ligne][col] = new Tile(4, Type.INTERSECTION3, Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne, col));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'W'){//water

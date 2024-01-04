@@ -26,7 +26,7 @@ public class SceneMenu extends JFrame implements Frame,MouseListener{
     private ArrayList<BufferedImage> mapAssets= new ArrayList<>();
     private BufferedImage mapsImage;
 
-    private JButton confirmButton, backButton, map1Button, map2Button;
+    private JButton confirmButton, backButton, map1Button, map2Button, map3Button;
 
     private int mapNumber=1;
     private boolean chosen=false;
@@ -58,13 +58,17 @@ public class SceneMenu extends JFrame implements Frame,MouseListener{
         backButton.addMouseListener(this);
         add(backButton); 
 
-        this.map1Button=makeButton((this.getWidth()-240)/2-160, (this.getHeight()-240)/2, 240, 160, 0, mapAssets);
+        this.map1Button=makeButton((this.getWidth()-240)/2-160, (this.getHeight()-480)/2, 240, 160, 0, mapAssets);
         map1Button.addMouseListener(this);
         add(map1Button); 
 
-        this.map2Button=makeButton((this.getWidth()-240)/2+160, (this.getHeight()-240)/2, 240, 160, 3, mapAssets);
+        this.map2Button=makeButton((this.getWidth()-240)/2+160, (this.getHeight()-480)/2, 240, 160, 3, mapAssets);
         map2Button.addMouseListener(this);
-        add(map2Button); 
+        add(map2Button);
+        
+        this.map3Button=makeButton((this.getWidth()-240)/2-160, (this.getHeight()-480)/2+200, 240, 160, 5, mapAssets);
+        map3Button.addMouseListener(this);
+        add(map3Button); 
 
         add(fond);
     }
@@ -80,7 +84,7 @@ public class SceneMenu extends JFrame implements Frame,MouseListener{
     }
 
     public void addAsset() {
-        for(int ligne=0; ligne<2;ligne++){
+        for(int ligne=0; ligne<3;ligne++){
             for(int col=0;col<2;col++){
                 mapAssets.add(mapsImage.getSubimage(col*240,ligne*160, 240, 160));
             }
@@ -91,14 +95,29 @@ public class SceneMenu extends JFrame implements Frame,MouseListener{
     public void mouseClicked(MouseEvent e) {
         if(e.getSource()== map1Button){
             map1Button.setIcon(new ImageIcon(mapAssets.get(0)));
+
             map2Button.setIcon(new ImageIcon(mapAssets.get(3)));
+            map3Button.setIcon(new ImageIcon(mapAssets.get(5)));
+            
             mapNumber=1;
             this.chosen=true;
         }
         else if((e.getSource()== map2Button)){
             map2Button.setIcon(new ImageIcon(mapAssets.get(2)));
+            
             map1Button.setIcon(new ImageIcon(mapAssets.get(1)));
+            map3Button.setIcon(new ImageIcon(mapAssets.get(5)));
+
             mapNumber=2;
+            this.chosen=true;
+        }
+        else if((e.getSource()== map3Button)){
+            map3Button.setIcon(new ImageIcon(mapAssets.get(4)));
+
+            map1Button.setIcon(new ImageIcon(mapAssets.get(1)));
+            map2Button.setIcon(new ImageIcon(mapAssets.get(3)));
+            
+            mapNumber=3;
             this.chosen=true;
         }
         System.out.println(mapNumber);

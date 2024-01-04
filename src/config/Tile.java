@@ -6,7 +6,7 @@ import model.Coordinates;
 
 public class Tile {
 
-    public enum Type{PATH,GRASS,WATER,CASTLE,TOWER,BAR,END};
+    public enum Type{PATH,GRASS,WATER,CASTLE,TOWER,BAR,END,INTERSECTION3,INTERSECTION4};
     private BufferedImage image; // image du tile
     private BufferedImage secondImg;
     private int img, sndImg;

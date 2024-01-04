@@ -159,7 +159,7 @@ public class EnemiesConfig {
         /*Si la prochaine coordonée est un chemin alors on avance
          * Sinon on vérifie si le personnage est arrivé au chateau, sinon on change sa direction
         */
-        if(getTileType((int)next.getX(),(int)next.getY())==Type.PATH){
+        if(getTileType((int)next.getX(),(int)next.getY())==Type.PATH || getTileType((int)next.getX(),(int)next.getY())==Type.INTERSECTION3 || getTileType((int)next.getX(),(int)next.getY())==Type.INTERSECTION4){
             e.move(e.getDir());
         }
         else if(isAtEnd(next)){
