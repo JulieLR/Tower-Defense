@@ -171,7 +171,7 @@ public class Tower extends Entities {
             } */
             //this.target=this.getEnemyTab()[0];
             this.enemiesArray();
-            System.out.println(this.enemyArray.size());
+            System.out.println(this.enemyArray.size()+"HEY");
         if (this.enemyArray.size()!=0) {
             this.enemyArray.get(0);
         }
@@ -304,7 +304,7 @@ public class Tower extends Entities {
         this.enemyArray.add(e);
     }
     public void deleteEnemyArray (Enemy e) {
-        this.enemyArray.remove(0);
+        this.enemyArray.remove(e);
 
     }
 
