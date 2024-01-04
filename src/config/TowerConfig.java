@@ -64,12 +64,12 @@ public class TowerConfig implements Serializable{
 
     public Tower towerNum (int n){
         switch (n) {
-            case 0: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
-            case 1: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 150, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
-            case 2: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
-            case 3: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 25, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
-            case 4: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
-            case 5: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
+            case 0: return new Tower(0.5f, new Coordinates(0, 0), 1, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 1: return new Tower(0.5f, new Coordinates(0, 0), 1, n, 150, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
+            case 2: return new Tower(0.5f, new Coordinates(0, 0), 1, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
+            case 3: return new Tower(0.5f, new Coordinates(0, 0), 1, n, 25, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 4: return new Tower(0.5f, new Coordinates(0, 0), 1, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
+            case 5: return new Tower(0.5f, new Coordinates(0, 0), 0, n, 150, this.game.getTileSize()*17, this.game.getTileSize()*5, this.game);
         }
         return null;
     }
@@ -214,7 +214,8 @@ public class TowerConfig implements Serializable{
     private void removeFromArray(Tower t, Enemy e){
         t.getEnemyArray().remove(t.getTarget());
         if(t.getEnemyArray().size()!=0){
-            t.setTarget(t.getEnemyArray().get(0));
+            t.setTarget(this.min(t));
+            System.out.println(t.getTarget().getNumber());
         }
         else{
             t.setTarget(null);
@@ -249,18 +250,32 @@ public class TowerConfig implements Serializable{
         for(Enemy e : enemies){
             if(t.getTarget()==null){
                 if(t.isInZone(e)&& e.isAlived()){
-                    t.setTarget(e);
                     t.getEnemyArray().add(e);
+                    t.setTarget(this.min(t));
                     System.out.println("NEW TARGET");
                 }
             }
             else{
                 if(t.isInZone(e)&& e.isAlived() && !t.getEnemyArray().contains(e)){
                     t.getEnemyArray().add(e);
+                    t.setTarget(this.min(t));
                     System.out.println("ENEMY ADDED");
                 }
             }
         }
+    }
+
+    private Enemy min (Tower t) {
+            if (t.getEnemyArray().size()>0) {
+            Enemy tmp= t.getEnemyArray().get(0);
+            for (int i=1; i<t.getEnemyArray().size()-1; i++) {
+                if(tmp.getNumber()>t.getEnemyArray().get(i).getNumber()) {
+                    tmp= t.getEnemyArray().get(i);
+                }
+            }
+            return tmp;
+        }
+        return null;
     }
 
 }
