@@ -2,11 +2,11 @@ package model;
 
 import java.awt.image.BufferedImage;
 
-public class Entities {
+public abstract class Entities {
 
-    private float vitesseAtk;
-    private Coordinates pos;
-    private int degat;
+    protected float vitesseAtk;
+    protected Coordinates pos;
+    protected int degat;
 
     public Entities(float v, Coordinates c, int degat){
         this.vitesseAtk=v;
