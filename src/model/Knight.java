@@ -7,7 +7,7 @@ public class Knight extends Enemy {
     private int rang;
 
     public Knight(int n, Coordinates pos,Game game) {
-        super(500, pos, 1, 1f, 0,1,game);
+        super(500, pos, 1, 0.5f, 0,1,game);
         this.rang=n;
         if(rang==1){
             super.setPointDeVie(400);

@@ -226,7 +226,7 @@ public class Game extends JPanel implements Runnable {
         int frames=0;
         int updates= 0;
 
-        double spawnInterval = 2000000000d;//2s
+        double spawnInterval = 4000000000d;//4s
         double delta =0;
         long currentTime;
         long lastTime = System.nanoTime();
