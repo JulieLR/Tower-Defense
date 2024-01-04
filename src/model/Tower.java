@@ -319,6 +319,10 @@ public class Tower extends Entities {
         }
     }
 
+    public void setTarget(Enemy e){
+        this.target=e;
+    }
+
 
 
 }

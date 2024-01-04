@@ -45,7 +45,7 @@ public class TowerConfig implements Serializable{
         for(Tower t : mouseTowers){
             getTarget(t);
             if(t.getTarget()!=null){
-                attaque(t.getTarget(),t);
+                atk(t.getTarget(),t);
             }
         }
     }
@@ -203,6 +203,18 @@ public class TowerConfig implements Serializable{
             }
         }
     }
+
+    public void atk(Enemy enemy,Tower tower){
+        if(enemy.getPointDeVie()-tower.getDegat()<0){
+            enemy.setPointDeVie(0);
+            enemy.setAlived(false);
+            base.setArgent(base.getArgent()+enemy.getPrime());
+        }
+        else{
+            enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
+        }
+         
+    }
     
     // distance entre une tour et un ennemi
     public double distanceTowerEnemy (Tower t, Enemy e) {
@@ -211,18 +223,42 @@ public class TowerConfig implements Serializable{
         Math.pow(e.getPos().getY()-t.getPos().getY(),2));
     }
 
+    private void removeFromArray(Tower t, Enemy e){
+        t.getEnemyArray().remove(t.getTarget());
+        if(t.getEnemyArray().size()!=0){
+            t.setTarget(t.getEnemyArray().get(0));
+        }
+        else{
+            t.setTarget(null);
+        }
+    }
+
     private void getTarget(Tower t){
+        if(t.getTarget()!=null){
+            if(t.getTarget().isAlived()){
+                if(!t.isInZone(t.getTarget())){
+                    removeFromArray(t, t.getTarget());
+                    System.out.println("TARGET NOT IN ZONE ANYMORE");
+                }
+            }
+            else{
+                removeFromArray(t, t.getTarget());
+                System.out.println("TARGET DEAD");
+            }
+        }
         for(Enemy e : enemies){
             if(t.getTarget()==null){
-                if(t.isInZone(e)){
-                    if(e.isAlived()){
-                        t.setTarget();
-                    }
-                    /* if (t.isNextposInZone(e)) {
-                        t.deleteEnemyTab(e);
-                    } */
-                
-                }   
+                if(t.isInZone(e)&& e.isAlived()){
+                    t.setTarget(e);
+                    t.getEnemyArray().add(e);
+                    System.out.println("NEW TARGET");
+                }
+            }
+            else{
+                if(t.isInZone(e)&& e.isAlived() && !t.getEnemyArray().contains(e)){
+                    t.getEnemyArray().add(e);
+                    System.out.println("ENEMY ADDED");
+                }
             }
         }
     }
