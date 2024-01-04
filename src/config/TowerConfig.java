@@ -253,29 +253,27 @@ public class TowerConfig implements Serializable{
                     t.getEnemyArray().add(e);
                     t.setTarget(this.min(t));
                     System.out.println("NEW TARGET");
+                    System.out.println(t.getTarget().getNumber());
                 }
             }
             else{
                 if(t.isInZone(e)&& e.isAlived() && !t.getEnemyArray().contains(e)){
                     t.getEnemyArray().add(e);
-                    t.setTarget(this.min(t));
                     System.out.println("ENEMY ADDED");
+                    System.out.println(t.getTarget().getNumber());
                 }
             }
         }
     }
 
     private Enemy min (Tower t) {
-            if (t.getEnemyArray().size()>0) {
-            Enemy tmp= t.getEnemyArray().get(0);
-            for (int i=1; i<t.getEnemyArray().size()-1; i++) {
-                if(tmp.getNumber()>t.getEnemyArray().get(i).getNumber()) {
-                    tmp= t.getEnemyArray().get(i);
-                }
+        Enemy tmp= t.getEnemyArray().get(0);
+        for (Enemy e: t.getEnemyArray()) {
+            if (e.getNumber()<tmp.getNumber()) {
+                tmp=e;
             }
-            return tmp;
         }
-        return null;
+        return tmp;
     }
 
 }
