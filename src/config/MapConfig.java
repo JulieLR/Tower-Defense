@@ -17,8 +17,8 @@ public class MapConfig {
     private Coordinates endCoor;
     private Coordinates start;
 
-    private String path1="src/config/map3T.txt";
-    private String path1C="src/config/map3C.txt";
+    private String path1="src/config/map1T.txt";
+    private String path1C="src/config/map1C.txt";
     private String path2="src/config/map2T.txt";
     private String path2C="src/config/map2C.txt";
     private String path3="src/config/map3T.txt";

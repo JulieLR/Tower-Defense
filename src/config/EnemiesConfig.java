@@ -64,7 +64,7 @@ public class EnemiesConfig {
 
 
     public Direction startDirection(){
-        if(this.game.getMapNumber()==1){
+        if(this.game.getMapNumber()==1 || this.game.getMapNumber()==3){
             return Direction.NORTH;
         }
         else{
@@ -114,7 +114,8 @@ public class EnemiesConfig {
         int a = (int)(n*0.5f);//50% de knight
         int b = (int)(n*0.2f);//30% de tank
         int c = (int)(n*0.2f);//20% de slime
-        int d = (int)(n*0.1f);//20% de bat
+        int d = (int)(n*0.1f);//10% de bat ou knight rouge
+        Random r = new Random();
 
         //ajout enemies faible
         for(int i=0;i<a;i++){
@@ -130,7 +131,13 @@ public class EnemiesConfig {
         }
 
         for(int k=0;k<d;k++){
-            this.enemies.add(new Bat(start,this.game));        
+            int x= r.nextInt(2);
+            if(x==0){
+                this.enemies.add(new Bat(start,this.game));           
+            }
+            else{
+                this.enemies.add(new Knight(1,start,this.game));        
+            }
         }
     }
 
