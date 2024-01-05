@@ -64,7 +64,7 @@ public class EnemiesConfig {
 
 
     public Direction startDirection(){
-        if(this.game.getMapNumber()==1 || this.game.getMapNumber()==3){
+        if(this.game.getMapNumber()==1 || this.game.getMapNumber()==3 || this.game.getMapNumber()==4) {
             return Direction.NORTH;
         }
         else{
