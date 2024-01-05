@@ -64,12 +64,12 @@ public class TowerConfig implements Serializable{
 
     public Tower towerNum (int n){
         switch (n) {
-            case 0: return new Tower(0.5f, new Coordinates(0, 0), 1, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
-            case 1: return new Tower(0.5f, new Coordinates(0, 0), 1, n, 150, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
-            case 2: return new Tower(0.5f, new Coordinates(0, 0), 1, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
-            case 3: return new Tower(0.5f, new Coordinates(0, 0), 1, n, 25, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
-            case 4: return new Tower(0.5f, new Coordinates(0, 0), 1, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
-            case 5: return new Tower(0.5f, new Coordinates(0, 0), 0, n, 150, this.game.getTileSize()*17, this.game.getTileSize()*5, this.game);
+            case 0: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 1: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 150, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
+            case 2: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
+            case 3: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 25, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 4: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
+            case 5: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
         }
         return null;
     }
