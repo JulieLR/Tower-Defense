@@ -64,8 +64,11 @@ public class MapConfig {
     public void chosenMap(){
         switch(this.game.getMapNumber()){
             case 1:mapFromFile(path1,path1C);
+            break;
             case 2:mapFromFile(path2,path2C);
+            break;
             case 3:mapFromFile(path3,path3C);
+            break;
         }
     }
     
