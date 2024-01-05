@@ -13,7 +13,8 @@ public class Knight extends Enemy {
             super.setPointDeVie(800);
             super.setDegat(5);
             super.setVitesseAtk(0.7f);
-            super.setPrime(5);
+            super.setType(2);
+            super.setPrime(25);
         }
     }
     

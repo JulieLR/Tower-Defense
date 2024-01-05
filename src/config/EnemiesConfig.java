@@ -93,6 +93,7 @@ public class EnemiesConfig {
         Random r = new Random();
         for(int i=0;i<10;i++){
             int x = r.nextInt(10);
+            int y = r.nextInt(2);
             if(x<5){
                 this.enemies.add(new Knight(0, start,this.game));
             }
@@ -103,7 +104,12 @@ public class EnemiesConfig {
                 this.enemies.add(new Slime(start,this.game)); 
             }
             else{
-                this.enemies.add(new Bat(start,this.game)); 
+                if(y==0){
+                    this.enemies.add(new Bat(start,this.game)); 
+                }
+                else{
+                    this.enemies.add(new Knight(1,start,this.game)); 
+                }
             }
             nbEnemies++;
         }
