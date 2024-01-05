@@ -214,7 +214,8 @@ public class TowerConfig implements Serializable{
     private void removeFromArray(Tower t, Enemy e){
         t.getEnemyArray().remove(t.getTarget());
         if(t.getEnemyArray().size()!=0){
-            t.setTarget(t.getEnemyArray().get(0));
+            t.setTarget(this.min(t));
+            System.out.println(t.getTarget().getNumber());
         }
         else{
             t.setTarget(null);
@@ -249,18 +250,30 @@ public class TowerConfig implements Serializable{
         for(Enemy e : enemies){
             if(t.getTarget()==null){
                 if(t.isInZone(e)&& e.isAlived()){
-                    t.setTarget(e);
                     t.getEnemyArray().add(e);
+                    t.setTarget(this.min(t));
                     System.out.println("NEW TARGET");
+                    System.out.println(t.getTarget().getNumber());
                 }
             }
             else{
                 if(t.isInZone(e)&& e.isAlived() && !t.getEnemyArray().contains(e)){
                     t.getEnemyArray().add(e);
                     System.out.println("ENEMY ADDED");
+                    System.out.println(t.getTarget().getNumber());
                 }
             }
         }
+    }
+
+    private Enemy min (Tower t) {
+        Enemy tmp= t.getEnemyArray().get(0);
+        for (Enemy e: t.getEnemyArray()) {
+            if (e.getNumber()<tmp.getNumber()) {
+                tmp=e;
+            }
+        }
+        return tmp;
     }
 
 }

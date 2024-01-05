@@ -43,6 +43,7 @@ public class EnemiesGraphics implements Graphic{
         long time = System.currentTimeMillis();
         for(Enemy e: enemies){
             if(e.isSpawned()&& e.isAlived()){
+                g.drawString(Integer.toString(e.getNumber()), (int) e.getPos().getX(), (int) e.getPos().getY());
                 if(e.isAtEnd()){
                     if(e instanceof Knight){
                         drawKnightAttack(g, time,e);
