@@ -207,6 +207,7 @@ public class Game extends JPanel implements Runnable {
         //System.out.println("Game Updated");
         this.towerConfig.update();
         this.enemies.update();
+        this.enemiesConfig.depasse();
         //this.baseLife.updateLife();
         if(this.base.isDestroyed()){
             System.exit(0);
