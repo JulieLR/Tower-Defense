@@ -23,6 +23,8 @@ public class MapConfig {
     private String path2C="src/config/map2C.txt";
     private String path3="src/config/map3T.txt";
     private String path3C="src/config/map3C.txt";
+    private String path4="src/config/map4T.txt";
+    private String path4C="src/config/map4C.txt";
 
 
     Random random = new Random();
@@ -68,6 +70,8 @@ public class MapConfig {
             case 2:mapFromFile(path2,path2C);
             break;
             case 3:mapFromFile(path3,path3C);
+            break;
+            case 4: mapFromFile(path4, path4C);
             break;
         }
     }
