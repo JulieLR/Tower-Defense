@@ -49,12 +49,13 @@ public class App extends JFrame{
     }
 
     public static void main(String[] args) throws IOException {
-        System.out.println("Hey");
-        //App app = new App();
-        Menu menu = new Menu();
-        //app.initInput();
-        //Menu menu = new Menu();
-        
+        javax.swing.SwingUtilities.invokeLater(
+        new Runnable() {
+            public void run() {
+                Menu menu = new Menu();
+            }
+        }
+    );
         
     }
 }
