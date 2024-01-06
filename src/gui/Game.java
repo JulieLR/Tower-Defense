@@ -103,7 +103,6 @@ public class Game extends JPanel implements Runnable {
         this.iconsConfig= new IconsConfig(this);
         this.iconsGraphics = new IconsGraphics(this,this.iconsConfig);
 
-        this.BottomBar= new BottomBar(this, towerConfig);
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
         start();
@@ -208,6 +207,7 @@ public class Game extends JPanel implements Runnable {
         this.towerConfig.update();
         this.enemies.update();
         this.enemiesConfig.depasse();
+        this.iconsConfig.update();
         //this.baseLife.updateLife();
         if(this.base.isDestroyed()){
             System.exit(0);

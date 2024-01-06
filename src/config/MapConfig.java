@@ -8,6 +8,8 @@ import java.io.FileReader;
 
 import gui.Game;
 import model.Coordinates;
+import java.util.ArrayList;
+
 
 public class MapConfig {
     
@@ -16,6 +18,7 @@ public class MapConfig {
     private Tile end;
     private Coordinates endCoor;
     private Coordinates start;
+    private ArrayList<Coordinates> towersEmpty=new ArrayList<>();
 
     private String path1="src/config/map1T.txt";
     private String path1C="src/config/map1C.txt";
@@ -61,6 +64,10 @@ public class MapConfig {
 
     public Coordinates getStart() {
         return start;
+    }
+
+    public ArrayList<Coordinates> getTowersEmpty() {
+        return towersEmpty;
     }
 
     public void chosenMap(){
@@ -137,6 +144,7 @@ public class MapConfig {
                     }
                     else if(readline.charAt(i) == 'T'){//Tower place
                         this.map[ligne][col] = new Tile(17,18, Type.TOWER,Character.getNumericValue(readline2.charAt(i)),new Coordinates(ligne*this.game.getTileSize(), col*this.game.getTileSize()));
+                        this.towersEmpty.add(new Coordinates(ligne*this.game.getTileSize(), col*this.game.getTileSize()));
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'S'){//ennemies start

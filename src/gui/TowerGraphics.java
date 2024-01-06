@@ -19,6 +19,7 @@ public class TowerGraphics implements Graphic,Frame {
     private TowerConfig towerConfig;
     private BufferedImage towerImage;
     private ArrayList<BufferedImage> towerAsset = new ArrayList<>();
+    private ArrayList<Coordinates> towersEmpty= new ArrayList<>();
     private ArrayList<Tower> tower;
 
     private Tower test;
@@ -271,10 +272,29 @@ public class TowerGraphics implements Graphic,Frame {
         }
     }
 
+    public void drawPanneau(Coordinates c, long time, Graphics g){
+        int n = (int)(400f);
+        int m = (int)(100f);
+
+        if(time%n<m){
+            g.drawImage(this.towerAsset.get(26),(int)( c.getX()),(int)(c.getY()-this.game.getTileSize()/2-2),this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else{
+            g.drawImage(this.towerAsset.get(26),(int) (c.getX()),(int)(c.getY()-this.game.getTileSize()/2),this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+    }
+
     @Override
     public void drawImages(Graphics g) {
         long time= System.currentTimeMillis();
         this.tower= towerConfig.getMouseTowers();
+        this.towersEmpty= towerConfig.getTowersEmpty();
+        if(towersEmpty.size()!=0){
+            for(Coordinates c : towersEmpty){
+                drawPanneau(c, time, g);
+            }
+        }
+
         for (Tower t: tower) {
             g.drawImage(
                 towerAsset.get(t.idColorTower()), 

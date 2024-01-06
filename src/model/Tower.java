@@ -16,26 +16,15 @@ public class Tower extends Entities {
     private Rectangle attackZone;
     private Game game;
     private Enemy target;
-    private EnemiesConfig enemyConfig;
-    private Enemy[] enemyTab;
     private ArrayList<Enemy> enemyArray= new ArrayList<>();
     
     public Tower(float attackSpeed, Coordinates position, int degat, int color, int price, int width, int height, Game game){
         super(attackSpeed, position, degat);
         this.towerColor=this.colorTower(color);
-        this.getType();
         this.price=price;
         this.game=game;
-        this.enemyConfig=this.game.getEnemyConfig();
         Coordinates c = pos(position,width,height,game.getTileSize());
         this.attackZone= new Rectangle((int) c.getX(), (int) c.getY(), width, height);
-        this.enemyTab= new Enemy[0];
-        //this.enemyTab= new Enemy[this.enemyConfig.getNbEnemies()];
-        //this.enemyTab= new Enemy[this.nbEnemiesInZone()];
-        //this.setEnemyTab();
-        //this.createEnemytab();
-        //this.enemiesTab();
-        this.enemiesArray();
     }
 
     public Coordinates pos(Coordinates cor, int width, int height, int size){
@@ -139,9 +128,22 @@ public class Tower extends Entities {
         this.price=price;
     }
 
+    public ArrayList<Enemy> getEnemyArray() {
+        return this.enemyArray;
+    }
+
     public Rectangle getAttackZone () {
         return this.attackZone;
     }
+
+    public Enemy getTarget() {
+        return target;
+    }
+
+     public void setTarget(Enemy e){
+        this.target=e;
+    }
+
     public void setAttackZone (int width, int height) {
         this.attackZone= new Rectangle((int) (getPos().getX()-(width-this.game.getTileSize())/2), (int) (getPos().getY()-(height-this.game.getTileSize())/2), width, height);
     }
@@ -153,176 +155,26 @@ public class Tower extends Entities {
         return false;
     }
 
-    public Enemy getTarget() {
-        return target;
-    }
-    public void setTarget() {
-        //this.setEnemyTab();
-        //if (this.enemyTab.length!=0) {
-            /* int i=0;
-            while (this.enemyTab[i]==null&& i<this.enemyTab.length-1) {
-                i++;
-            }
-            if (i==this.enemyTab.length) {
-                this.target=null;
-            }
-            else {
-                this.target= this.getEnemyTab()[i];
-            } */
-            //this.target=this.getEnemyTab()[0];
-            this.enemiesArray();
-            System.out.println(this.enemyArray.size()+"HEY");
-        if (this.enemyArray.size()!=0) {
-            this.enemyArray.get(0);
+    public int getLevel(){
+        switch (this.idColorTower()) {
+            case 0: return 1;
+            case 1: return 2;
+            case 2: return 3;
+            case 3: return 1;
+            case 4: return 2;
+            case 5: return 3;
         }
-        else {
-            this.target=null;
-        }
+        return 0;
     }
 
-    public Enemy[] getEnemyTab() {
-        return this.enemyTab;
-    }
-    public void setEnemyTab() {
-        this.afficheEnemyTab();
-        for (Enemy e: this.enemyConfig.getEnemies()) {
-            if (isInZone(e)) {
-                this.addEnemyInTab(e);
-                if (!e.isAlived()) {
-                    this.deleteEnemyTab(e);
-                    //this.enemyTab[e.getNumber()]=null;
-                }
-            }
+    public int getNextPrice(int id){
+        switch (this.getTowerColor()) {
+            case TOWER_BLUE: return 150;
+            case TOWER_ORANGE: return 200;
+            case TOWER_SMALL: return 50;
+            case TOWER_MEDIUM: return 150;
         }
+        return -1;
     }
-    public void addEnemyInTab (Enemy e) {
-        //this.enemyTab[e.getNumber()]=e;
-        Enemy[] tab= new Enemy[this.enemyTab.length+1];
-        for (int i=0; i<this.enemyTab.length; i++) {
-            tab[i]= this.enemyTab[i];
-        }
-        tab[this.enemyTab.length]=e;
-        this.enemyTab=tab; 
-    }
-    public void deleteEnemyTab (Enemy e) {
-        //this.enemyTab[e.getNumber()]=null;
-        Enemy[] tab= new Enemy[this.enemyTab.length-1];
-        for (int i=1; i<this.enemyTab.length; i++) {
-            tab[i-1]= this.enemyTab[i];
-            //this.enemyTab[i-1]=this.enemyTab[i];
-        }
-        //this.enemyTab[enemyTab.length-1]=null;
-        this.enemyTab=tab; 
-
-    } 
-
-    /* public int nbEnemiesInZone () {
-        int n=1;
-        for (Enemy e: this.enemyConfig.getEnemies()) {
-            if (this.isInZone(e)) {
-                n++;
-                if(!e.isAlived()) {
-                    n--;
-                }
-                else {
-                    if (!this.isInZone(e)) {
-                        n--;
-                    }
-                }
-            }
-        }
-        return n;
-    } */
-    /* public int numberNotAlivedOrNotInZone () {
-        int n=1;
-        for (Enemy e: this.enemyConfig.getEnemies()) {
-            if (this.isInZone(e)) {
-                if(!e.isAlived()) {
-                    n++;
-                }
-                else {
-                    if (!this.isInZone(e)) {
-                        n++;
-                    }
-                }
-            }
-        }
-        return n;
-    } */
-    public void enemiesTab () {
-        //int n=0;
-        for (Enemy e: this.enemyConfig.getEnemies()) {
-            if (this.isInZone(e)) {
-                this.addEnemyInTab(e);
-                //n++;
-                if(!e.isAlived()) {
-                    //this.enemyTab[e.getNumber()]=null;
-                    this.deleteEnemyTab(e);
-                    //n--;
-                }
-                else {
-                    if (!this.isInZone(e)) {
-                        //this.enemyTab[e.getNumber()]=null;
-                        this.deleteEnemyTab(e);
-                        //n--;
-                    }
-                }
-            }
-        }
-        //return n;
-    }
-
-    /* public void createEnemytab () {
-        Enemy[] tab= new Enemy[this.nbEnemiesInZone()];
-        for (Enemy e: this.enemyConfig.getEnemies()) {
-            tab[e.getNumber()]= e;
-        }
-        this.enemyTab= tab;
-    } */
-
-    public void afficheEnemyTab () {
-        for (int i=0; i<this.enemyTab.length; i++) {
-            System.out.print(this.enemyTab[i].getNumber()+ "  ");
-        }
-        System.out.println("    ");
-    }
-
-    public ArrayList<Enemy> getEnemyArray() {
-        return this.enemyArray;
-    }
-    /* public void setEnemyArray() {
-        for (Enemy e: this.enemyConfig.getEnemies()) {
-            if (isInZone(e)) {
-                this.addEnemyInArray(e);
-                if (!e.isAlived()) {
-                    this.deleteEnemyArray(e);
-                }
-            }
-        }
-    }*/
-    public void addEnemyInArray (Enemy e) {
-        this.enemyArray.add(e);
-    }
-    public void deleteEnemyArray (Enemy e) {
-        this.enemyArray.remove(e);
-
-    }
-
-    public void enemiesArray () {
-        for (Enemy e: this.enemyConfig.getEnemies()) {
-            if (this.isInZone(e)) {
-                this.addEnemyInArray(e);
-                if(!e.isAlived() || !this.isInZone(e)) {
-                    this.deleteEnemyArray(e);
-                }
-            }
-        }
-    }
-
-    public void setTarget(Enemy e){
-        this.target=e;
-    }
-
-
 
 }
