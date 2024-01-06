@@ -99,6 +99,18 @@ public class Tower extends Entities {
         return null;
     }
 
+    public static int getPriceByNumber(int n){
+        switch (n) {
+            case 0: return 75;
+            case 1: return 150;
+            case 2: return 200;
+            case 3: return 25;
+            case 4: return 50;
+            case 5: return 150;
+        }
+        return 0;
+    }
+
     public int getType () {
         return this.type;
     }

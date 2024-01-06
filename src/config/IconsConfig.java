@@ -66,9 +66,9 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
     }
 
     public void addIcons(){
-        for(int i=0; i<6;i++){
-            icons.add(new Icon(this.towerImages.get(i),i));
-        }
+        icons.add(new Icon(this.towerImages.get(0),0));
+        icons.add(new Icon(this.towerImages.get(3),3));
+        
     }
 
     public void update(){

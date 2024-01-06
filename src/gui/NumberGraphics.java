@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import config.EnemiesConfig;
+import config.IconsConfig;
 import config.TowerConfig;
 import model.Base;
 import model.Coordinates;
@@ -15,14 +16,16 @@ public class NumberGraphics implements Graphic{
     private Game game;
     private BufferedImage numberImage, allSpriteImage;
     private ArrayList<BufferedImage> numberAsset = new ArrayList<>();
+    private ArrayList<Icon> icons = new ArrayList<>();
     private Tower tower;
 
-    public NumberGraphics (Game game) {
+    public NumberGraphics (Game game, IconsConfig iconConfig) {
         this.game= game;
         this.numberImage= getImage("src/ressources/number/number.png");
         this.allSpriteImage= getImage("src/ressources/sprite.png");
         this.addAsset();
         this.tower=this.game.getTowerConfig().getTowers().get(0);
+        this.icons= iconConfig.getIcons();
         //this.towerConfig=this.game.getTowerConfig();
     }
 
@@ -44,7 +47,7 @@ public class NumberGraphics implements Graphic{
         g.drawImage(this.numberAsset.get(10), 170, 10, 54, 54, null);
         this.drawMoney(g);
         g.drawImage(this.numberAsset.get(11), 170, 65, 54, 54, null);
-        this.drawTowerPrice(g);
+        this.drawIconsPrice(g);
 
     }
 
@@ -87,6 +90,13 @@ public class NumberGraphics implements Graphic{
                 drawNumber(g, this.tower.towerEnum(i).getPrice(), new Coordinates(80+160*i, 780), 3, 25);
                 g.drawImage(this.numberAsset.get(11), 105+160*i, 785, 27, 27, null);
             }
+        }
+    }
+
+    public void drawIconsPrice(Graphics g){
+        for(Icon icon : icons){
+            drawNumber(g, Tower.getPriceByNumber(icon.getTower()), new Coordinates((int)(icon.getZone().getX()+icon.getZone().getWidth()/2-icon.getZone().getWidth()/8-4), (int) (icon.getZone().getY()+icon.getZone().getHeight()+3)), 3, 25);
+            g.drawImage(this.numberAsset.get(11), (int)(icon.getZone().getX()+icon.getZone().getWidth()-icon.getZone().getWidth()/4-8),(int) (icon.getZone().getY()+icon.getZone().getHeight()+7), 27, 27, null);
         }
     }
 
