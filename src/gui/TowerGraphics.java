@@ -232,19 +232,6 @@ public class TowerGraphics implements Graphic,Frame {
 
         } 
     } 
-    public BufferedImage rotate(BufferedImage img, double angle) {
-        int w = img.getWidth();    
-        int h = img.getHeight();
-    
-        BufferedImage rotated = new BufferedImage(w, h, img.getType());  
-        Graphics2D graphic = rotated.createGraphics();
-
-        graphic.rotate(Math.toRadians(angle), w/2, h/2);
-        graphic.drawImage(img, null, 0, 0);
-        graphic.dispose();
-        
-        return rotated;
-    }
 
 
     @Override
@@ -277,7 +264,7 @@ public class TowerGraphics implements Graphic,Frame {
         int m = (int)(100f);
 
         if(time%n<m){
-            g.drawImage(this.towerAsset.get(26),(int)( c.getX()),(int)(c.getY()-this.game.getTileSize()/2-2),this.game.getTileSize(),this.game.getTileSize(), null);
+            g.drawImage(this.towerAsset.get(26),(int)( c.getX()),(int)(c.getY()-this.game.getTileSize()/2-3),this.game.getTileSize(),this.game.getTileSize(), null);
         }
         else{
             g.drawImage(this.towerAsset.get(26),(int) (c.getX()),(int)(c.getY()-this.game.getTileSize()/2),this.game.getTileSize(),this.game.getTileSize(), null);
