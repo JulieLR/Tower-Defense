@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import config.Tile.Type;
 
 import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -28,10 +29,14 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
 
     private ArrayList<BufferedImage> towerImages;
     private ArrayList<Icon> icons = new ArrayList<>();
+    private ArrayList<Icon> upgradeIcon = new ArrayList<>();
+
     private Tower towerChosen;
     private boolean isClicked=false;
     private int iconNb;
     private Base base;
+
+    private ArrayList<Tower> towers;
 
     public IconsConfig(Game game){
 
@@ -42,6 +47,7 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         this.towerImages= towerGraphics.getTowerIcons();
         this.base = this.game.getBase();
         addIcons();
+        addUpgradeIcons();
         this.game.addMouseListener(this);
         this.game.addMouseMotionListener(this);
     }
@@ -65,8 +71,41 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         }
     }
 
+    public void update(){
+        addUpgradeIcons();
+    }
+
+    public void addUpgradeIcons(){
+        this.towers=this.towerConfig.getMouseTowers();
+        ArrayList<Icon> upgradeIcons = new ArrayList<>();
+        for(Tower t : towers){
+            if(t.getLevel()!=3 && t.getNextPrice(t.idColorTower()+1)<= this.base.getArgent()){
+
+                Icon i = new Icon(t.getLevel()+1);
+
+                int y =(int) t.getPos().getY();
+                if(t.getLevel()==1){
+                    y = (int) t.getPos().getY()-20;
+                }
+                else if(t.getLevel()==2){
+                    y = (int) t.getPos().getY()-40;
+                }
+
+                i.setZone(new Rectangle((int)(t.getPos().getX()+8+28),y, 9*4, 9*4));
+                i.setImgCoordinates(new Coordinates((int)t.getPos().getX()+8, y));
+                i.setActualTower((t));
+                upgradeIcons.add(i);
+            }
+        }
+        this.upgradeIcon= upgradeIcons;
+    }
+
     public ArrayList<Icon> getIcons() {
         return icons;
+    }
+
+    public ArrayList<Icon> getUpgradeIcon() {
+        return upgradeIcon;
     }
 
     public void payCastle(int price){
@@ -83,16 +122,12 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         if(tile.getType()==Type.TOWER){
             //System.out.println("BON TYPE ? "+(tile.getType()==Type.TOWER));
     
-            ArrayList<Tower> newList = new ArrayList<>();
+            ArrayList<Tower> newList = new ArrayList<>(towerConfig.getMouseTowers());
             for(Tower t:towerConfig.getMouseTowers()){
                 if(t.getPos()==tile.getTileCoor()){
+                    newList.remove(t);
                     //System.out.println("tower removed");
                     //System.out.println("TPOS : "+t.getPos().getX()+","+t.getPos().getY()+"      TILE : "+tile.getTileCoor().getX()+","+tile.getTileCoor().getY());
-                }
-                else{
-                    newList.add(t);
-                    //System.out.println("tower added");
-
                 }
             }
             towerConfig.setMouseTowers(newList);
@@ -148,8 +183,13 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
                 }
             }
         }
+        for(Icon icon : upgradeIcon ){
+            if(icon.getZone().contains(e.getPoint())){
+                this.towerChosen=towerConfig.towerNum(icon.getActualTower().idColorTower()+1);
+                addTower(mapConfig.getTile(icon.getActualTower().getPos()));
+            }
+        }
     }
-
 
     @Override
     public void mousePressed(MouseEvent e) {

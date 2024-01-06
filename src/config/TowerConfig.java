@@ -19,6 +19,7 @@ public class TowerConfig implements Serializable{
     private Game game;
     private ArrayList<Tower> towers= new ArrayList<> ();
     private ArrayList<Tower> mouseTowers = new ArrayList<>();
+    private ArrayList<Coordinates> towersEmpty = new ArrayList<>();
 
     private ArrayList<Enemy> enemies= new ArrayList<> ();
     private BufferedImage towerImage;
@@ -29,6 +30,7 @@ public class TowerConfig implements Serializable{
     public TowerConfig (Game game) /* throws IOException, ClassNotFoundException */ {
         this.game=game;
         this.enemies=this.game.getEnemyConfig().getEnemies();
+        this.towersEmpty=this.game.getMapConfig().getTowersEmpty();
         addTower(getPosTower());
         this.base= this.game.getBase();
         //loadTowerImage();
@@ -41,7 +43,7 @@ public class TowerConfig implements Serializable{
                 attaque(t.getTarget(),t);
             }
         } */
-
+        deleteTowersPlaced();
         for(Tower t : mouseTowers){
             getTarget(t);
             if(t.getTarget()!=null){
@@ -53,6 +55,9 @@ public class TowerConfig implements Serializable{
     public ArrayList<Tower> getTowers () {
         return this.towers;
     }
+    public ArrayList<Coordinates> getTowersEmpty() {
+        return towersEmpty;
+    }
 
     public ArrayList<Tower> getMouseTowers() {
         return mouseTowers;
@@ -60,6 +65,21 @@ public class TowerConfig implements Serializable{
 
     public void setMouseTowers(ArrayList<Tower> mouseTowers) {
         this.mouseTowers = mouseTowers;
+    }
+
+    public void deleteTowersPlaced(){
+        ArrayList<Coordinates> newTowerEmpty= new ArrayList<>(towersEmpty);
+        if(mouseTowers.size()!=0){
+            for(Coordinates towerEmpty : towersEmpty){
+                for(Tower tower : mouseTowers){
+                    if((tower.getPos().getX()== towerEmpty.getX()) && (tower.getPos().getY()== towerEmpty.getY())){
+                        newTowerEmpty.remove(towerEmpty);
+                        System.out.println("PLACE REMOVED");
+                    }
+                }
+            }
+            this.towersEmpty=newTowerEmpty;
+        }
     }
 
     public Tower towerNum (int n){
@@ -181,28 +201,6 @@ public class TowerConfig implements Serializable{
         return posTower;
     }
  
-    // attaque
-    private void attaque (Enemy enemy, Tower tower) {
-        //tower.enemiesTab();
-        tower.enemiesArray();
-        //System.out.println(tower.nbEnemiesInZone());
-        if(enemy.getPointDeVie()-tower.getDegat()<0){
-            enemy.setPointDeVie(0);
-            enemy.setAlived(false);
-            //tower.deleteEnemyTab(enemy);
-            tower.deleteEnemyArray(enemy);
-            tower.setTarget();
-            base.setArgent(base.getArgent()+enemy.getPrime());
-        }
-        else{
-            enemy.setPointDeVie(enemy.getPointDeVie()-tower.getDegat());
-            if (!tower.isInZone(enemy)) {
-                //tower.deleteEnemyTab(enemy);
-                tower.deleteEnemyArray(enemy);
-                tower.setTarget();
-            }
-        }
-    }
     
     // distance entre une tour et un ennemi
     public double distanceTowerEnemy (Tower t, Enemy e) {

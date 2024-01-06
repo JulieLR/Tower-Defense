@@ -18,7 +18,10 @@ public class IconsGraphics implements Graphic{
     private IconsConfig iconsConfig;
     private ArrayList<Icon> icons;
     private BufferedImage iconsBackground;
+    private BufferedImage iconsUpgrade;
     private ArrayList<BufferedImage> backgroundIcons= new ArrayList<>();
+    private ArrayList<BufferedImage> upgradeAsset= new ArrayList<>();
+
     private TowerConfig towerConfig;
 
     private BufferedImage actualBackground;
@@ -37,12 +40,17 @@ public class IconsGraphics implements Graphic{
         this.iconsConfig.setIconsGraphics(this);
         this.icons = iconsConfig.getIcons();
         this.iconsBackground = getImage("src/ressources/towers/iconBackground.png");
+        this.iconsUpgrade = getImage("src/ressources/towers/icons.png");
         addAsset();
         //this.towerConfig= this
     }
 
     public ArrayList<BufferedImage> getBackgroundIcons() {
         return backgroundIcons;
+    }
+
+    public ArrayList<BufferedImage> getUpgradeAsset() {
+        return upgradeAsset;
     }
 
     public Icon getChosenIcon() {
@@ -74,12 +82,36 @@ public class IconsGraphics implements Graphic{
         for(int i=0; i<2;i++){
             backgroundIcons.add(iconsBackground.getSubimage(i*32, 0, 32, 32));
         }
+        for(int i=0;i<4;i++){
+            upgradeAsset.add(iconsUpgrade.getSubimage(16*i, 0, 16, 16));
+            System.out.println(upgradeAsset.size());
+        }
         this.actualBackground= backgroundIcons.get(0);
     }
 
+    public void drawUpgrade(Graphics g,Icon icon, long time){
+        int n = (int)(400f);
+        int m = (int)(100f);
+
+        if(time%n<m){
+            g.drawImage(upgradeAsset.get(icon.getLevel()-1), (int)icon.getImgCoordinates().getX(),(int)icon.getImgCoordinates().getY(),64,64, null);        
+        }
+        else{
+            g.drawImage(upgradeAsset.get(icon.getLevel()-1), (int)icon.getImgCoordinates().getX(),(int)icon.getImgCoordinates().getY()-2,64,64, null);
+        }
+        //g.drawRect((int) icon.getZone().getX(), (int)icon.getZone().getY(), (int)icon.getZone().getWidth(),(int) icon.getZone().getHeight());
+    }
+
     public void drawImages(Graphics g){
+        long time = System.currentTimeMillis();
         int ecart = this.game.getWidth()/6;
         int hauteur = this.game.getInitialTileSize();
+
+        ArrayList<Icon> upgradeIcon = this.iconsConfig.getUpgradeIcon();
+
+        for(Icon icon : upgradeIcon){
+            drawUpgrade(g, icon,time);
+        }
         
         for(int i=0; i<icons.size();i++){
             icons.get(i).setZone(new Rectangle(this.game.getTileSize()+ecart*i-10-(this.game.getTileSize()+this.game.getTileSize()/2)/4, 655+hauteur, this.game.getTileSize()+this.game.getTileSize()/2, this.game.getTileSize()+this.game.getTileSize()/2));
