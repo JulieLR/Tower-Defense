@@ -19,8 +19,10 @@ public class IconsGraphics implements Graphic{
     private ArrayList<Icon> icons;
     private BufferedImage iconsBackground;
     private BufferedImage iconsUpgrade;
+    private BufferedImage powersIcons;
     private ArrayList<BufferedImage> backgroundIcons= new ArrayList<>();
     private ArrayList<BufferedImage> upgradeAsset= new ArrayList<>();
+    private ArrayList<BufferedImage> powersIconAsset= new ArrayList<>();
 
     private TowerConfig towerConfig;
 
@@ -41,6 +43,7 @@ public class IconsGraphics implements Graphic{
         this.icons = iconsConfig.getIcons();
         this.iconsBackground = getImage("src/ressources/towers/iconBackground.png");
         this.iconsUpgrade = getImage("src/ressources/towers/icons.png");
+        this.powersIcons = getImage("src/ressources/Powers/powerIconSprite.png");
         addAsset();
         //this.towerConfig= this
     }
@@ -78,6 +81,10 @@ public class IconsGraphics implements Graphic{
         this.mouse=mouse;
     }
 
+    public ArrayList<BufferedImage> getPowersIconAsset() {
+        return powersIconAsset;
+    }
+
     public void addAsset(){
         for(int i=0; i<2;i++){
             backgroundIcons.add(iconsBackground.getSubimage(i*32, 0, 32, 32));
@@ -85,6 +92,9 @@ public class IconsGraphics implements Graphic{
         for(int i=0;i<4;i++){
             upgradeAsset.add(iconsUpgrade.getSubimage(16*i, 0, 16, 16));
             System.out.println(upgradeAsset.size());
+        }
+        for(int i=0; i<3;i++){
+            powersIconAsset.add(powersIcons.getSubimage(i*32, 0, 32, 32));
         }
         this.actualBackground= backgroundIcons.get(0);
     }
@@ -121,7 +131,12 @@ public class IconsGraphics implements Graphic{
             else{
                 g.drawImage(backgroundIcons.get(0), (int)icons.get(i).getZone().getX(), (int)icons.get(i).getZone().getY(), (int)icons.get(i).getZone().getWidth(), (int)icons.get(i).getZone().getHeight(), null);
             }
-            g.drawImage(icons.get(i).getImage(), this.game.getTileSize()+ecart*i-10, 655+hauteur/5, this.game.getTileSize()-this.game.getTileSize()/4, this.game.getTileSize()+this.game.getTileSize()/2 ,null);
+            if(i>1){
+                g.drawImage(icons.get(i).getImage(), this.game.getTileSize()+ecart*i-this.game.getTileSize()/4, 655+this.game.getTileSize()/2, this.game.getTileSize(), this.game.getTileSize() ,null);
+            }
+            else{
+                g.drawImage(icons.get(i).getImage(), this.game.getTileSize()+ecart*i-10, 655+hauteur/5, this.game.getTileSize()-this.game.getTileSize()/4, this.game.getTileSize()+this.game.getTileSize()/2 ,null);
+            }
             //g.setColor(Color.BLACK);
             //g.drawString("PRICE", (int)icons.get(i).getZone().getX(), (int)icons.get(i).getZone().getY()+(int)icons.get(i).getZone().getHeight()+32);
         }

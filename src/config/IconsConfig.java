@@ -6,6 +6,7 @@ import gui.IconsGraphics;
 import model.Base;
 import model.Coordinates;
 import model.Tower;
+import model.Power.Element;
 import gui.TowerGraphics;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         this.towerConfig=this.game.getTowerConfig();
         this.towerGraphics= this.game.getTowerGraphics();
         this.towerImages= towerGraphics.getTowerIcons();
+        this.iconsGraphics=new IconsGraphics(game, this);
         this.base = this.game.getBase();
         addIcons();
         addUpgradeIcons();
@@ -68,6 +70,10 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
     public void addIcons(){
         icons.add(new Icon(this.towerImages.get(0),0));
         icons.add(new Icon(this.towerImages.get(3),3));
+        icons.add(new Icon(this.iconsGraphics.getPowersIconAsset().get(0),Element.FIRE));
+        icons.add(new Icon(this.iconsGraphics.getPowersIconAsset().get(1),Element.ICE));
+        icons.add(new Icon(this.iconsGraphics.getPowersIconAsset().get(2),Element.THUNDER));
+
         
     }
 
