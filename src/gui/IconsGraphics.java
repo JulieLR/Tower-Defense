@@ -121,15 +121,23 @@ public class IconsGraphics implements Graphic{
             else{
                 g.drawImage(backgroundIcons.get(0), (int)icons.get(i).getZone().getX(), (int)icons.get(i).getZone().getY(), (int)icons.get(i).getZone().getWidth(), (int)icons.get(i).getZone().getHeight(), null);
             }
-            g.drawImage(icons.get(i).getImage(), this.game.getTileSize()+ecart*i-10, 655+hauteur, this.game.getTileSize()-this.game.getTileSize()/4, this.game.getTileSize()+this.game.getTileSize()/2 ,null);
+            g.drawImage(icons.get(i).getImage(), this.game.getTileSize()+ecart*i-10, 655+hauteur/5, this.game.getTileSize()-this.game.getTileSize()/4, this.game.getTileSize()+this.game.getTileSize()/2 ,null);
             //g.setColor(Color.BLACK);
             //g.drawString("PRICE", (int)icons.get(i).getZone().getX(), (int)icons.get(i).getZone().getY()+(int)icons.get(i).getZone().getHeight()+32);
         }
         if(this.mouse!=null){
-            g.drawImage(icons.get(followingIconNumber).getImage(), (int)mouse.getX()-this.game.getInitialTileSize()*3/2, (int)mouse.getY()-this.game.getInitialTileSize()*6, this.game.getTileSize(), this.game.getTileSize()*2 ,null);
+            g.drawImage(icons.get(getIndex(followingIconNumber)).getImage(), (int)mouse.getX()-this.game.getInitialTileSize()*3/2, (int)mouse.getY()-this.game.getInitialTileSize()*6, this.game.getTileSize(), this.game.getTileSize()*2 ,null);
             g.setColor(new Color(200, 200, 200, 100));
             //this.iconsConfig.getTowerChosen().getAttackZone().getWidth()
             g.fillRect((int) (mouse.getX()-this.iconsConfig.getTowerChosen().getAttackZone().getWidth()/2), (int) (mouse.getY()-this.iconsConfig.getTowerChosen().getAttackZone().getHeight()/2), (int) this.iconsConfig.getTowerChosen().getAttackZone().getWidth() , (int) this.iconsConfig.getTowerChosen().getAttackZone().getHeight());
+        }
+    }
+
+    public int getIndex(int n){
+        if(n ==3){
+            return 1;
+        }else{
+            return n;
         }
     }
 }

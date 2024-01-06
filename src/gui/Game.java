@@ -98,10 +98,11 @@ public class Game extends JPanel implements Runnable {
 
         this.towerConfig= new TowerConfig(this);
         this.towerGraphics= new TowerGraphics(this, towerConfig);
-        this.numberGraphics= new NumberGraphics(this);
 
         this.iconsConfig= new IconsConfig(this);
         this.iconsGraphics = new IconsGraphics(this,this.iconsConfig);
+
+        this.numberGraphics= new NumberGraphics(this,this.iconsConfig);
 
         setPreferredSize(new Dimension(width, height));
         setVisible(true);
