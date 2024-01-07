@@ -23,7 +23,6 @@ public class PowersGraphics implements Graphic{
     private Power actualPower;
     private boolean animationDone=false;
 
-    private int count=0;
 
     public PowersGraphics(PowersConfig powersConfig, Game game){
 
@@ -48,9 +47,6 @@ public class PowersGraphics implements Graphic{
         this.animationDone = animationDone;
     }
 
-    public int getCount() {
-        return count;
-    }
 
     @Override
     public void addAsset() {
@@ -69,14 +65,13 @@ public class PowersGraphics implements Graphic{
         long time = System.currentTimeMillis();
         this.enemies=this.game.getEnemyConfig().getEnemies();
         if(actualPower!=null ) {
-        if(!animationDone){
+        if(!actualPower.isAnimationDone()){
         if(this.actualPower.getType()== Element.FIRE){
             for(Enemy e :enemies){
                 if(e.isAlived()){
                     drawIceOrFire(g,e,time,false);
                 }
             }
-            //this.actualPower=null;
         }
         else if(this.actualPower.getType()==Element.ICE){
             for(Enemy e :enemies){
@@ -84,7 +79,6 @@ public class PowersGraphics implements Graphic{
                     drawIce(g,e,time);
                 }
             }
-            //this.actualPower=null;
         }
         else if(this.actualPower.getType()==Element.THUNDER){
             for(Enemy e :enemies){
@@ -92,19 +86,15 @@ public class PowersGraphics implements Graphic{
                     drawThunder(g,e,time);
                 }
             }
-            //this.actualPower=null;
-        }
-        count++;
-        if(count>180){
-            this.animationDone=true;
-            count=0;
-            System.out.println(count);
         }
     }
     }
     }
 
-    private void drawThunder(Graphics g, Enemy e, long time) {
+    private void drawThunder(Graphics g, Enemy e, long times) { 
+
+        long time = times - actualPower.getClickedTime();
+
         int r = (int)(1600f/0.5f);
         int s = (int)(1400f/0.5f);
         int q = (int)(1200f/0.5f);
@@ -140,11 +130,14 @@ public class PowersGraphics implements Graphic{
             g.drawImage(this.powersAsset.get(27),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r>=s){
-            //this.animationDone=true;
+            actualPower.setAnimationDone(true);
         }
     }
 
-    private void drawIceOrFire(Graphics g, Enemy e, long time, boolean Ice) {
+    private void drawIceOrFire(Graphics g, Enemy e, long times, boolean Ice) {
+
+        long time = times - actualPower.getClickedTime();
+
         int ecart=0;
         if(!Ice){
             ecart = 10;
@@ -186,11 +179,15 @@ public class PowersGraphics implements Graphic{
         } 
         else{
             g.drawImage(this.powersAsset.get(ecart+8),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            actualPower.setAnimationDone(true);
         }
 
     }
 
-    public void drawIce(Graphics g, Enemy e, long time){
+    public void drawIce(Graphics g, Enemy e, long times){
+
+        long time = times - actualPower.getClickedTime();
+
         int r = (int)(2400f/0.5f);
         int s = (int)(2000f/0.5f);
         int q = (int)(1600f/0.5f);
@@ -215,6 +212,8 @@ public class PowersGraphics implements Graphic{
         } 
         else{
             g.drawImage(this.powersAsset.get(7),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            actualPower.setAnimationDone(true);
+            this.powersConfig.setIceDone(true);
         }
     }
     

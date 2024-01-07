@@ -77,11 +77,6 @@ public class EnemiesGraphics implements Graphic{
             else if(e.isSpawned()){
                 if(!e.getDeadAnimation()){
                     drawDead(g, time, e);
-                    /* count++;
-                    if(count>=30){
-                        e.setDeadAnimation(true);
-                        count=0;
-                    } */
                 }
             }
         }
@@ -269,9 +264,8 @@ public class EnemiesGraphics implements Graphic{
         } 
     }
 
-    public void drawDead(Graphics g, long time, Enemy e){
-        e.setTimeDead(System.currentTimeMillis());
-
+    public void drawDead(Graphics g, long times, Enemy e){
+        long time = times - e.getTimeDead();
         int n = (int)(600f/0.5f);
         int h = (int)(500f/0.5f);
         int m = (int)(400f/0.5f);
@@ -280,22 +274,22 @@ public class EnemiesGraphics implements Graphic{
         int o = (int)(100f/0.5f);
         int p = 23;
 
-        if(e.getTimeDead()%n<o){
+        if(time%n<o){
             g.drawImage(this.enemiesAsset.get(p),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(e.getTimeDead()%n<l){
+        else if(time%n<l){
             g.drawImage(this.enemiesAsset.get(p+1),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(e.getTimeDead()%n<k){
+        else if(time%n<k){
             g.drawImage(this.enemiesAsset.get(p+2),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(e.getTimeDead()%n<m){
+        else if(time%n<m){
             g.drawImage(this.enemiesAsset.get(p+3),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(e.getTimeDead()%n<h){
+        else if(time%n<h){
             g.drawImage(this.enemiesAsset.get(p+4),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(e.getTimeDead()%n>h){
+        else if(time%n>h){
             e.setDeadAnimation(true);
         } 
         

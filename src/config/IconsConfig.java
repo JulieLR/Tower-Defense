@@ -222,6 +222,7 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
                 this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(0));
                 System.out.println("RELEASED");
                 Power p = new Power(icons.get(i).getPower());
+                p.setClickedTime(System.currentTimeMillis());
                 this.powersConfig.getPowersGraphics().setActualPower(p);
                 this.powersConfig.setPower(p);
                 this.powersConfig.getPowersGraphics().setAnimationDone(false);

@@ -19,7 +19,8 @@ public class PowersConfig {
     private Power power;
     private Power lastPower;
 
-    private int count=0;
+    private boolean iceDone=false;
+
 
     public PowersConfig(Game game){
         this.game=game;
@@ -39,6 +40,10 @@ public class PowersConfig {
         return powersGraphics;
     }
 
+    public void setIceDone(boolean iceDone) {
+        this.iceDone = iceDone;
+    }
+
     public void update(){
         this.enemies=this.enemiesConfig.getEnemies();
         if(power!=null){
@@ -55,13 +60,12 @@ public class PowersConfig {
             this.lastPower=power;
             power=null;
         }
-        if(lastPower!=null && lastPower.getType()==Element.ICE){
-            if(powersGraphics.getCount()>=180){
-                for(Enemy e : enemies){
-                    e.setSpeed(e.getInitialSpeed());
-                }
-                System.out.println("REINITIALISE");
+        if(iceDone){
+            for(Enemy e : enemies){
+                e.setSpeed(e.getInitialSpeed());
             }
+            this.iceDone=false;
+            System.out.println("REINITIALISE");
         }
     }
 
