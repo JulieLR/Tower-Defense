@@ -16,4 +16,5 @@ public class Slime extends Enemy {
     public int getColor() {
         return Color;
     }
+
 }

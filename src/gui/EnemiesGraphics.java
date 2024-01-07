@@ -24,6 +24,7 @@ public class EnemiesGraphics implements Graphic{
     private ArrayList<BufferedImage> batAsset = new ArrayList<>();
     private ArrayList<BufferedImage> slimeAsset = new ArrayList<>();
     private ArrayList<Enemy> enemies;
+    private int count=0;
 
     public EnemiesGraphics(Game game,EnemiesConfig e){
 
@@ -76,6 +77,11 @@ public class EnemiesGraphics implements Graphic{
             else if(e.isSpawned()){
                 if(!e.getDeadAnimation()){
                     drawDead(g, time, e);
+                    /* count++;
+                    if(count>=30){
+                        e.setDeadAnimation(true);
+                        count=0;
+                    } */
                 }
             }
         }
@@ -264,33 +270,33 @@ public class EnemiesGraphics implements Graphic{
     }
 
     public void drawDead(Graphics g, long time, Enemy e){
+        e.setTimeDead(System.currentTimeMillis());
 
-        int n = (int)(1300f/0.5f);
-        int h = (int)(1050f/0.5f);
-        int m = (int)(800f/0.5f);
-        int k = (int)(550f/0.5f);
-        int l = (int)(300f/0.5f);
-        int o = (int)(50f/0.5f);
+        int n = (int)(600f/0.5f);
+        int h = (int)(500f/0.5f);
+        int m = (int)(400f/0.5f);
+        int k = (int)(300f/0.5f);
+        int l = (int)(200f/0.5f);
+        int o = (int)(100f/0.5f);
         int p = 23;
 
-        if(time%n<o){
+        if(e.getTimeDead()%n<o){
             g.drawImage(this.enemiesAsset.get(p),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(time%n<l){
+        else if(e.getTimeDead()%n<l){
             g.drawImage(this.enemiesAsset.get(p+1),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(time%n<k){
+        else if(e.getTimeDead()%n<k){
             g.drawImage(this.enemiesAsset.get(p+2),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(time%n<m){
+        else if(e.getTimeDead()%n<m){
             g.drawImage(this.enemiesAsset.get(p+3),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(time%n<h){
+        else if(e.getTimeDead()%n<h){
             g.drawImage(this.enemiesAsset.get(p+4),(int) e.getPos().getX(),(int)e.getPos().getY()-32,this.game.getTileSize(),this.game.getTileSize(), null);
         }
-        else if(time%n>h){
+        else if(e.getTimeDead()%n>h){
             e.setDeadAnimation(true);
-
         } 
         
     }

@@ -62,6 +62,12 @@ public class EnemiesConfig {
         }
     }
 
+    public void reinitialiseSpeed(){
+        for(Enemy e : enemies){
+            e.setSpeed(e.getInitialSpeed());
+        }
+    }
+
 
     public Direction startDirection(){
         if(this.game.getMapNumber()==1 || this.game.getMapNumber()==3 || this.game.getMapNumber()==4) {

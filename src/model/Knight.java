@@ -6,6 +6,7 @@ public class Knight extends Enemy {
 
     private int rang;
 
+
     public Knight(int n, Coordinates pos,Game game) {
         super(500, pos, 1, 0.5f, 0,10,game);
         this.rang=n;
@@ -17,5 +18,6 @@ public class Knight extends Enemy {
             super.setPrime(25);
         }
     }
+
     
 }
