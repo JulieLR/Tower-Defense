@@ -24,6 +24,7 @@ public class EnemiesGraphics implements Graphic{
     private ArrayList<BufferedImage> batAsset = new ArrayList<>();
     private ArrayList<BufferedImage> slimeAsset = new ArrayList<>();
     private ArrayList<Enemy> enemies;
+    private int count=0;
 
     public EnemiesGraphics(Game game,EnemiesConfig e){
 
@@ -263,14 +264,14 @@ public class EnemiesGraphics implements Graphic{
         } 
     }
 
-    public void drawDead(Graphics g, long time, Enemy e){
-
-        int n = (int)(1300f/0.5f);
-        int h = (int)(1050f/0.5f);
-        int m = (int)(800f/0.5f);
-        int k = (int)(550f/0.5f);
-        int l = (int)(300f/0.5f);
-        int o = (int)(50f/0.5f);
+    public void drawDead(Graphics g, long times, Enemy e){
+        long time = times - e.getTimeDead();
+        int n = (int)(600f/0.5f);
+        int h = (int)(500f/0.5f);
+        int m = (int)(400f/0.5f);
+        int k = (int)(300f/0.5f);
+        int l = (int)(200f/0.5f);
+        int o = (int)(100f/0.5f);
         int p = 23;
 
         if(time%n<o){
@@ -290,7 +291,6 @@ public class EnemiesGraphics implements Graphic{
         }
         else if(time%n>h){
             e.setDeadAnimation(true);
-
         } 
         
     }

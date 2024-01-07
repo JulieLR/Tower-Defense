@@ -5,7 +5,9 @@ import gui.Icon;
 import gui.IconsGraphics;
 import model.Base;
 import model.Coordinates;
+import model.Power;
 import model.Tower;
+import model.Power.Element;
 import gui.TowerGraphics;
 
 import java.util.ArrayList;
@@ -23,6 +25,7 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
  
     private Game game;
     private MapConfig mapConfig;
+    private PowersConfig powersConfig;
     private TowerConfig towerConfig;
     private TowerGraphics towerGraphics;
     private IconsGraphics iconsGraphics;
@@ -43,8 +46,10 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         this.game=game;
         this.mapConfig=this.game.getMapConfig();
         this.towerConfig=this.game.getTowerConfig();
+        this.powersConfig=this.game.getPowersConfig();
         this.towerGraphics= this.game.getTowerGraphics();
         this.towerImages= towerGraphics.getTowerIcons();
+        this.iconsGraphics=new IconsGraphics(game, this);
         this.base = this.game.getBase();
         addIcons();
         addUpgradeIcons();
@@ -68,6 +73,10 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
     public void addIcons(){
         icons.add(new Icon(this.towerImages.get(0),0));
         icons.add(new Icon(this.towerImages.get(3),3));
+        icons.add(new Icon(this.iconsGraphics.getPowersIconAsset().get(0),Element.FIRE));
+        icons.add(new Icon(this.iconsGraphics.getPowersIconAsset().get(1),Element.ICE));
+        icons.add(new Icon(this.iconsGraphics.getPowersIconAsset().get(2),Element.THUNDER));
+
         
     }
 
@@ -166,23 +175,26 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         else{
             for(Icon icon : this.icons){
                 if(icon.getZone().contains(e.getPoint())){
-                    this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(1));
-                    System.out.println("IN ZONE CLICKED");
-                    if(isEnoughMoney(icon)){
-                        this.towerChosen=towerConfig.towerNum(icon.getTower());
+                    if(icon.getPower()==null){
+                        this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(1));
                         this.iconsGraphics.setChosenIcon(icon);
-                        this.iconNb=icon.getTower();
-                        this.isClicked=true;
-                        //image qui suit souris
-                        System.out.println("AVANT "+this.base.getArgent());
-                        this.iconsGraphics.setFollowing(true);
-                    }
-                    else{
-                        System.out.println("NO MONEY");
+                        System.out.println("IN ZONE CLICKED");
+                        if(isEnoughMoney(icon)){
+                            this.towerChosen=towerConfig.towerNum(icon.getTower());
+                            this.iconNb=icon.getTower();
+                            this.isClicked=true;
+                            //image qui suit souris
+                            System.out.println("AVANT "+this.base.getArgent());
+                            this.iconsGraphics.setFollowing(true);
+                        }
+                        else{
+                            System.out.println("NO MONEY");
+                        }
                     }
                 }
             }
         }
+
         for(Icon icon : upgradeIcon ){
             if(icon.getZone().contains(e.getPoint())){
                 this.towerChosen=towerConfig.towerNum(icon.getActualTower().idColorTower()+1);
@@ -193,11 +205,29 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
+        for(int i=2;i<icons.size();i++){
+            if(icons.get(i).getZone().contains(e.getPoint())){
+                this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(1));
+                this.iconsGraphics.setChosenIcon(icons.get(i));
+                System.out.println("THATS POWER");
+            }
+        }
     }
 
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        for(int i=2;i<icons.size();i++){
+            if(icons.get(i).getZone().contains(e.getPoint())){
+                this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(0));
+                System.out.println("RELEASED");
+                Power p = new Power(icons.get(i).getPower());
+                p.setClickedTime(System.currentTimeMillis());
+                this.powersConfig.getPowersGraphics().setActualPower(p);
+                this.powersConfig.setPower(p);
+                this.powersConfig.getPowersGraphics().setAnimationDone(false);
+            }
+        }
     }
 
 

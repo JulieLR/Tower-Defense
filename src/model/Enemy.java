@@ -22,10 +22,12 @@ public class Enemy extends Entities{
     private boolean isSpawned;
     private boolean isAlived;
     private boolean deadAnimation;
+    private final float initialSpeed;
 
     private Direction dir = Direction.SOUTH;
     private Random r = new Random();
 
+    private long timeDead;
 
     public Enemy(int vie, Coordinates pos,int degat, float vitesseAtk,int type, int prime, Game game){
         super(vitesseAtk, pos, degat);
@@ -34,6 +36,7 @@ public class Enemy extends Entities{
         this.prime=prime;
         this.game=game;
         this.deadAnimation=false;
+        this.initialSpeed=vitesseAtk;
         this.zone= new Rectangle( (int) this.getPos().getX(), (int) this.getPos().getY()-this.game.getTileSize()/this.game.getScale(),this.game.getTileSize(),this.game.getTileSize());
         this.hitBox= new Rectangle( (int) this.getPos().getX()+this.game.getTileSize()/3, (int) this.getPos().getY()-(this.game.getTileSize()/this.game.getScale())+this.game.getTileSize()/3,this.game.getTileSize()/3,this.game.getTileSize()/3);
     }
@@ -50,7 +53,7 @@ public class Enemy extends Entities{
         return super.getVitesseAtk();
     }
 
-    public void setSpeed(int speed) {
+    public void setSpeed(float speed) {
         super.setVitesseAtk(speed);
     }
 
@@ -64,6 +67,10 @@ public class Enemy extends Entities{
 
     public Rectangle getZone() {
         return zone;
+    }
+
+    public float getInitialSpeed(){
+        return this.initialSpeed;
     }
 
     public void setZone() {
@@ -130,6 +137,14 @@ public class Enemy extends Entities{
 
     public void setDeadAnimation(boolean deadAnimation) {
         this.deadAnimation = deadAnimation;
+    }
+
+    public long getTimeDead() {
+        return timeDead;
+    }
+
+    public void setTimeDead(long timeDead) {
+        this.timeDead = timeDead;
     }
 
     public void move(float x, float y){

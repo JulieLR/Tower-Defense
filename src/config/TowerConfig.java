@@ -224,6 +224,7 @@ public class TowerConfig implements Serializable{
         if(enemy.getPointDeVie()-tower.getDegat()<0){
             enemy.setPointDeVie(0);
             enemy.setAlived(false);
+            enemy.setTimeDead(System.currentTimeMillis());
             base.setArgent(base.getArgent()+enemy.getPrime());
         }
         else{

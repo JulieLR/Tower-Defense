@@ -1,6 +1,7 @@
 package gui;
 
 import model.Tower;
+import model.Power.Element;
 import model.Coordinates;
 import java.awt.image.BufferedImage;
 import java.awt.event.MouseEvent;
@@ -15,6 +16,7 @@ public class Icon{
     private int level;
     private Coordinates Coordinates;
     private Tower actualTower;
+    private Element power;
 
 
     public Icon(BufferedImage img, int tower){
@@ -25,6 +27,12 @@ public class Icon{
     public Icon(int level){
         this.level =level;
     }
+
+    public Icon(BufferedImage img, Element power){
+        this.image= img;
+        this.power=power;
+    }
+
 
     public BufferedImage getImage() {
         return image;
@@ -68,5 +76,9 @@ public class Icon{
 
     public Tower getActualTower() {
         return actualTower;
+    }
+
+    public Element getPower() {
+        return power;
     }
 }

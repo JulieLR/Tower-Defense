@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import config.EnemiesConfig;
 import config.IconsConfig;
 import config.MapConfig;
+import config.PowersConfig;
 import config.Tile;
 import config.TowerConfig;
 import config.Tile.Type;
@@ -61,6 +62,9 @@ public class Game extends JPanel implements Runnable {
     private IconsConfig iconsConfig;
     private IconsGraphics iconsGraphics;
 
+    private PowersConfig powersConfig;
+    private PowersGraphics powersGraphics;
+
     private JPanel towerButton;
     private JPanel BottomBar;
     private App app;
@@ -98,6 +102,9 @@ public class Game extends JPanel implements Runnable {
 
         this.towerConfig= new TowerConfig(this);
         this.towerGraphics= new TowerGraphics(this, towerConfig);
+
+        this.powersConfig=new PowersConfig(this);
+        this.powersGraphics= this.powersConfig.getPowersGraphics();
 
         this.iconsConfig= new IconsConfig(this);
         this.iconsGraphics = new IconsGraphics(this,this.iconsConfig);
@@ -185,12 +192,17 @@ public class Game extends JPanel implements Runnable {
         return iconsGraphics;
     }
 
+    public PowersConfig getPowersConfig() {
+        return powersConfig;
+    }
+
 
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
 
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
         enemies.drawImages(g);
+        powersGraphics.drawImages(g);
         towerGraphics.drawImages(g);
         mapGraphics.drawBottomBarAndScore(g);
         iconsGraphics.drawImages(g);
@@ -209,6 +221,7 @@ public class Game extends JPanel implements Runnable {
         this.enemies.update();
         this.enemiesConfig.depasse();
         this.iconsConfig.update();
+        powersConfig.update();
         //this.baseLife.updateLife();
         if(this.base.isDestroyed()){
             System.exit(0);
