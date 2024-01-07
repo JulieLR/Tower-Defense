@@ -8,6 +8,7 @@ import config.IconsConfig;
 import config.TowerConfig;
 import model.Coordinates;
 import model.Tower;
+import model.Power.Element;
 
 import java.util.ArrayList;
 import java.awt.image.BufferedImage;
@@ -96,6 +97,7 @@ public class IconsGraphics implements Graphic{
         for(int i=0; i<3;i++){
             powersIconAsset.add(powersIcons.getSubimage(i*32, 0, 32, 32));
         }
+        powersIconAsset.add(powersIcons.getSubimage(0, 32, 16, 16));
         this.actualBackground= backgroundIcons.get(0);
     }
 
@@ -132,9 +134,15 @@ public class IconsGraphics implements Graphic{
             else{
                 g.drawImage(backgroundIcons.get(0), (int)icons.get(i).getZone().getX(), (int)icons.get(i).getZone().getY(), (int)icons.get(i).getZone().getWidth(), (int)icons.get(i).getZone().getHeight(), null);
             }
-
+            //Powers icons
             if(i>1){
                 g.drawImage(icons.get(i).getImage(), this.game.getTileSize()+ecart*i-this.game.getTileSize()/4, 655+this.game.getTileSize()/2, this.game.getTileSize(), this.game.getTileSize() ,null);
+                if(!this.iconsConfig.isUnlocked() && !(icons.get(i).getPower()==Element.HEAL)){
+                    g.drawImage(powersIconAsset.get(3), this.game.getTileSize()+ecart*i-this.game.getTileSize()/4, 655+this.game.getTileSize()/2, this.game.getTileSize(), this.game.getTileSize() ,null);
+                }
+                if(icons.get(i).getPower()==Element.HEAL && !this.iconsConfig.isTowerUpgradeUnlocked()){
+                    g.drawImage(powersIconAsset.get(3), this.game.getTileSize()+ecart*i-this.game.getTileSize()/4, 655+this.game.getTileSize()/2, this.game.getTileSize(), this.game.getTileSize() ,null);
+                }
             }
             else{
                 g.drawImage(icons.get(i).getImage(), this.game.getTileSize()+ecart*i-10, 655+hauteur/5, this.game.getTileSize()-this.game.getTileSize()/4, this.game.getTileSize()+this.game.getTileSize()/2 ,null);

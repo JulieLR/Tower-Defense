@@ -1,8 +1,10 @@
 package gui;
 
+import config.IconsConfig;
 import config.PowersConfig;
 import model.Enemy;
 import model.Power;
+import model.Tower;
 import model.Power.Element;
 
 import java.awt.Graphics;
@@ -14,11 +16,14 @@ public class PowersGraphics implements Graphic{
     private Game game;
     private PowersConfig powersConfig;
     private ArrayList<Enemy> enemies;
+    private ArrayList<Tower> towers;
 
     private BufferedImage iceAndFireImg;
     private BufferedImage thunderImg;
+    private BufferedImage upImg;
 
     private ArrayList<BufferedImage> powersAsset= new ArrayList<>();
+
 
     private Power actualPower;
     private boolean animationDone=false;
@@ -28,6 +33,7 @@ public class PowersGraphics implements Graphic{
 
         this.iceAndFireImg = getImage("src/ressources/Powers/powersSprite.png");
         this.thunderImg= getImage("src/ressources/Powers/thunderSprite.png");
+        this.upImg= getImage("src/ressources/Powers/upSprite.png");
 
         this.game=game;
         this.powersConfig=powersConfig;
@@ -47,6 +53,9 @@ public class PowersGraphics implements Graphic{
         this.animationDone = animationDone;
     }
 
+    public ArrayList<BufferedImage> getPowersAsset() {
+        return powersAsset;
+    }
 
     @Override
     public void addAsset() {
@@ -58,12 +67,17 @@ public class PowersGraphics implements Graphic{
         for(int col=0;col<8;col++){
             powersAsset.add(this.thunderImg.getSubimage(col*64, 0, 64, 64));
         }
+        for(int col=0;col<4;col++){
+            powersAsset.add(this.upImg.getSubimage(col*25, 0, 25, 25));
+        }
     }
 
     @Override
     public void drawImages(Graphics g) {
         long time = System.currentTimeMillis();
         this.enemies=this.game.getEnemyConfig().getEnemies();
+        this.towers=this.game.getTowerConfig().getMouseTowers();
+
         if(actualPower!=null ) {
         if(!actualPower.isAnimationDone()){
         if(this.actualPower.getType()== Element.FIRE){
@@ -85,6 +99,11 @@ public class PowersGraphics implements Graphic{
                 if(e.isAlived()){
                     drawThunder(g,e,time);
                 }
+            }
+        }
+        else if(this.actualPower.getType()==Element.HEAL){
+            for(Tower t :towers){
+                drawUp(g,t,time);
             }
         }
     }
@@ -215,6 +234,31 @@ public class PowersGraphics implements Graphic{
             actualPower.setAnimationDone(true);
             this.powersConfig.setIceDone(true);
         }
+    }
+
+    public void drawUp(Graphics g, Tower t, long times){
+
+        long time = times - actualPower.getClickedTime();
+
+        int n = (int)(400f/0.5f);
+        int m = (int)(300f/0.5f);
+        int k = (int)(200f/0.5f);
+        int l = (int)(100f/0.5f);
+        
+        if(time%n<l){
+            g.drawImage(this.powersAsset.get(28),(int) t.getPos().getX(),IconsConfig.getYAlignment(t),this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else if(time%n<k){
+            g.drawImage(this.powersAsset.get(29),(int) t.getPos().getX(),IconsConfig.getYAlignment(t),this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else if(time%n<m){
+            g.drawImage(this.powersAsset.get(30),(int) t.getPos().getX(),IconsConfig.getYAlignment(t),this.game.getTileSize(),this.game.getTileSize(), null);
+        }
+        else{
+            g.drawImage(this.powersAsset.get(31),(int) t.getPos().getX(),IconsConfig.getYAlignment(t),this.game.getTileSize(),this.game.getTileSize(), null);
+            actualPower.setAnimationDone(true);
+        } 
+
     }
     
 

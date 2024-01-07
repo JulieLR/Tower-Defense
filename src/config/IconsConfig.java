@@ -39,6 +39,10 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
     private int iconNb;
     private Base base;
 
+    private boolean unlocked=false;
+    private boolean towerUpgradeUnlocked=false;
+
+
     private ArrayList<Tower> towers;
 
     public IconsConfig(Game game){
@@ -70,18 +74,56 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         this.iconsGraphics = iconsGraphics;
     }
 
+    public boolean isUnlocked() {
+        return unlocked;
+    }
+
+
+    public void setUnlocked(boolean unlocked) {
+        this.unlocked = unlocked;
+    }
+
+    public boolean isTowerUpgradeUnlocked() {
+        return towerUpgradeUnlocked;
+    }
+
+
+    public void setTowerUpgradeUnlocked(boolean towerUpgradeUnlocked) {
+        this.towerUpgradeUnlocked = towerUpgradeUnlocked;
+    }
+
     public void addIcons(){
         icons.add(new Icon(this.towerImages.get(0),0));
         icons.add(new Icon(this.towerImages.get(3),3));
         icons.add(new Icon(this.iconsGraphics.getPowersIconAsset().get(0),Element.FIRE));
         icons.add(new Icon(this.iconsGraphics.getPowersIconAsset().get(1),Element.ICE));
         icons.add(new Icon(this.iconsGraphics.getPowersIconAsset().get(2),Element.THUNDER));
-
+        icons.add(new Icon(this.powersConfig.getPowersGraphics().getPowersAsset().get(29),Element.HEAL));
         
     }
 
     public void update(){
         addUpgradeIcons();
+        if(this.game.getEnemyConfig().getNbEnemiesDead()>=this.powersConfig.getNbUnlock(this.game.getLevel())){
+            this.unlocked=true;
+        }
+        if(this.game.getTowerConfig().isAllMaxLevel()){
+            this.towerUpgradeUnlocked=true;
+        }
+    }
+
+    public static int getYAlignment(Tower t){
+        int y =(int) t.getPos().getY();
+        if(t.getLevel()==1){
+            y = (int) t.getPos().getY()-20;
+        }
+        else if(t.getLevel()==2){
+            y = (int) t.getPos().getY()-40;
+        }
+        else if(t.getLevel()==3){
+            y = (int) t.getPos().getY()-60;
+        }
+        return y;
     }
 
     public void addUpgradeIcons(){
@@ -92,13 +134,7 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
 
                 Icon i = new Icon(t.getLevel()+1);
 
-                int y =(int) t.getPos().getY();
-                if(t.getLevel()==1){
-                    y = (int) t.getPos().getY()-20;
-                }
-                else if(t.getLevel()==2){
-                    y = (int) t.getPos().getY()-40;
-                }
+                int y =getYAlignment(t);
 
                 i.setZone(new Rectangle((int)(t.getPos().getX()+8+28),y, 9*4, 9*4));
                 i.setImgCoordinates(new Coordinates((int)t.getPos().getX()+8, y));
@@ -152,9 +188,15 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         }
     }
 
-    private boolean isEnoughMoney(Icon icon){
+    private boolean isEnoughMoneyTower(Icon icon){
         System.out.println(this.base.getArgent());
         return this.base.getArgent()>=towerConfig.getTowerPrice(icon.getTower());
+        
+    }
+
+    private boolean isEnoughMoneyPower(Icon icon){
+        System.out.println(this.base.getArgent());
+        return this.base.getArgent()>=Power.prices(icon.getPower());
         
     }
 
@@ -179,7 +221,7 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
                         this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(1));
                         this.iconsGraphics.setChosenIcon(icon);
                         System.out.println("IN ZONE CLICKED");
-                        if(isEnoughMoney(icon)){
+                        if(isEnoughMoneyTower(icon)){
                             this.towerChosen=towerConfig.towerNum(icon.getTower());
                             this.iconNb=icon.getTower();
                             this.isClicked=true;
@@ -203,29 +245,57 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         }
     }
 
+    public void pressed(Icon icon){
+        if(isEnoughMoneyPower(icon)){
+            this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(1));
+            this.iconsGraphics.setChosenIcon(icon);
+            System.out.println("THATS POWER");
+        }
+    }
+
     @Override
     public void mousePressed(MouseEvent e) {
-        for(int i=2;i<icons.size();i++){
-            if(icons.get(i).getZone().contains(e.getPoint())){
-                this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(1));
-                this.iconsGraphics.setChosenIcon(icons.get(i));
-                System.out.println("THATS POWER");
+        if(unlocked){
+            for(int i=2;i<icons.size()-1;i++){
+                if(icons.get(i).getZone().contains(e.getPoint())){
+                    pressed(icons.get(i));
+                }
             }
+        }
+        if(towerUpgradeUnlocked){
+            if(icons.get(5).getZone().contains(e.getPoint())){
+                pressed(icons.get(5));
+            }
+        }
+    }
+
+    public void released(Icon icon){
+        this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(0));
+        System.out.println("RELEASED");
+
+        if(isEnoughMoneyPower(icon)){
+            Power p = new Power(icon.getPower());
+            p.setClickedTime(System.currentTimeMillis());
+            this.powersConfig.getPowersGraphics().setActualPower(p);
+            this.powersConfig.setPower(p);
+            this.powersConfig.getPowersGraphics().setAnimationDone(false);
+            this.base.enleveArgent(Power.prices(p.getType()));
         }
     }
 
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        for(int i=2;i<icons.size();i++){
-            if(icons.get(i).getZone().contains(e.getPoint())){
-                this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(0));
-                System.out.println("RELEASED");
-                Power p = new Power(icons.get(i).getPower());
-                p.setClickedTime(System.currentTimeMillis());
-                this.powersConfig.getPowersGraphics().setActualPower(p);
-                this.powersConfig.setPower(p);
-                this.powersConfig.getPowersGraphics().setAnimationDone(false);
+        if(unlocked){
+            for(int i=2;i<icons.size()-1;i++){
+                if(icons.get(i).getZone().contains(e.getPoint())){
+                    released(icons.get(i));
+                }
+            }
+        }
+        if(towerUpgradeUnlocked){
+            if(icons.get(5).getZone().contains(e.getPoint())){
+                released(icons.get(5));
             }
         }
     }

@@ -22,6 +22,7 @@ public class EnemiesConfig {
 
     private int nbEnemies;
     private int nbSpawned;
+    private int nbEnemiesDead=0;
     private Coordinates start;
     private Coordinates end;
     private Enemy e;
@@ -54,6 +55,15 @@ public class EnemiesConfig {
     public int getNbSpawned() {
         return nbSpawned;
     }
+
+    public int getNbEnemiesDead() {
+        return nbEnemiesDead;
+    }
+
+    public void setNbEnemiesDead(int nbEnemiesDead) {
+        this.nbEnemiesDead = nbEnemiesDead;
+    }
+
 
     public void startLevel(int level){
         switch(level){

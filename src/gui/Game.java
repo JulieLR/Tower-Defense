@@ -78,6 +78,7 @@ public class Game extends JPanel implements Runnable {
     private NumberGraphics numberGraphics;
 
     private boolean marathon=false;
+    private int level;
     
     // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
     private Mouse_Listener mouseListener; 
@@ -92,7 +93,7 @@ public class Game extends JPanel implements Runnable {
         this.mapGraphics= new MapGraphics(this, tiles);
 
         this.base = new Base(this,1000);
-
+        this.level = level;
         if(level==4){
             this.marathon=true;
         }
@@ -196,14 +197,18 @@ public class Game extends JPanel implements Runnable {
         return powersConfig;
     }
 
+    public int getLevel() {
+        return level;
+    }
+
 
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
 
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
         enemies.drawImages(g);
-        powersGraphics.drawImages(g);
         towerGraphics.drawImages(g);
+        powersGraphics.drawImages(g);
         mapGraphics.drawBottomBarAndScore(g);
         iconsGraphics.drawImages(g);
         numberGraphics.drawImages(g);

@@ -6,6 +6,7 @@ import gui.Game;
 import gui.PowersGraphics;
 import model.Enemy;
 import model.Power;
+import model.Tower;
 import model.Power.Element;
 
 public class PowersConfig {
@@ -13,8 +14,10 @@ public class PowersConfig {
 
     private Game game;
     private ArrayList<Enemy> enemies;
+    private ArrayList<Tower> towers;
     private PowersGraphics powersGraphics;
     private EnemiesConfig enemiesConfig;
+    private TowerConfig towersConfig;
 
     private Power power;
     private Power lastPower;
@@ -26,6 +29,7 @@ public class PowersConfig {
         this.game=game;
         powersGraphics = new PowersGraphics(this, game);
         this.enemiesConfig=this.game.getEnemyConfig();
+        this.towersConfig=this.game.getTowerConfig();
     }
 
     public void setPower(Power p){
@@ -46,6 +50,7 @@ public class PowersConfig {
 
     public void update(){
         this.enemies=this.enemiesConfig.getEnemies();
+        this.towers=this.towersConfig.getMouseTowers();
         if(power!=null){
             switch(power.getType()){
                 case FIRE: fireOrThunderAction(enemies, false);
@@ -53,6 +58,8 @@ public class PowersConfig {
                 case ICE: IceAction(enemies);
                     break;
                 case THUNDER: fireOrThunderAction(enemies, true);
+                    break;
+                case HEAL: healAction(towers);
                     break;
                 default:
                     break;
@@ -67,6 +74,15 @@ public class PowersConfig {
             this.iceDone=false;
             System.out.println("REINITIALISE");
         }
+    }
+
+    private void healAction(ArrayList<Tower> towers) {
+        for(Tower t : towers){
+            System.out.println(t.getDegat());
+            t.setDegat(t.getDegat()+20);
+            System.out.println(t.getDegat());
+        }
+
     }
 
     public void fireOrThunderAction(ArrayList<Enemy> enemies, boolean thunder){
@@ -98,5 +114,15 @@ public class PowersConfig {
         for(Enemy e: enemies){
             e.setSpeed(0);
         }
+    }
+
+    public int getNbUnlock(int mode){
+        switch(mode){
+            case 1: return 1;
+            case 2: return 10;
+            case 3: return 15;
+            case 4: return 20;
+        }
+        return 0;
     }
 }
