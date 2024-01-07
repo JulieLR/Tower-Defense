@@ -225,6 +225,7 @@ public class TowerConfig implements Serializable{
             enemy.setPointDeVie(0);
             enemy.setAlived(false);
             enemy.setTimeDead(System.currentTimeMillis());
+            this.game.getEnemyConfig().setNbEnemiesDead(this.game.getEnemyConfig().getNbEnemiesDead()+1);
             base.setArgent(base.getArgent()+enemy.getPrime());
         }
         else{
@@ -275,4 +276,15 @@ public class TowerConfig implements Serializable{
         return tmp;
     }
 
+    public boolean isAllMaxLevel(){
+        if(mouseTowers.size()!=0){
+            for(Tower t : mouseTowers){
+            if(t.getLevel()!=3){
+                return false;
+            }
+        }
+        return true;
+        }
+        return false;
+    }
 }
