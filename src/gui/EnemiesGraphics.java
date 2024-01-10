@@ -46,7 +46,7 @@ public class EnemiesGraphics implements Graphic{
             if(e.isSpawned()&& e.isAlived()){
                 g.drawString(Integer.toString(e.getNumber()), (int) e.getPos().getX(), (int) e.getPos().getY());
                 if(e.isAtEnd()){
-                    if(e instanceof Knight){
+                    if(e instanceof Knight || e instanceof Tank){
                         drawKnightAttack(g, time,e);
                     }else if(e instanceof Bat){
                         drawBatAttack(g, time, e);

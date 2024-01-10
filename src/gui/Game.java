@@ -98,7 +98,7 @@ public class Game extends JPanel implements Runnable {
             this.marathon=true;
         }
 
-        this.enemiesConfig = new EnemiesConfig(this,10,level);
+        this.enemiesConfig = new EnemiesConfig(this,10,level,this.tiles);
         this.enemies= new EnemiesGraphics(this,this.enemiesConfig);
 
         this.towerConfig= new TowerConfig(this);

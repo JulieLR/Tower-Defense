@@ -127,7 +127,7 @@ public class Menu extends JFrame implements Frame,Graphic,MouseListener{
     }
 
     public void addAsset() {
-        for(int ligne=0; ligne<11;ligne++){
+        for(int ligne=0; ligne<13;ligne++){
             for(int col=0;col<2;col++){
                 assets.add(buttonImage.getSubimage(col*140,ligne*56, 140, 56));
             }
