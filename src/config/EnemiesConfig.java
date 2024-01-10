@@ -18,30 +18,27 @@ public class EnemiesConfig {
 
     private Game game;
     private Base base;
+    private MapConfig mapConfig;
     private ArrayList<Enemy> enemies= new ArrayList<>();
 
     private int nbEnemies;
     private int nbSpawned;
     private int nbEnemiesDead=0;
     private Coordinates start;
-    private Coordinates end;
     private Enemy e;
     private int mode;
 
-    public EnemiesConfig(Game game,int n, int mode){
+    public EnemiesConfig(Game game,int n, int mode, MapConfig mapConfig){
 
         this.game=game;
         this.base = this.game.getBase();
         this.nbEnemies=n;
         this.nbSpawned=0;
         this.mode=mode;
-        this.start = this.game.getMapConfig().getStartCoor();
-        this.end = this.game.getMapConfig().getEndCoor();
-        this.e= new Enemy(200,start,20, 4f,1,1,this.game);
+        this.mapConfig=mapConfig;
+        this.start = this.mapConfig.getStartCoor();
 
-        startLevel(mode);
-        //enemies.get(0).setSpawned(true);
-        //this.enemies.add(e);
+        startLevel(this.mode);
     }
 
     public ArrayList<Enemy> getEnemies() {
