@@ -165,37 +165,28 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
     public void addTower(Tile tile){
         //Si la Tile sur laquelle on a cliqué est une tour
         if(tile.getType()==Type.TOWER){
-            //System.out.println("BON TYPE ? "+(tile.getType()==Type.TOWER));
     
             ArrayList<Tower> newList = new ArrayList<>(towerConfig.getMouseTowers());
             for(Tower t:towerConfig.getMouseTowers()){
                 if(t.getPos()==tile.getTileCoor()){
                     newList.remove(t);
-                    //System.out.println("tower removed");
-                    //System.out.println("TPOS : "+t.getPos().getX()+","+t.getPos().getY()+"      TILE : "+tile.getTileCoor().getX()+","+tile.getTileCoor().getY());
                 }
             }
             towerConfig.setMouseTowers(newList);
-            //System.out.println("mouseTowers changed");
             towerChosen.setPos(tile.getTileCoor());
-            //System.out.println("CHOSENPOS : "+towerChosen.getPos().getX()+","+towerChosen.getPos().getY());
             ///actualise la zone d'attaque
             towerChosen.setAttackZone((int)towerChosen.getAttackZone().getWidth(),(int)towerChosen.getAttackZone().getHeight());
             towerConfig.getMouseTowers().add(towerChosen);
             this.base.enleveArgent(towerChosen.getPrice());
-            System.out.println("APRES " +this.base.getArgent());
-            //System.out.println("towerChosen added");
         }
     }
 
     private boolean isEnoughMoneyTower(Icon icon){
-        System.out.println(this.base.getArgent());
         return this.base.getArgent()>=towerConfig.getTowerPrice(icon.getTower());
         
     }
 
     private boolean isEnoughMoneyPower(Icon icon){
-        System.out.println(this.base.getArgent());
         return this.base.getArgent()>=Power.prices(icon.getPower());
         
     }
@@ -205,7 +196,6 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
     public void mouseClicked(MouseEvent e) {
         if(isClicked){
             this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(0));
-            System.out.println("ISCLICKED PART");
             this.isClicked=false;
             Coordinates tPos= new Coordinates((int)e.getPoint().getX(), (int)e.getPoint().getY());
             Tile tile =mapConfig.getTile(tPos);
@@ -220,17 +210,14 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
                     if(icon.getPower()==null){
                         this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(1));
                         this.iconsGraphics.setChosenIcon(icon);
-                        System.out.println("IN ZONE CLICKED");
                         if(isEnoughMoneyTower(icon)){
                             this.towerChosen=towerConfig.towerNum(icon.getTower());
                             this.iconNb=icon.getTower();
                             this.isClicked=true;
                             //image qui suit souris
-                            System.out.println("AVANT "+this.base.getArgent());
                             this.iconsGraphics.setFollowing(true);
                         }
                         else{
-                            System.out.println("NO MONEY");
                         }
                     }
                 }
@@ -249,7 +236,6 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
         if(isEnoughMoneyPower(icon)){
             this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(1));
             this.iconsGraphics.setChosenIcon(icon);
-            System.out.println("THATS POWER");
         }
     }
 
@@ -271,7 +257,6 @@ public class IconsConfig implements MouseListener, MouseMotionListener{
 
     public void released(Icon icon){
         this.iconsGraphics.setActualBackground(this.iconsGraphics.getBackgroundIcons().get(0));
-        System.out.println("RELEASED");
 
         if(isEnoughMoneyPower(icon)){
             Power p = new Power(icon.getPower());

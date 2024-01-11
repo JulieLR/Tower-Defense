@@ -10,8 +10,8 @@ import config.TowerConfig;
 import config.EnemiesConfig;
 import model.Coordinates;
 import model.Direction;
-import model.Enemy;
 import model.Tower;
+import model.Enemies.*;
 import model.Tower.TowerColor;
 
 public class TowerGraphics implements Graphic,Frame {
@@ -88,10 +88,8 @@ public class TowerGraphics implements Graphic,Frame {
     private double angleTowerEnemy (Tower t, Enemy e) {
         double angle= Math.atan(t.getPos().getX()- e.getPos().getX()/ t.getPos().getY()- e.getPos().getY());
         if (t.getPos().getX()-e.getPos().getX()<0) {
-            System.out.println("angle :"+angle);
             return angle;
         }
-        System.out.println("angle :"+angle);
         return -angle;
         
     }
@@ -181,7 +179,6 @@ public class TowerGraphics implements Graphic,Frame {
                     //g.rotate(Math.toRadians(45), (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0]+(this.game.getTileSize()/2), (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1]+(this.game.getTileSize()/2));
                     }
                 }
-                //System.out.println(Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos()))));
             }
         }
     }
@@ -194,7 +191,6 @@ public class TowerGraphics implements Graphic,Frame {
         int t3= (int) (n*4.0f/t.getVitesseAtk());
 
         int nb=6;
-        // System.out.println(t.isMagic());
         if (time%t3<t0) {
             g.drawImage(
                 this.towerAsset.get(t.idColorTower()+nb), 

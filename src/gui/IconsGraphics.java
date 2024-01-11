@@ -92,7 +92,6 @@ public class IconsGraphics implements Graphic{
         }
         for(int i=0;i<4;i++){
             upgradeAsset.add(iconsUpgrade.getSubimage(16*i, 0, 16, 16));
-            System.out.println(upgradeAsset.size());
         }
         for(int i=0; i<3;i++){
             powersIconAsset.add(powersIcons.getSubimage(i*32, 0, 32, 32));

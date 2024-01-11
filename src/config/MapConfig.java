@@ -20,14 +20,14 @@ public class MapConfig {
     private Coordinates start;
     private ArrayList<Coordinates> towersEmpty=new ArrayList<>();
 
-    private String path1="src/config/map1T.txt";
-    private String path1C="src/config/map1C.txt";
-    private String path2="src/config/map2T.txt";
-    private String path2C="src/config/map2C.txt";
-    private String path3="src/config/map3T.txt";
-    private String path3C="src/config/map3C.txt";
-    private String path4="src/config/map4T.txt";
-    private String path4C="src/config/map4C.txt";
+    private String path1="src/config/mapFiles/map1T.txt";
+    private String path1C="src/config/mapFiles/map1C.txt";
+    private String path2="src/config/mapFiles/map2T.txt";
+    private String path2C="src/config/mapFiles/map2C.txt";
+    private String path3="src/config/mapFiles/map3T.txt";
+    private String path3C="src/config/mapFiles/map3C.txt";
+    private String path4="src/config/mapFiles/map4T.txt";
+    private String path4C="src/config/mapFiles/map4C.txt";
 
 
     Random random = new Random();
@@ -38,7 +38,7 @@ public class MapConfig {
         this.map= new Tile[this.game.getCol()][this.game.getLigne()];
         //addAsset();
         chosenMap();
-        //System.out.print(this.getTile(new Coordinates(130, 130)).typeToString());
+        //t.print(this.getTile(new Coordinates(130, 130)).typeToString());
     } 
 
     public Tile getTile(Coordinates c){
@@ -92,7 +92,6 @@ public class MapConfig {
             String readline;
             String readline2;
             while ((readline = reader.readLine()) != null && (readline2 = reader_2.readLine()) != null){
-                System.out.println(ligne + " " + readline);
                 for(int i =0; i< readline.length();i++){
                     int r = random.nextInt(10);
                     if(readline.charAt(i) == 'G'){//Grass

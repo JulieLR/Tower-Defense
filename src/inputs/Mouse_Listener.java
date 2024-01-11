@@ -11,15 +11,12 @@ public class Mouse_Listener implements MouseListener, MouseMotionListener{
     public void mouseClicked(MouseEvent e) { /*
         // click gauche
         if (e.getButton()== MouseEvent.BUTTON1) {
-            System.out.println("left button pressed");
         } 
         // scroller 
         else if (e.getButton()== MouseEvent.BUTTON2) {
-            System.out.println("scroll button pressed");
         }
         // click droit
         else if (e.getButton()== MouseEvent.BUTTON3) {
-            System.out.println("right button pressed");
         } */
     }
 

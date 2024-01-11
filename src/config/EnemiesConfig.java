@@ -6,13 +6,13 @@ import java.util.Random;
 import config.Tile.Type;
 import gui.Game;
 import model.Base;
-import model.Bat;
 import model.Coordinates;
 import model.Direction;
-import model.Enemy;
-import model.Knight;
-import model.Slime;
-import model.Tank;
+import model.Enemies.Bat;
+import model.Enemies.Enemy;
+import model.Enemies.Knight;
+import model.Enemies.Slime;
+import model.Enemies.Tank;
 
 public class EnemiesConfig {
 
