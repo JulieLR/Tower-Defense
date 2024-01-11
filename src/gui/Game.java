@@ -93,9 +93,6 @@ public class Game extends JPanel implements Runnable {
 
         this.base = new Base(this,1000);
         this.level = level;
-        if(level==4){
-            this.marathon=true;
-        }
 
         this.enemiesConfig = new EnemiesConfig(this,10,level,this.tiles);
         this.enemies= new EnemiesGraphics(this,this.enemiesConfig);
