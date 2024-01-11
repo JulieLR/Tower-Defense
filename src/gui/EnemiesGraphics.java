@@ -5,14 +5,11 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import config.EnemiesConfig;
-import config.Tile;
-import config.Tile.Type;
 import model.Enemies.Bat;
 import model.Enemies.Enemy;
 import model.Enemies.Knight;
 import model.Enemies.Slime;
 import model.Enemies.Tank;
-import model.Coordinates;
 import model.Direction;
 
 public class EnemiesGraphics implements Graphic{
@@ -24,8 +21,7 @@ public class EnemiesGraphics implements Graphic{
     private ArrayList<BufferedImage> batAsset = new ArrayList<>();
     private ArrayList<BufferedImage> slimeAsset = new ArrayList<>();
     private ArrayList<Enemy> enemies;
-    private int count=0;
-
+    
     public EnemiesGraphics(Game game,EnemiesConfig e){
 
         this.enemiesSprite= getImage("src/ressources/enemies/enemiesSprite.png");
@@ -44,7 +40,6 @@ public class EnemiesGraphics implements Graphic{
         long time = System.currentTimeMillis();
         for(Enemy e: enemies){
             if(e.isSpawned()&& e.isAlived()){
-                g.drawString(Integer.toString(e.getNumber()), (int) e.getPos().getX(), (int) e.getPos().getY());
                 if(e.isAtEnd()){
                     if(e instanceof Knight || e instanceof Tank){
                         drawKnightAttack(g, time,e);

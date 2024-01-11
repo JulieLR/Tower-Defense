@@ -11,8 +11,6 @@ import javax.swing.JFrame;
 
 import gui.Menu.Fond;
 
-import javax.swing.JButton;
-
 public class SettingsMenu extends JFrame implements Frame,MouseListener{
 
     private Menu menu;

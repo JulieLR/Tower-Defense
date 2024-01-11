@@ -1,10 +1,7 @@
 package model;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.lang.Math.*;
 import java.util.ArrayList;
 
-import config.EnemiesConfig;
 import gui.Game;
 import model.Enemies.Enemy;
 
@@ -41,28 +38,6 @@ public class Tower extends Entities {
     public TowerColor getTowerColor () {
         return this.towerColor;
     }
-    public void setTowerColor (TowerColor towerColor) {
-        this.towerColor=towerColor;
-    }
-
-    public TowerColor towerColorBlue () {
-        return TowerColor.TOWER_BLUE;
-    }
-    public TowerColor towerColorOrange () {
-        return TowerColor.TOWER_ORANGE;
-    }
-    public TowerColor towerColorRed () {
-        return TowerColor.TOWER_RED;
-    }
-    public TowerColor towerColorSmall () {
-        return TowerColor.TOWER_SMALL;
-    }
-    public TowerColor towerColorMedium () {
-        return TowerColor.TOWER_MEDIUM;
-    }
-    public TowerColor towerColorExtra () {
-        return TowerColor.TOWER_EXTRA;
-    }
 
     public int idColorTower () {
         switch (this.getTowerColor()) {
@@ -98,6 +73,20 @@ public class Tower extends Entities {
             case 5: return new Tower(0.5f, this.getPos(), 2, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
         }
         return null;
+    }
+
+    public void setRectangle(int width, int height) {
+        this.attackZone= new Rectangle(this.game.getTileSize()*width, this.game.getTileSize()*height);
+    }
+    public void setRectangleByColor(int n) {
+        switch (n) {            
+            case 0: setRectangle(3, 3);
+            case 1: setRectangle(5, 5);
+            case 2: setRectangle(7, 7);
+            case 3: setRectangle(3, 3);
+            case 4: setRectangle(5, 3);
+            case 5: setRectangle(7, 5);
+        }
     }
 
     public static int getPriceByNumber(int n){
