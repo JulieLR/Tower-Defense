@@ -1,4 +1,4 @@
-package model;
+package model.Enemies;
 
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import gui.Game;
+import model.Coordinates;
+import model.Direction;
+import model.Entities;
 
 public class Enemy extends Entities{
 

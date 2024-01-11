@@ -7,11 +7,11 @@ import java.util.ArrayList;
 import config.EnemiesConfig;
 import config.Tile;
 import config.Tile.Type;
-import model.Enemy;
-import model.Knight;
-import model.Slime;
-import model.Tank;
-import model.Bat;
+import model.Enemies.Bat;
+import model.Enemies.Enemy;
+import model.Enemies.Knight;
+import model.Enemies.Slime;
+import model.Enemies.Tank;
 import model.Coordinates;
 import model.Direction;
 

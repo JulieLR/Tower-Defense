@@ -2,10 +2,10 @@ package gui;
 
 import config.IconsConfig;
 import config.PowersConfig;
-import model.Bat;
-import model.Enemy;
 import model.Power;
 import model.Tower;
+import model.Enemies.Bat;
+import model.Enemies.Enemy;
 import model.Power.Element;
 
 import java.awt.Graphics;
@@ -219,10 +219,6 @@ public class PowersGraphics implements Graphic{
 
         int r = (int)(2400f/0.5f);
         int s = (int)(2000f/0.5f);
-        int q = (int)(1600f/0.5f);
-        int n = (int)(1400f/0.5f);
-        int h = (int)(1000f/0.5f);
-        int m = (int)(600f/0.5f);
         int k = (int)(400f/0.5f);
         int l = (int)(200f/0.5f);
         int o = (int)(100f/0.5f);

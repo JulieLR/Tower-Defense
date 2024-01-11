@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import config.EnemiesConfig;
 import gui.Game;
+import model.Enemies.Enemy;
 
 public class Tower extends Entities {
     // Attribut

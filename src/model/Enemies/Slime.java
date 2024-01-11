@@ -1,6 +1,8 @@
-package model;
+package model.Enemies;
 
 import gui.Game;
+import model.Coordinates;
+
 import java.util.Random;
 
 public class Slime extends Enemy {

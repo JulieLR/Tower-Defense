@@ -137,7 +137,6 @@ public class SceneMenu extends JFrame implements Frame,MouseListener{
             mapNumber=4;
             this.chosen=true;
         }
-        System.out.println(mapNumber);
     }
 
     @Override

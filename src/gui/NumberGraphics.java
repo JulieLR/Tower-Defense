@@ -9,9 +9,9 @@ import config.IconsConfig;
 import config.TowerConfig;
 import model.Base;
 import model.Coordinates;
-import model.Enemy;
 import model.Power;
 import model.Tower;
+import model.Enemies.Enemy;
 
 public class NumberGraphics implements Graphic{
     private Game game;

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import gui.Game;
 import gui.PowersGraphics;
-import model.Enemy;
 import model.Power;
 import model.Tower;
+import model.Enemies.Enemy;
 import model.Power.Element;
 
 public class PowersConfig {
@@ -72,15 +72,12 @@ public class PowersConfig {
                 e.setSpeed(e.getInitialSpeed());
             }
             this.iceDone=false;
-            System.out.println("REINITIALISE");
         }
     }
 
     private void healAction(ArrayList<Tower> towers) {
         for(Tower t : towers){
-            System.out.println(t.getDegat());
             t.setDegat(t.getDegat()+20);
-            System.out.println(t.getDegat());
         }
 
     }

@@ -131,7 +131,6 @@ public class ModeMenu extends JFrame implements Frame,MouseListener{
             changed=true;
             modeNumber=4;
         }
-        System.out.println(modeNumber);
     }
 
     @Override

@@ -1,6 +1,7 @@
-package model;
+package model.Enemies;
 
 import gui.Game;
+import model.Coordinates;
 
 public class Bat  extends Enemy{
 

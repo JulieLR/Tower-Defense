@@ -16,11 +16,9 @@ public class Keyboard_Listener implements KeyListener{
     public void keyPressed(KeyEvent e) { /* 
         // appuie sur A
         if (e.getKeyCode()==KeyEvent.VK_A) {
-            System.out.println("A pressed");
         } 
         // appuie sur 0 (marche pas avec le numpad, fonctionne avec ou sans maj)
         else if (e.getKeyCode()==KeyEvent.VK_0) {
-            System.out.println("0 pressed");
         } */
         
     }

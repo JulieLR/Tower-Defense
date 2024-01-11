@@ -10,9 +10,9 @@ import config.Tile.Type;
 import gui.Game;
 import model.Base;
 import model.Coordinates;
-import model.Enemy;
 import model.Entities;
 import model.Tower;
+import model.Enemies.Enemy;
 import model.Tower.TowerColor;
 
 public class TowerConfig implements Serializable{
@@ -74,7 +74,6 @@ public class TowerConfig implements Serializable{
                 for(Tower tower : mouseTowers){
                     if((tower.getPos().getX()== towerEmpty.getX()) && (tower.getPos().getY()== towerEmpty.getY())){
                         newTowerEmpty.remove(towerEmpty);
-                        System.out.println("PLACE REMOVED");
                     }
                 }
             }
@@ -126,15 +125,12 @@ public class TowerConfig implements Serializable{
         out.close();
         fileout.close();
         
-        System.out.println("object info serealised");
 
         long serialVersionUID= ObjectStreamClass.lookup(towerImage.getClass()).getSerialVersionUID();
-        System.out.println(serialVersionUID); 
     }*/
     private void towerSerialize (BufferedImage img, String fichier) {
         try (ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(fichier))) {
             out.writeObject(img);
-            System.out.println("object info serealised");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,15 +146,14 @@ public class TowerConfig implements Serializable{
         in.close();
         fileIn.close();
 
-        System.out.println("object info serealised");
+        t.println("object info serealised");
 
         long serialVersionUID= ObjectStreamClass.lookup(towerImage.getClass()).getSerialVersionUID();
-        System.out.println(serialVersionUID);
+        t.println(serialVersionUID);
         
     } */
     private BufferedImage towerDeserialize (String fichier) {
         try (ObjectInputStream in= new ObjectInputStream(new FileInputStream(fichier))) {
-            System.out.println("object info serealised");
             return (BufferedImage) in.readObject();
         } catch (IOException| ClassNotFoundException e) {
             e.printStackTrace();
@@ -213,7 +208,6 @@ public class TowerConfig implements Serializable{
         t.getEnemyArray().remove(t.getTarget());
         if(t.getEnemyArray().size()!=0){
             t.setTarget(this.min(t));
-            System.out.println(t.getTarget().getNumber());
         }
         else{
             t.setTarget(null);
@@ -239,12 +233,10 @@ public class TowerConfig implements Serializable{
             if(t.getTarget().isAlived()){
                 if(!t.isInZone(t.getTarget())){
                     removeFromArray(t, t.getTarget());
-                    System.out.println("TARGET NOT IN ZONE ANYMORE");
                 }
             }
             else{
                 removeFromArray(t, t.getTarget());
-                System.out.println("TARGET DEAD");
             }
         }
         for(Enemy e : enemies){
@@ -252,15 +244,11 @@ public class TowerConfig implements Serializable{
                 if(t.isInZone(e)&& e.isAlived()){
                     t.getEnemyArray().add(e);
                     t.setTarget(this.min(t));
-                    System.out.println("NEW TARGET");
-                    System.out.println(t.getTarget().getNumber());
                 }
             }
             else{
                 if(t.isInZone(e)&& e.isAlived() && !t.getEnemyArray().contains(e)){
                     t.getEnemyArray().add(e);
-                    System.out.println("ENEMY ADDED");
-                    System.out.println(t.getTarget().getNumber());
                 }
             }
         }
