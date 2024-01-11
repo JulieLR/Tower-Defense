@@ -1,7 +1,5 @@
 package model;
 
-import java.awt.image.BufferedImage;
-
 public abstract class Entities {
 
     protected float vitesseAtk;

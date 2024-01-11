@@ -3,7 +3,6 @@ package model;
 import gui.Game;
 
 public class Base {
-    
     private Game game;
     private int pointDeVie, argent;
 

@@ -31,7 +31,6 @@ public class PowersGraphics implements Graphic{
 
 
     public PowersGraphics(PowersConfig powersConfig, Game game){
-
         this.iceAndFireImg = getImage("src/ressources/Powers/powersSprite.png");
         this.thunderImg= getImage("src/ressources/Powers/thunderSprite.png");
         this.upImg= getImage("src/ressources/Powers/upSprite.png");
@@ -80,47 +79,46 @@ public class PowersGraphics implements Graphic{
         this.towers=this.game.getTowerConfig().getMouseTowers();
 
         if(actualPower!=null ) {
-        if(!actualPower.isAnimationDone()){
-        if(this.actualPower.getType()== Element.FIRE){
-            for(Enemy e :enemies){
-                if(e.isAlived()){
-                    int hauteur=0;
-                    if(e instanceof Bat){
-                        hauteur=this.game.getTileSize();
-                    }  
-                    drawIceOrFire(g,e,time,false,hauteur);
+            if(!actualPower.isAnimationDone()){
+                if(this.actualPower.getType()== Element.FIRE){
+                    for(Enemy e :enemies){
+                        if(e.isAlived()){
+                            int hauteur=0;
+                            if(e instanceof Bat){
+                                hauteur=this.game.getTileSize();
+                            }  
+                            drawIceOrFire(g,e,time,false,hauteur);
+                        }
+                    }
+                }
+                else if(this.actualPower.getType()==Element.ICE){
+                    for(Enemy e :enemies){
+                        if(e.isAlived()){
+                            drawIce(g,e,time);
+                        }
+                    }
+                }
+                else if(this.actualPower.getType()==Element.THUNDER){
+                    for(Enemy e :enemies){
+                        if(e.isAlived()){
+                            int hauteur=0;
+                            if(e instanceof Bat){
+                                hauteur=this.game.getTileSize();
+                            }           
+                            drawThunder(g,e,time,hauteur);
+                        }
+                    }
+                }
+                else if(this.actualPower.getType()==Element.HEAL){
+                    for(Tower t :towers){
+                        drawUp(g,t,time);
+                    }
                 }
             }
         }
-        else if(this.actualPower.getType()==Element.ICE){
-            for(Enemy e :enemies){
-                if(e.isAlived() && !(e instanceof Bat)){
-                    drawIce(g,e,time);
-                }
-            }
-        }
-        else if(this.actualPower.getType()==Element.THUNDER){
-            for(Enemy e :enemies){
-                if(e.isAlived()){
-                    int hauteur=0;
-                    if(e instanceof Bat){
-                        hauteur=this.game.getTileSize();
-                    }           
-                    drawThunder(g,e,time,hauteur);
-                }
-            }
-        }
-        else if(this.actualPower.getType()==Element.HEAL){
-            for(Tower t :towers){
-                drawUp(g,t,time);
-            }
-        }
-    }
-    }
     }
 
     private void drawThunder(Graphics g, Enemy e, long times,int hauteur) { 
-
         long time = times - actualPower.getClickedTime();
 
         int r = (int)(1600f/0.5f);
@@ -163,12 +161,12 @@ public class PowersGraphics implements Graphic{
         }
     }
 
-    private void drawIceOrFire(Graphics g, Enemy e, long times, boolean Ice, int hauteur) {
+    private void drawIceOrFire(Graphics g, Enemy e, long times, boolean ice, int hauteur) {
 
         long time = times - actualPower.getClickedTime();
 
         int ecart=0;
-        if(!Ice){
+        if(!ice){
             ecart = 10;
         }
 

@@ -5,9 +5,7 @@ import java.awt.Rectangle;
 import java.awt.Color;
 
 import config.IconsConfig;
-import config.TowerConfig;
 import model.Coordinates;
-import model.Tower;
 import model.Power.Element;
 
 import java.util.ArrayList;
@@ -24,9 +22,6 @@ public class IconsGraphics implements Graphic{
     private ArrayList<BufferedImage> backgroundIcons= new ArrayList<>();
     private ArrayList<BufferedImage> upgradeAsset= new ArrayList<>();
     private ArrayList<BufferedImage> powersIconAsset= new ArrayList<>();
-
-    private TowerConfig towerConfig;
-
     private BufferedImage actualBackground;
     private Icon chosenIcon;
 

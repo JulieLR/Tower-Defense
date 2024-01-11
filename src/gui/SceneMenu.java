@@ -13,9 +13,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import gui.Menu.Fond;
-
-import javax.swing.JButton;
-
 public class SceneMenu extends JFrame implements Frame,MouseListener{
 
     private Menu menu;

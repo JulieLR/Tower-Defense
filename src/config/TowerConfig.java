@@ -1,7 +1,5 @@
 package config;
 
-import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -10,10 +8,8 @@ import config.Tile.Type;
 import gui.Game;
 import model.Base;
 import model.Coordinates;
-import model.Entities;
 import model.Tower;
 import model.Enemies.Enemy;
-import model.Tower.TowerColor;
 
 public class TowerConfig implements Serializable{
     private Game game;
@@ -22,7 +18,6 @@ public class TowerConfig implements Serializable{
     private ArrayList<Coordinates> towersEmpty = new ArrayList<>();
 
     private ArrayList<Enemy> enemies= new ArrayList<> ();
-    private BufferedImage towerImage;
     private Base base;
     // public transient BufferedImage towerImageTransient; // transient pour igniorer le serializes
     // private static final int serialVersionUID= 1;
@@ -33,16 +28,9 @@ public class TowerConfig implements Serializable{
         this.towersEmpty=this.game.getMapConfig().getTowersEmpty();
         addTower(getPosTower());
         this.base= this.game.getBase();
-        //loadTowerImage();
     }
 
     public void update(){
-        /* for(Tower t : towers){
-            getTarget(t);
-            if(t.getTarget()!=null){
-                attaque(t.getTarget(),t);
-            }
-        } */
         deleteTowersPlaced();
         for(Tower t : mouseTowers){
             getTarget(t);
@@ -115,59 +103,6 @@ public class TowerConfig implements Serializable{
 
         }
     }
-
-    // conversion des donnees en fichier binaire
-    /* private void towerSerialize (BufferedImage img, String fichier) throws IOException {
-        /* this.towerImage= getSprite(serialVersionUID);
-        FileOutputStream fileout= new FileOutputStream("TowerManager.ser");
-        ObjectOutputStream out= new ObjectOutputStream(fileout);
-        out.writeObject(towerImage);
-        out.close();
-        fileout.close();
-        
-
-        long serialVersionUID= ObjectStreamClass.lookup(towerImage.getClass()).getSerialVersionUID();
-    }*/
-    private void towerSerialize (BufferedImage img, String fichier) {
-        try (ObjectOutputStream out= new ObjectOutputStream(new FileOutputStream(fichier))) {
-            out.writeObject(img);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    // consersion des donnees du fichier binaire en donnees que reconnait java
-    /* private void towerDeserialize () throws IOException, ClassNotFoundException {
-        this.towerImage= null;
-        FileInputStream fileIn= new FileInputStream("src/gui/TowerManager.ser");
-        ObjectInputStream in= new ObjectInputStream(fileIn);
-        this.towerImage= (BufferedImage) in.readObject();
-        in.close();
-        fileIn.close();
-
-        t.println("object info serealised");
-
-        long serialVersionUID= ObjectStreamClass.lookup(towerImage.getClass()).getSerialVersionUID();
-        t.println(serialVersionUID);
-        
-    } */
-    private BufferedImage towerDeserialize (String fichier) {
-        try (ObjectInputStream in= new ObjectInputStream(new FileInputStream(fichier))) {
-            return (BufferedImage) in.readObject();
-        } catch (IOException| ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private void loadTowerImage () {
-        towerSerialize(towerImage, "TowerManager.ser");
-        towerImage= towerDeserialize("TowerManager.ser");
-    }
-
-
-
     // le nombre de tours qu'il y a sur la map
     public int getNbTower () {
         int n=0;
@@ -196,14 +131,6 @@ public class TowerConfig implements Serializable{
         return posTower;
     }
  
-    
-    // distance entre une tour et un ennemi
-    public double distanceTowerEnemy (Tower t, Enemy e) {
-        return Math.sqrt(
-        Math.pow(e.getPos().getX()-t.getPos().getX(),2) +
-        Math.pow(e.getPos().getY()-t.getPos().getY(),2));
-    }
-
     private void removeFromArray(Tower t, Enemy e){
         t.getEnemyArray().remove(t.getTarget());
         if(t.getEnemyArray().size()!=0){

@@ -4,8 +4,6 @@ import model.Tower;
 import model.Power.Element;
 import model.Coordinates;
 import java.awt.image.BufferedImage;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.Rectangle;
 
 public class Icon{

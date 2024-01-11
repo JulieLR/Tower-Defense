@@ -1,18 +1,13 @@
 package gui;
 
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import config.MapConfig;
 import config.TowerConfig;
-import config.EnemiesConfig;
 import model.Coordinates;
 import model.Direction;
 import model.Tower;
-import model.Enemies.*;
-import model.Tower.TowerColor;
 
 public class TowerGraphics implements Graphic,Frame {
     private Game game;
@@ -35,17 +30,6 @@ public class TowerGraphics implements Graphic,Frame {
         this.tower= towerConfig.getMouseTowers();
         this.addAsset();
     }
-
-
-    // attaque selon l'angle en radian voulu en paramètre
-    private double[] attackCorner (double corner) {
-        double[] tab= new double[2]; 
-        tab[0]= Math.cos(-corner); // sens horaire, donc on doit mettre le signe - avant la valeur de l'angle
-        tab[1]= Math.sin(-corner); 
-        return tab;    
-    }
-
-
 
     public Direction getVerticalPos(Tower t){
         if(t.getTarget().getPos().getY()<t.getPos().getY()){
@@ -83,17 +67,6 @@ public class TowerGraphics implements Graphic,Frame {
         }
     }
 
-
-    // la methode atan renvoie un angle entre -pi/2 et pi/2
-    private double angleTowerEnemy (Tower t, Enemy e) {
-        double angle= Math.atan(t.getPos().getX()- e.getPos().getX()/ t.getPos().getY()- e.getPos().getY());
-        if (t.getPos().getX()-e.getPos().getX()<0) {
-            return angle;
-        }
-        return -angle;
-        
-    }
-
     public int getRotateCoef(Tower t){
         Direction h = getHorizontalePos(t);
         Direction v = getVerticalPos(t);
@@ -128,53 +101,38 @@ public class TowerGraphics implements Graphic,Frame {
             int t2= (int) (n*3.0f/t.getVitesseAtk());
             int t3= (int) (n*4.0f/t.getVitesseAtk());
 
-            Coordinates e = this.game.getEnemyConfig().getNextCoor((t.getTarget()));
             float y = getVerticalNombre(t);
             float x = getHorizontalNombre(t);
             double angle =getRotateCoef(t)*90+Math.toDegrees(Math.atan(this.angle(t.getPos(), t.getTarget().getPos())));
 
             int nb=6;
             if (time%t3<t0) {
-                g.drawImage( rotate (
-                    this.towerAsset.get(t.idColorTower()+nb), angle),
-                    (int)(t.getPos().getX()+x), 
-                    (int)(t.getPos().getY()+y), 
-                    this.game.getTileSize(),
-                    this.game.getTileSize(), 
+                g.drawImage( rotate(this.towerAsset.get(t.idColorTower()+nb), angle),
+                    (int)(t.getPos().getX()+x), (int)(t.getPos().getY()+y), 
+                    this.game.getTileSize(), this.game.getTileSize(), 
                     null);
             } else if (time%t3<t1) {
                 if (t.isMagic()) {
-                    g.drawImage( rotate(
-                        this.towerAsset.get(t.idColorTower()+nb*2), angle),
-                        (int)(t.getPos().getX()+x*2), 
-                        (int)(t.getPos().getY()+y*2), 
-                        this.game.getTileSize(),
-                        this.game.getTileSize(), 
+                    g.drawImage( rotate(this.towerAsset.get(t.idColorTower()+nb*2), angle),
+                        (int)(t.getPos().getX()+x*2), (int)(t.getPos().getY()+y*2), 
+                        this.game.getTileSize(), this.game.getTileSize(), 
                         null);
                 } else if (t.isPhysic()) {
-                    g.drawImage( rotate (
-                        this.towerAsset.get(t.idColorTower()+nb),angle),
-                        (int)(t.getPos().getX()+x*2), 
-                        (int)(t.getPos().getY()+y*2),  
-                        this.game.getTileSize(),
-                        this.game.getTileSize(), 
+                    g.drawImage( rotate(this.towerAsset.get(t.idColorTower()+nb),angle),
+                        (int)(t.getPos().getX()+x*2), (int)(t.getPos().getY()+y*2),  
+                        this.game.getTileSize(), this.game.getTileSize(), 
                         null);
             } else if (time%t3<t2) {
                 if (t.isMagic()) {
-                    g.drawImage( rotate(
-                        this.towerAsset.get(t.idColorTower()+nb*3), angle),
-                        (int)(t.getPos().getX()+x*3), 
-                        (int)(t.getPos().getY()+y*3), 
-                        this.game.getTileSize(),
-                        this.game.getTileSize(), 
+                    g.drawImage( rotate(this.towerAsset.get(t.idColorTower()+nb*3), angle),
+                        (int)(t.getPos().getX()+x*3), (int)(t.getPos().getY()+y*3), 
+                        this.game.getTileSize(), this.game.getTileSize(), 
                         null);
                 } else if (t.isPhysic()) {
                     g.drawImage( rotate (
                         this.towerAsset.get(t.idColorTower()+nb),angle),
-                        (int)(t.getPos().getX()+x*3), 
-                        (int)(t.getPos().getY()+y*3),  
-                        this.game.getTileSize(),
-                        this.game.getTileSize(), 
+                        (int)(t.getPos().getX()+x*3), (int)(t.getPos().getY()+y*3),  
+                        this.game.getTileSize(), this.game.getTileSize(), 
                         null);
                     //g.rotate(Math.toRadians(45), (int)t.getPos().getX()+this.game.getTileSize()*3*attaqueDirection(d)[0]+(this.game.getTileSize()/2), (int)t.getPos().getY()+this.game.getTileSize()*3*attaqueDirection(d)[1]+(this.game.getTileSize()/2));
                     }
@@ -182,52 +140,6 @@ public class TowerGraphics implements Graphic,Frame {
             }
         }
     }
-
-    private void attackTowerCornerDraw (Graphics g, long time, Tower t, double corner) {
-        float n= 150f;
-        int t0= (int) (n/t.getVitesseAtk());
-        int t1= (int) (n*2.0f/t.getVitesseAtk());
-        int t2= (int) (n*3.0f/t.getVitesseAtk());
-        int t3= (int) (n*4.0f/t.getVitesseAtk());
-
-        int nb=6;
-        if (time%t3<t0) {
-            g.drawImage(
-                this.towerAsset.get(t.idColorTower()+nb), 
-                (int) (t.getPos().getX()+this.game.getTileSize()*attackCorner(corner)[0]), 
-                (int) (t.getPos().getY()+this.game.getTileSize()*attackCorner(corner)[1]- this.game.getTileSize()), 
-                this.game.getTileSize(),
-                this.game.getTileSize(), 
-                null);
-        } else if (time%t3<t1) {
-            g.drawImage(
-                this.towerAsset.get(t.idColorTower()+nb*2), 
-                (int) (t.getPos().getX()+this.game.getTileSize()*2*attackCorner(corner)[0]), 
-                (int) (t.getPos().getY()+this.game.getTileSize()*2*attackCorner(corner)[1]- this.game.getTileSize()), 
-                this.game.getTileSize(),
-                this.game.getTileSize(), 
-                null);
-        } else if (time%t3<t2) {
-            if (t.isMagic()) {
-                g.drawImage(
-                    this.towerAsset.get(t.idColorTower()+nb*3), 
-                    (int) (t.getPos().getX()+this.game.getTileSize()*3*attackCorner(corner)[0]), 
-                    (int) (t.getPos().getY()+this.game.getTileSize()*3*attackCorner(corner)[1]- this.game.getTileSize()), 
-                    this.game.getTileSize(),
-                    this.game.getTileSize(), 
-                    null);
-            } else if (t.isPhysic()) {
-                g.drawImage(
-                    this.towerAsset.get(t.idColorTower()+nb*2), 
-                    (int) (t.getPos().getX()+this.game.getTileSize()*3*attackCorner(corner)[0]), 
-                    (int) (t.getPos().getY()+this.game.getTileSize()*3*attackCorner(corner)[1]- this.game.getTileSize()), 
-                    this.game.getTileSize(),
-                    this.game.getTileSize(), 
-                    null);
-            }
-
-        } 
-    } 
 
 
     @Override

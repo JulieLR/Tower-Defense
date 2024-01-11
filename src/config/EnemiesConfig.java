@@ -299,7 +299,7 @@ public class EnemiesConfig {
         for (Enemy e0: this.enemies) {
             for (Enemy e1: this.enemies) {
                 if (e0!=e1 && e0.isAlived() && e1.isAlived() && !e0.isAtEnd() && !e1.isAtEnd()) {
-                    double precision = 0.00000000001f; 
+                    double precision = 0.000000001f; 
                     if (Math.abs(e0.getPos().getX()-e1.getPos().getX())<precision && Math.abs(e0.getPos().getY()-e1.getPos().getY())<precision && !isChange) {
                         System.out.print(e0.getNumber()+ "\t"+ e1.getNumber()+ "\t");
                         int tmp= e0.getNumber();

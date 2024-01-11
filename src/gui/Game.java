@@ -11,21 +11,11 @@ import config.Tile;
 import config.TowerConfig;
 import config.Tile.Type;
 import model.Base;
-import model.Coordinates;
-import inputs.Keyboard_Listener;
-import inputs.Mouse_Listener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
-import java.util.ArrayList;
-import java.util.Random;
-import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 
 
@@ -81,10 +71,6 @@ public class Game extends JPanel implements Runnable {
     private boolean isEnd=false;
     private boolean isEndFrameOn=false;
 
-    // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
-    private Mouse_Listener mouseListener; 
-    private Keyboard_Listener keyboardlistener;
-
     public Game(int mode,int mapNumber, App app){
 
         this.app=app;
@@ -117,12 +103,6 @@ public class Game extends JPanel implements Runnable {
     }
 
     public void initInput() {
-        mouseListener= new Mouse_Listener();
-        keyboardlistener= new Keyboard_Listener();
-
-        addMouseListener(mouseListener);
-        addMouseMotionListener(mouseListener);
-        addKeyListener(keyboardlistener);
 
         requestFocus();
     }

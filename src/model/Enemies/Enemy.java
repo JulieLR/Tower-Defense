@@ -1,9 +1,6 @@
 package model.Enemies;
 
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Random;
 
 import gui.Game;
 import model.Coordinates;
@@ -28,7 +25,6 @@ public class Enemy extends Entities{
     private final float initialSpeed;
 
     private Direction dir = Direction.SOUTH;
-    private Random r = new Random();
 
     private long timeDead;
 
