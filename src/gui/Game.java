@@ -246,7 +246,7 @@ public class Game extends JPanel implements Runnable {
         int frames=0;
         int updates= 0;
 
-        double spawnInterval = 4000000000d;//4s
+        double spawnInterval = 5000000000d;//4s
         double delta =0;
         long currentTime;
         long lastTime = System.nanoTime();
@@ -278,9 +278,6 @@ public class Game extends JPanel implements Runnable {
             lastTime=currentTime;
             if(delta >=1){
                 enemiesConfig.spawn();
-                if(this.enemiesConfig.getNbSpawned()==this.enemiesConfig.getNbEnemies() && marathon){
-                    this.enemiesConfig.addNewEnemies();
-                }
                 delta--;
             }
         }

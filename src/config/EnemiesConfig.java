@@ -25,9 +25,9 @@ public class EnemiesConfig {
     private int nbSpawned;
     private int nbEnemiesDead=0;
     private Coordinates start;
-    private Enemy e;
     private int mode;
-
+    private boolean isMarathon;
+    private float coeff=1;
     public EnemiesConfig(Game game,int n, int mode, MapConfig mapConfig){
 
         this.game=game;
@@ -38,7 +38,7 @@ public class EnemiesConfig {
         this.mapConfig=mapConfig;
         this.start = this.mapConfig.getStartCoor();
 
-        startLevel(this.mode);
+        startLevel(this.mode,1);
     }
 
     public ArrayList<Enemy> getEnemies() {
@@ -62,11 +62,44 @@ public class EnemiesConfig {
     }
 
 
-    public void startLevel(int level){
-        switch(level){
-            case 1 : makeEnemies(nbEnemies);
-            case 4 : marathonStart();
+    public void startLevel(int mode, int level){
+        int nbEnemies=0;
+        switch(mode){
+            case 1 : 
+                if(level==1){
+                    setCoefficient(1);
+                }
+                else{
+                    setCoefficient(1.1f);
+                }
+                nbEnemies=10;
+                break;
+            case 2 : 
+                if(level==1){
+                    setCoefficient(1.3f);
+                }
+                else{
+                    setCoefficient(1.4f);
+                }
+                nbEnemies=20;
+                break;
+            case 3 : 
+                if(level==1){
+                    setCoefficient(2f);
+                }
+                else{
+                    setCoefficient(2.1f);
+                }
+                nbEnemies=30;
+                break;
+            case 4 : nbEnemies=10;this.isMarathon=true;
         }
+        addNewEnemies(nbEnemies);
+        this.nbEnemies=nbEnemies;
+    }
+
+    public void setCoefficient(float coeff){
+        this.coeff=coeff;
     }
 
     public void reinitialiseSpeed(){
@@ -77,11 +110,11 @@ public class EnemiesConfig {
 
 
     public Direction startDirection(){
-        if(this.game.getMapNumber()==1 || this.game.getMapNumber()==3 || this.game.getMapNumber()==4) {
-            return Direction.NORTH;
+        if(this.game.getMapNumber()==2) {
+            return Direction.SOUTH;
         }
         else{
-            return Direction.SOUTH;
+            return Direction.NORTH;
         }
     }
 
@@ -92,28 +125,30 @@ public class EnemiesConfig {
             enemies.get(nbSpawned).setSpawned(true);
             enemies.get(nbSpawned).setAlived(true);
             enemies.get(nbSpawned).setNumber(nbSpawned);
+            changeStats(enemies.get(nbSpawned));
             nbSpawned++;
         }
 
     }
 
-    public void marathonStart(){
-        makeEnemies(10);
-        this.nbEnemies=10;
+    public void changeStats(Enemy e){
+        e.setPointDeVie((int)(e.getPointDeVie()*coeff));
+        e.setSpeed(e.getSpeed()*coeff);
+        e.setDegat((int)(e.getDegat()*coeff));
     }
 
-    public void addNewEnemies(){
+    public void addNewEnemies(int number){
         Random r = new Random();
-        for(int i=0;i<10;i++){
-            int x = r.nextInt(10);
+        for(int i=0;i<number;i++){
+            int x = r.nextInt(number);
             int y = r.nextInt(2);
-            if(x<5){
-                this.enemies.add(new Knight(0, start,this.game));
+            if(x<number*0.3f){
+                this.enemies.add(new Bat( start,this.game));
             }
-            else if(x<7){
+            else if(x<number*0.6f){
                 this.enemies.add(new Tank(start, this.game));
             }
-            else if(x<9){
+            else if(x<number*0.9f){
                 this.enemies.add(new Slime(start,this.game)); 
             }
             else{
@@ -128,42 +163,6 @@ public class EnemiesConfig {
         }
     }
 
-    //Création d'enemies(ajout dans l'arraylist)
-    private void makeEnemies(int n) {
-        int a = (int)(n*0.5f);//50% de knight
-        int b = (int)(n*0.2f);//30% de tank
-        int c = (int)(n*0.2f);//20% de slime
-        int d = (int)(n*0.1f);//10% de bat ou knight rouge
-        Random r = new Random();
-
-        //ajout enemies faible
-        for(int i=0;i<a;i++){
-            this.enemies.add(new Knight(0, start,this.game));
-        }
-        //ajout enemies moyen
-        for(int j=0;j<b;j++){
-            this.enemies.add(new Tank(start, this.game));
-        }
-        //ajout enemies fort
-        for(int k=0;k<c;k++){
-            this.enemies.add(new Slime(start,this.game));        
-        }
-
-        for(int k=0;k<d;k++){
-            int x= r.nextInt(2);
-            if(x==0){
-                this.enemies.add(new Bat(start,this.game));           
-            }
-            else{
-                this.enemies.add(new Knight(1,start,this.game));        
-            }
-        }
-    }
-
-    public Enemy getE() {
-        return e;
-    }
-
     /* Pour chaque enemies, si il est déjà spawn alors on update ses mouvements */
     public void update(){
         for( Enemy e : enemies){
@@ -171,13 +170,25 @@ public class EnemiesConfig {
                 updateMove(e);
             }
         }
+        if(nbSpawned==nbEnemies && isMarathon){
+            addNewEnemies(10);
+            setCoefficient(coeff*1.1f);
+        }
     }
 
     public Coordinates getNextCoor(Enemy e){
-        return new Coordinates((int) (e.getPos().getX() + getHorizontalSpeed(e.getDir(),e)), (int) (e.getPos().getY() + getVerticalSpeed(e.getDir(),e)));
+        if(e.getDir()== Direction.NORTH || e.getDir()== Direction.SOUTH){
+            return new Coordinates((int) (e.getPos().getX()), (int) (e.getPos().getY() + getAddSpeed(e.getDir(),e)));
+        }
+        else{
+            return new Coordinates((int) (e.getPos().getX() + getAddSpeed(e.getDir(),e)), (int) (e.getPos().getY()));
+        }
     }
 
     //update la position de l'enemie
+    /**
+     * @param e
+     */
     private void updateMove(Enemy e) {
         //On initialise deux
         Coordinates next = getNextCoor(e);
@@ -185,7 +196,7 @@ public class EnemiesConfig {
         /*Si la prochaine coordonée est un chemin alors on avance
          * Sinon on vérifie si le personnage est arrivé au chateau, sinon on change sa direction
         */
-        if(getTileType((int)next.getX(),(int)next.getY())==Type.PATH || getTileType((int)next.getX(),(int)next.getY())==Type.INTERSECTION3 || getTileType((int)next.getX(),(int)next.getY())==Type.INTERSECTION4){
+        if(getTileType((int)next.getX(),(int)next.getY())==Type.PATH|| getTileType((int)next.getX(),(int)next.getY())==Type.INTERSECTION3 || getTileType((int)next.getX(),(int)next.getY())==Type.INTERSECTION4){
             e.move(e.getDir());
         }
         else if(isAtEnd(next)){
@@ -216,15 +227,15 @@ public class EnemiesConfig {
         Direction dir = e.getDir();
         Direction nextDir=e.getDir();
 
-        int x = (int) e.getPos().getX()/this.game.getTileSize();
-        int y = (int) e.getPos().getY()/this.game.getTileSize();
+        int x = (int) e.getPos().getX();
+        int y = (int) e.getPos().getY();
         
         //si la direction etait EAST ou SOUTH on centre le perso car il atteind jamais le centre dans ces cas
         setAtCenterTile(e,dir,x,y);
 
         //Si on allait verticalement alors la prochaine direction sera horizontale
         if(dir == Direction.NORTH || dir == Direction.SOUTH){
-            int newX = (int) (e.getPos().getX() + getHorizontalSpeed(Direction.EAST,e));
+            int newX = (int) (e.getPos().getX() + getAddSpeed(Direction.EAST,e));
             if(isPath(new Coordinates(newX, (int)e.getPos().getY()))){
                 nextDir=Direction.EAST;
             }
@@ -233,7 +244,7 @@ public class EnemiesConfig {
             }
         }
         else{
-            int newY = (int) (e.getPos().getY() + getVerticalSpeed(Direction.NORTH,e));
+            int newY = (int) (e.getPos().getY() + getAddSpeed(Direction.NORTH,e));
             if(isPath(new Coordinates((int)e.getPos().getX(),newY))){
                 nextDir=Direction.NORTH;
             }
@@ -253,31 +264,20 @@ public class EnemiesConfig {
                 y++;
             }
         }
-        e.setPos(x*this.game.getTileSize(),y*this.game.getTileSize());
+        e.setPos(x,y);
     }
 
     public Type getTileType(int x, int y) {
         return game.getTileType(x,y);
     }
 
-    public float getVerticalSpeed(Direction dir,Enemy e) {
-        if(dir == Direction.NORTH){
+    public float getAddSpeed(Direction dir, Enemy e){
+        if(dir == Direction.NORTH|| dir ==Direction.WEST){
             return -e.getSpeed();
         }
-        else if(dir== Direction.SOUTH){
+        else{
             return e.getSpeed()+this.game.getTileSize();
         }
-        return 0;
-    }
-
-    public float getHorizontalSpeed(Direction dir,Enemy e) {
-        if(dir == Direction.WEST){
-            return -e.getSpeed();
-        }
-        else if(dir == Direction.EAST){
-            return e.getSpeed()+this.game.getTileSize();
-        }
-        return 0;
     }
 
     public void attaque(Base base, Enemy e){
@@ -301,7 +301,6 @@ public class EnemiesConfig {
                         e0.setNumber(e1.getNumber());
                         e1.setNumber(tmp);
                         isChange=true;
-                        System.out.println("CHANGED "+ e0.getNumber()+ "\t"+ e1.getNumber());
                     }
                 }
             }
