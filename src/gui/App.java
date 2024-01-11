@@ -22,12 +22,10 @@ public class App extends JFrame{
         setLayout(new BorderLayout());
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("TOWER DEFENSE");
-        //setResizable(false);
+        setResizable(false);
 
         this.game = new Game(level,mapNumber, this);
-        //add(game);
 
-        //this.pack();
         JButton button = new JButton("TEST");
         button.setBounds(200,700, 100, 50);
         game.add(button,BorderLayout.SOUTH);

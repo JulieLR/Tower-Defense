@@ -26,19 +26,21 @@ public class EnemiesConfig {
     private int nbEnemiesDead=0;
     private Coordinates start;
     private int mode;
+    private int level;
     private boolean isMarathon;
     private float coeff=1;
-    public EnemiesConfig(Game game,int n, int mode, MapConfig mapConfig){
+
+    public EnemiesConfig(Game game, int mode,int level, MapConfig mapConfig){
 
         this.game=game;
         this.base = this.game.getBase();
-        this.nbEnemies=n;
         this.nbSpawned=0;
         this.mode=mode;
+        this.level=level;
         this.mapConfig=mapConfig;
         this.start = this.mapConfig.getStartCoor();
 
-        startLevel(this.mode,1);
+        startLevel(this.mode,level);
     }
 
     public ArrayList<Enemy> getEnemies() {
@@ -59,6 +61,10 @@ public class EnemiesConfig {
 
     public void setNbEnemiesDead(int nbEnemiesDead) {
         this.nbEnemiesDead = nbEnemiesDead;
+    }  
+
+    public boolean isAllDead(){
+        return this.nbEnemiesDead==nbEnemies;
     }
 
 
@@ -67,19 +73,19 @@ public class EnemiesConfig {
         switch(mode){
             case 1 : 
                 if(level==1){
-                    setCoefficient(1);
+                    setCoefficient(1.2f);
                 }
                 else{
-                    setCoefficient(1.1f);
+                    setCoefficient(1.3f);
                 }
                 nbEnemies=10;
                 break;
             case 2 : 
                 if(level==1){
-                    setCoefficient(1.3f);
+                    setCoefficient(1.4f);
                 }
                 else{
-                    setCoefficient(1.4f);
+                    setCoefficient(1.5f);
                 }
                 nbEnemies=20;
                 break;
@@ -88,7 +94,7 @@ public class EnemiesConfig {
                     setCoefficient(2f);
                 }
                 else{
-                    setCoefficient(2.1f);
+                    setCoefficient(2.2f);
                 }
                 nbEnemies=30;
                 break;

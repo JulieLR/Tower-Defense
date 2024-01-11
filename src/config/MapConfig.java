@@ -18,6 +18,7 @@ public class MapConfig {
     private Tile end;
     private Coordinates endCoor;
     private Coordinates start;
+    private int mode;
     private ArrayList<Coordinates> towersEmpty=new ArrayList<>();
 
     private String path1="src/config/mapFiles/map1T.txt";
@@ -32,9 +33,10 @@ public class MapConfig {
 
     Random random = new Random();
 
-    public MapConfig(Game game) {
+    public MapConfig(Game game,int mode) {
 
         this.game=game;
+        this.mode=mode;
         this.map= new Tile[this.game.getCol()][this.game.getLigne()];
         //addAsset();
         chosenMap();
@@ -123,7 +125,7 @@ public class MapConfig {
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'C'){//castle
-                        int x =Character.getNumericValue(readline2.charAt(i));//type of castle
+                        int x =(mode==4)? 3: mode-1;//type of castle
                         this.map[ligne][col] = new Tile(24+x, Type.CASTLE,0,new Coordinates(ligne, col));
                         this.end=this.map[ligne][col];
                         this.endCoor = new Coordinates((ligne*this.game.getTileSize()), col*this.game.getTileSize());
