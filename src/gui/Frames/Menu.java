@@ -1,4 +1,4 @@
-package gui;
+package gui.Frames;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import gui.App;
+import gui.Graphics.Graphic;
 
 public class Menu extends JFrame implements Frame,Graphic,MouseListener{
 

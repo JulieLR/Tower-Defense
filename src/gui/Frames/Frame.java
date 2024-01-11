@@ -1,4 +1,4 @@
-package gui;
+package gui.Frames;
 
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;

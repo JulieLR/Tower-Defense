@@ -1,4 +1,4 @@
-package gui;
+package gui.Frames;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import gui.Menu.Fond;
+import gui.Frames.Menu.Fond;
 
 public class SettingsMenu extends JFrame implements Frame,MouseListener{
 

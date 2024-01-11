@@ -1,4 +1,4 @@
-package gui;
+package gui.Graphics;
 
 import javax.imageio.ImageIO;
 import java.awt.Graphics;

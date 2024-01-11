@@ -1,4 +1,4 @@
-package gui;
+package gui.Frames;
 
 import java.awt.Color;
 import java.awt.Graphics;
@@ -11,6 +11,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import gui.Game;
+import gui.Frames.Menu;
+import gui.Graphics.Graphic;
 
 public class EndFrame extends JFrame implements Frame,Graphic,MouseListener{
 

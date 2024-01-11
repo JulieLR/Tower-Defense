@@ -1,4 +1,4 @@
-package gui;
+package gui.Graphics;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import config.MapConfig;
 import config.Tile;
 import config.Tile.Type;
+import gui.Game;
 
 public class MapGraphics implements Graphic {
     

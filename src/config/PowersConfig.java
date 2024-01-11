@@ -3,7 +3,7 @@ package config;
 import java.util.ArrayList;
 
 import gui.Game;
-import gui.PowersGraphics;
+import gui.Graphics.PowersGraphics;
 import model.Power;
 import model.Tower;
 import model.Enemies.*;

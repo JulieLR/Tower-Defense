@@ -1,10 +1,11 @@
-package gui;
+package gui.Graphics;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import config.EnemiesConfig;
+import gui.Game;
 import model.Enemies.Bat;
 import model.Enemies.Enemy;
 import model.Enemies.Knight;

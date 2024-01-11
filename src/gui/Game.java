@@ -10,6 +10,13 @@ import config.PowersConfig;
 import config.Tile;
 import config.TowerConfig;
 import config.Tile.Type;
+import gui.Frames.EndFrame;
+import gui.Graphics.EnemiesGraphics;
+import gui.Graphics.IconsGraphics;
+import gui.Graphics.MapGraphics;
+import gui.Graphics.NumberGraphics;
+import gui.Graphics.PowersGraphics;
+import gui.Graphics.TowerGraphics;
 import model.Base;
 
 import java.awt.Graphics;

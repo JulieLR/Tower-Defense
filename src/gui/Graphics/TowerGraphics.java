@@ -1,10 +1,12 @@
-package gui;
+package gui.Graphics;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import config.TowerConfig;
+import gui.Game;
+import gui.Frames.Frame;
 import model.Coordinates;
 import model.Direction;
 import model.Tower;

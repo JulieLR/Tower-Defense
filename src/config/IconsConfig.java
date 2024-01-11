@@ -2,13 +2,13 @@ package config;
 
 import gui.Game;
 import gui.Icon;
-import gui.IconsGraphics;
 import model.Base;
 import model.Coordinates;
 import model.Power;
 import model.Tower;
 import model.Power.Element;
-import gui.TowerGraphics;
+import gui.Graphics.IconsGraphics;
+import gui.Graphics.TowerGraphics;
 
 import java.util.ArrayList;
 

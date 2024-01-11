@@ -1,10 +1,12 @@
-package gui;
+package gui.Graphics;
 
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import config.IconsConfig;
+import gui.Game;
+import gui.Icon;
 import model.Coordinates;
 import model.Power;
 import model.Tower;

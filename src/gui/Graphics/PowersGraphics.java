@@ -1,7 +1,8 @@
-package gui;
+package gui.Graphics;
 
 import config.IconsConfig;
 import config.PowersConfig;
+import gui.Game;
 import model.Power;
 import model.Tower;
 import model.Enemies.Bat;
