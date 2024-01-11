@@ -94,18 +94,21 @@ public class NumberGraphics implements Graphic{
         }
     }
 
-    public void drawIconsPrice(Graphics g){
+public void drawIconsPrice(Graphics g){
         for(Icon icon : icons){
             //Towers
             if(icon.getPower()==null){
                 drawNumber(g, Tower.getPriceByNumber(icon.getTower()), new Coordinates((int)(icon.getZone().getX()+icon.getZone().getWidth()/2-icon.getZone().getWidth()/8-4), (int) (icon.getZone().getY()+icon.getZone().getHeight()+3)), 3, 25);
+                g.drawImage(this.numberAsset.get(11), (int)(icon.getZone().getX()+icon.getZone().getWidth()-icon.getZone().getWidth()/4-8),(int) (icon.getZone().getY()+icon.getZone().getHeight()+7), 27, 27, null);
             }
             //Powers
             else{
-                drawNumber(g, Power.prices(icon.getPower()), new Coordinates((int)(icon.getZone().getX()+icon.getZone().getWidth()/2-icon.getZone().getWidth()/8-4), (int) (icon.getZone().getY()+icon.getZone().getHeight()+3)), 3, 25);
+                drawNumber(g, Power.prices(icon.getPower()), new Coordinates((int)(icon.getZone().getX()+icon.getZone().getWidth()/2-icon.getZone().getWidth()/8+10), (int) (icon.getZone().getY()+icon.getZone().getHeight()+3)), 3, 25);
+                g.drawImage(this.numberAsset.get(11), (int)(icon.getZone().getX()+icon.getZone().getWidth()-icon.getZone().getWidth()/4+5),(int) (icon.getZone().getY()+icon.getZone().getHeight()+7), 27, 27, null);
             }
-            g.drawImage(this.numberAsset.get(11), (int)(icon.getZone().getX()+icon.getZone().getWidth()-icon.getZone().getWidth()/4-8),(int) (icon.getZone().getY()+icon.getZone().getHeight()+7), 27, 27, null);
+            
         }
     }
 
 }
+
