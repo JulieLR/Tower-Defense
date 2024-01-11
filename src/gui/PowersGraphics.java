@@ -2,6 +2,7 @@ package gui;
 
 import config.IconsConfig;
 import config.PowersConfig;
+import model.Bat;
 import model.Enemy;
 import model.Power;
 import model.Tower;
@@ -83,7 +84,11 @@ public class PowersGraphics implements Graphic{
         if(this.actualPower.getType()== Element.FIRE){
             for(Enemy e :enemies){
                 if(e.isAlived()){
-                    drawIceOrFire(g,e,time,false);
+                    int hauteur=0;
+                    if(e instanceof Bat){
+                        hauteur=this.game.getTileSize();
+                    }  
+                    drawIceOrFire(g,e,time,false,hauteur);
                 }
             }
         }
@@ -97,7 +102,11 @@ public class PowersGraphics implements Graphic{
         else if(this.actualPower.getType()==Element.THUNDER){
             for(Enemy e :enemies){
                 if(e.isAlived()){
-                    drawThunder(g,e,time);
+                    int hauteur=0;
+                    if(e instanceof Bat){
+                        hauteur=this.game.getTileSize();
+                    }           
+                    drawThunder(g,e,time,hauteur);
                 }
             }
         }
@@ -110,7 +119,7 @@ public class PowersGraphics implements Graphic{
     }
     }
 
-    private void drawThunder(Graphics g, Enemy e, long times) { 
+    private void drawThunder(Graphics g, Enemy e, long times,int hauteur) { 
 
         long time = times - actualPower.getClickedTime();
 
@@ -124,36 +133,37 @@ public class PowersGraphics implements Graphic{
         int l = (int)(200f/0.5f);
         int o = (int)(100f/0.5f);
 
+
         if(time%r<o){
-            g.drawImage(this.powersAsset.get(20),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(20),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<l){
-            g.drawImage(this.powersAsset.get(21),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(21),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<k){
-            g.drawImage(this.powersAsset.get(22),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(22),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<m){
-            g.drawImage(this.powersAsset.get(23),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(23),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<h){
-            g.drawImage(this.powersAsset.get(24),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(24),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<n){
-            g.drawImage(this.powersAsset.get(25),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(25),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<q){
-            g.drawImage(this.powersAsset.get(26),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(26),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<s){
-            g.drawImage(this.powersAsset.get(27),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(27),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r>=s){
             actualPower.setAnimationDone(true);
         }
     }
 
-    private void drawIceOrFire(Graphics g, Enemy e, long times, boolean Ice) {
+    private void drawIceOrFire(Graphics g, Enemy e, long times, boolean Ice, int hauteur) {
 
         long time = times - actualPower.getClickedTime();
 
@@ -173,31 +183,31 @@ public class PowersGraphics implements Graphic{
         int o = (int)(200f/0.5f);
 
         if(time%r<o){
-            g.drawImage(this.powersAsset.get(ecart),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(ecart),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<l){
-            g.drawImage(this.powersAsset.get(ecart+1),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(ecart+1),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<k){
-            g.drawImage(this.powersAsset.get(ecart+2),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(ecart+2),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else  if(time%r<m){
-            g.drawImage(this.powersAsset.get(ecart+3),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(ecart+3),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<h){
-            g.drawImage(this.powersAsset.get(ecart+4),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(ecart+4),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<n){
-            g.drawImage(this.powersAsset.get(ecart+5),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(ecart+5),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
         else if(time%r<q){
-            g.drawImage(this.powersAsset.get(ecart+6),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(ecart+6),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         }
          else if(time%r<s){
-            g.drawImage(this.powersAsset.get(ecart+7),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(ecart+7),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
         } 
         else{
-            g.drawImage(this.powersAsset.get(ecart+8),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
+            g.drawImage(this.powersAsset.get(ecart+8),(int) e.getPos().getX()-this.game.getInitialTileSize(),(int)e.getPos().getY()-this.game.getInitialTileSize()*3-hauteur,this.game.getInitialTileSize()*6,this.game.getInitialTileSize()*6, null);
             actualPower.setAnimationDone(true);
         }
 

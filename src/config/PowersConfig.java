@@ -118,7 +118,7 @@ public class PowersConfig {
 
     public int getNbUnlock(int mode){
         switch(mode){
-            case 1: return 1;
+            case 1: return 10;
             case 2: return 10;
             case 3: return 15;
             case 4: return 20;
