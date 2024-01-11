@@ -214,8 +214,8 @@ public class Game extends JPanel implements Runnable {
 
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
         if(!isEnd){
-             enemies.drawImages(g);
             towerGraphics.drawImages(g);
+            enemies.drawImages(g);
             powersGraphics.drawImages(g);
             mapGraphics.drawBottomBarAndScore(g);
             iconsGraphics.drawImages(g);
@@ -292,7 +292,7 @@ public class Game extends JPanel implements Runnable {
         long lastTimeCheck= System.currentTimeMillis(); 
 
 
-        double spawnInterval = 5000000000d;//4s
+        double spawnInterval = 5000000000d;//5s
         double delta =0;
         long currentTime;
         long lastTime = System.nanoTime();

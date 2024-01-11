@@ -71,7 +71,6 @@ public class EnemiesGraphics implements Graphic{
                         }
                     }
                 }
-                g.drawRect((int)e.getHitBox().getX(), (int)e.getHitBox().getY(), (int)e.getHitBox().getWidth(), (int)e.getHitBox().getHeight());
                 
             }
             else if(e.isSpawned()){
@@ -95,41 +94,6 @@ public class EnemiesGraphics implements Graphic{
                 break;
         }
         return d;
-    }
-
-
-    public void drawRainbowSlimeWaalk(Graphics g, long time, Slime e){
-        int p = getEcartDirection(e.getDir(), true);
-
-        int q = (int)(1200f/0.5f);
-        int n = (int)(300f/0.5f);
-        int h = (int)(800f/0.5f);
-        int m = (int)(600f/0.5f);
-        int k = (int)(400f/0.5f);
-        int l = (int)(200f/0.5f);
-        int o = (int)(100f/0.5f);
-
-        if(time%n<o){
-            g.drawImage(this.slimeAsset.get(e.getColor()+p),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else{
-            g.drawImage(this.slimeAsset.get(e.getColor()+p+1),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        /* else if(time%n<k){
-            g.drawImage(this.slimeAsset.get(p+2),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else if(time%n<m){
-            g.drawImage(this.slimeAsset.get(p+3),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else if(time%n<h){
-            g.drawImage(this.slimeAsset.get(p+4),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else if(time%n<q){
-            g.drawImage(this.slimeAsset.get(p+5),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
-        }
-        else{
-            g.drawImage(this.slimeAsset.get(p+6),(int) e.getPos().getX(),(int)e.getPos().getY()-this.game.getInitialTileSize(),this.game.getTileSize(),this.game.getTileSize(), null);
-        }  */
     }
 
     public void drawSlimeAttack(Graphics g, long time, Slime e){

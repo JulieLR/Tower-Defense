@@ -91,10 +91,10 @@ public class EnemiesConfig {
                 break;
             case 3 : 
                 if(level==1){
-                    setCoefficient(2f);
+                    setCoefficient(1.6f);
                 }
                 else{
-                    setCoefficient(2.2f);
+                    setCoefficient(1.7f);
                 }
                 nbEnemies=30;
                 break;
@@ -178,9 +178,11 @@ public class EnemiesConfig {
         }
         if(nbSpawned==nbEnemies && isMarathon){
             addNewEnemies(10);
-            setCoefficient(coeff*1.1f);
+            setCoefficient(coeff*1.2f);
         }
     }
+
+    
 
     public Coordinates getNextCoor(Enemy e){
         if(e.getDir()== Direction.NORTH || e.getDir()== Direction.SOUTH){
@@ -192,9 +194,6 @@ public class EnemiesConfig {
     }
 
     //update la position de l'enemie
-    /**
-     * @param e
-     */
     private void updateMove(Enemy e) {
         //On initialise deux
         Coordinates next = getNextCoor(e);
@@ -237,7 +236,7 @@ public class EnemiesConfig {
         int y = (int) e.getPos().getY();
         
         //si la direction etait EAST ou SOUTH on centre le perso car il atteind jamais le centre dans ces cas
-        setAtCenterTile(e,dir,x,y);
+        setAtCenterTile(e,dir,x/this.game.getTileSize(),y/this.game.getTileSize());
 
         //Si on allait verticalement alors la prochaine direction sera horizontale
         if(dir == Direction.NORTH || dir == Direction.SOUTH){
@@ -270,7 +269,7 @@ public class EnemiesConfig {
                 y++;
             }
         }
-        e.setPos(x,y);
+        e.setPos(x*this.game.getTileSize(),y*this.game.getTileSize());
     }
 
     public Type getTileType(int x, int y) {

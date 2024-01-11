@@ -94,7 +94,7 @@ public class PowersGraphics implements Graphic{
         }
         else if(this.actualPower.getType()==Element.ICE){
             for(Enemy e :enemies){
-                if(e.isAlived()){
+                if(e.isAlived() && !(e instanceof Bat)){
                     drawIce(g,e,time);
                 }
             }

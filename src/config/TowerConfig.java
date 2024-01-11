@@ -83,12 +83,12 @@ public class TowerConfig implements Serializable{
 
     public Tower towerNum (int n){
         switch (n) {
-            case 0: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 75, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
-            case 1: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 150, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
-            case 2: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
+            case 0: return new Tower(0.5f, new Coordinates(0, 0), 3, n, 35, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
+            case 1: return new Tower(0.5f, new Coordinates(0, 0), 6, n, 70, this.game.getTileSize()*5, this.game.getTileSize()*5, this.game);
+            case 2: return new Tower(0.5f, new Coordinates(0, 0), 9, n, 200, this.game.getTileSize()*7, this.game.getTileSize()*7, this.game);
             case 3: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 25, this.game.getTileSize()*3, this.game.getTileSize()*3, this.game);
-            case 4: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
-            case 5: return new Tower(0.5f, new Coordinates(0, 0), 2, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
+            case 4: return new Tower(0.5f, new Coordinates(0, 0), 4, n, 50, this.game.getTileSize()*5, this.game.getTileSize()*3, this.game);
+            case 5: return new Tower(0.5f, new Coordinates(0, 0), 8, n, 150, this.game.getTileSize()*7, this.game.getTileSize()*5, this.game);
         }
         return null;
     }
@@ -265,7 +265,7 @@ public class TowerConfig implements Serializable{
     }
 
     public boolean isAllMaxLevel(){
-        if(mouseTowers.size()!=0){
+        if(mouseTowers.size()==6 ){
             for(Tower t : mouseTowers){
             if(t.getLevel()!=3){
                 return false;
