@@ -65,8 +65,6 @@ public class Game extends JPanel implements Runnable {
     private PowersConfig powersConfig;
     private PowersGraphics powersGraphics;
 
-    private JPanel towerButton;
-    private JPanel BottomBar;
     private App app;
 
     private Base base;
@@ -78,23 +76,28 @@ public class Game extends JPanel implements Runnable {
     private NumberGraphics numberGraphics;
 
     private int level;
-    
+    private int mode;
+
+    private boolean isEnd=false;
+    private boolean isEndFrameOn=false;
+
     // interaction clavier et souris (ici psk sinon ça compte aussi les coordonnées de la barre en haut avec le titre)
     private Mouse_Listener mouseListener; 
     private Keyboard_Listener keyboardlistener;
 
-    public Game(int level,int mapNumber, App app){
+    public Game(int mode,int mapNumber, App app){
 
         this.app=app;
         this.mapNumber=mapNumber;
 
-        this.tiles= new MapConfig(this);
+        this.tiles= new MapConfig(this,mode);
         this.mapGraphics= new MapGraphics(this, tiles);
 
         this.base = new Base(this,1000);
-        this.level = level;
+        this.mode=mode;
+        this.level=1;
 
-        this.enemiesConfig = new EnemiesConfig(this,10,level,this.tiles);
+        this.enemiesConfig = new EnemiesConfig(this,mode,level,this.tiles);
         this.enemies= new EnemiesGraphics(this,this.enemiesConfig);
 
         this.towerConfig= new TowerConfig(this);
@@ -197,17 +200,29 @@ public class Game extends JPanel implements Runnable {
         return level;
     }
 
+    public void setEnd(boolean isEnd) {
+        this.isEnd = isEnd;
+    }
+
+    public void setEndFrameOn(boolean isEndFrameOn) {
+        this.isEndFrameOn = isEndFrameOn;
+    }
+
 
     public void paintComponent(Graphics g)  {
         super.paintComponent(g);
 
         mapGraphics.drawImages(g); //draw map à mettre avant le draw des characters
-        enemies.drawImages(g);
-        towerGraphics.drawImages(g);
-        powersGraphics.drawImages(g);
-        mapGraphics.drawBottomBarAndScore(g);
-        iconsGraphics.drawImages(g);
-        numberGraphics.drawImages(g);
+        if(!isEnd){
+             enemies.drawImages(g);
+            towerGraphics.drawImages(g);
+            powersGraphics.drawImages(g);
+            mapGraphics.drawBottomBarAndScore(g);
+            iconsGraphics.drawImages(g);
+            numberGraphics.drawImages(g);
+        }else{
+            mapGraphics.drawBottomBarAndScore(g);
+        }
 
         g.dispose(); //
     }
@@ -217,15 +232,54 @@ public class Game extends JPanel implements Runnable {
         gameThread.start();
     }
     private void updateGame () {
-        this.towerConfig.update();
-        this.enemies.update();
-        this.enemiesConfig.depasse();
-        this.iconsConfig.update();
-        powersConfig.update();
-        //this.baseLife.updateLife();
-        if(this.base.isDestroyed()){
-            System.exit(0);
+        if(!isEnd){
+            this.towerConfig.update();
+            this.enemies.update();
+            this.enemiesConfig.depasse();
+            this.iconsConfig.update();
+            powersConfig.update();
         }
+        if(this.base.isDestroyed()){
+            isEnd=true;
+            if(!isEndFrameOn){
+                new EndFrame(this, level, mode,false);
+                isEndFrameOn=true;
+            }
+        }
+        else if(this.enemiesConfig.isAllDead()){
+            isEnd=true;
+            if(!isEndFrameOn){
+                new EndFrame(this, level, mode,true);
+                isEndFrameOn=true;
+            }
+        }
+    }
+
+    public void resetBase(){
+        this.base=new Base(this,1000);
+    }
+
+    public void resetEnemies(int mode, int level){
+        this.enemiesConfig= new EnemiesConfig(this, mode,level,tiles);
+        this.enemies= new EnemiesGraphics(this, enemiesConfig);
+    }
+
+    public void resetTowers(){
+        this.towerConfig= new TowerConfig(this);
+        this.towerGraphics= new TowerGraphics(this, towerConfig);
+    }
+
+    public void resetIcons(){
+        this.iconsConfig=new IconsConfig(this);
+        this.iconsGraphics=new IconsGraphics(this, iconsConfig);
+    }
+
+    public void resetAll(int mode, int level){
+        resetBase();
+        resetEnemies(mode, level);
+        resetTowers();
+        resetIcons();
+        this.level=level;
     }
 
     @Override
