@@ -125,7 +125,7 @@ public class MapConfig {
                         ligne++;
                     }
                     else if(readline.charAt(i) == 'C'){//castle
-                        int x =(mode==4)? 3: mode-1;//type of castle
+                        int x =(mode==4)? 2: mode-1;//type of castle
                         this.map[ligne][col] = new Tile(24+x, Type.CASTLE,0,new Coordinates(ligne, col));
                         this.end=this.map[ligne][col];
                         this.endCoor = new Coordinates((ligne*this.game.getTileSize()), col*this.game.getTileSize());

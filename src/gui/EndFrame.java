@@ -130,6 +130,7 @@ public class EndFrame extends JFrame implements Frame,Graphic,MouseListener{
             homeButton.setIcon(new ImageIcon(assets.get(2)));
             game.getApp().dispose();
             new Menu();
+            dispose();
         }
         else if((e.getSource()== nextButton) && win){
             nextButton.setIcon(new ImageIcon(assets.get(0)));

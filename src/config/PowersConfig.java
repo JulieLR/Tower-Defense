@@ -6,7 +6,7 @@ import gui.Game;
 import gui.PowersGraphics;
 import model.Power;
 import model.Tower;
-import model.Enemies.Enemy;
+import model.Enemies.*;
 import model.Power.Element;
 
 public class PowersConfig {
@@ -109,7 +109,9 @@ public class PowersConfig {
 
     public void IceAction(ArrayList<Enemy> enemies){
         for(Enemy e: enemies){
-            e.setSpeed(0);
+            if(!(e instanceof Bat)){
+                 e.setSpeed(0);
+            }
         }
     }
 
